@@ -7,10 +7,12 @@ class Routes {
   Routes._();
   static const splash = '/splash';
   static const onBoarding = '/onboarding';
+  static const demo = '/demo';
 
   // Map of routes
   static final routes = <String, WidgetBuilder>{
     splash: (_) => const SplashScreen(),
     onBoarding: (_) => const OnboardingScreen(),
+    demo: (_) => const OnboardingScreen(),
   };
 }

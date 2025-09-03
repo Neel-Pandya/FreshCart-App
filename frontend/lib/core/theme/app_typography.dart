@@ -129,7 +129,7 @@ final class AppTypography {
 
   static final labelMedium = GoogleFonts.roboto(
     fontSize: 12,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w400,
     letterSpacing: 0.5,
   );
 
