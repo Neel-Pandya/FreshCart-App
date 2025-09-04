@@ -30,7 +30,7 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
 
     Toaster.showSuccessMessage(message: "OTP Submitted: $otp", context: context);
 
-    Navigator.of(context).pushReplacementNamed(AuthRoutes.login);
+    Navigator.of(context).pushReplacementNamed(AuthRoutes.resetPassword);
   }
 
   @override
