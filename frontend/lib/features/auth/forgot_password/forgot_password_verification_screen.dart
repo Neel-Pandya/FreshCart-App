@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/auth_routes.dart';
-import 'package:frontend/core/utils/toaster.dart'; // ✅ Add this
+import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class SignupVerificationScreen extends StatefulWidget {
-  const SignupVerificationScreen({super.key});
+class ForgotPasswordVerificationScreen extends StatefulWidget {
+  const ForgotPasswordVerificationScreen({super.key});
 
   @override
-  State<SignupVerificationScreen> createState() => _SignupVerificationScreenState();
+  State<ForgotPasswordVerificationScreen> createState() => _ForgotPasswordVerificationScreenState();
 }
 
-class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
+class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerificationScreen> {
   final TextEditingController _otpController = TextEditingController();
 
   void _onSubmit(BuildContext context) {
