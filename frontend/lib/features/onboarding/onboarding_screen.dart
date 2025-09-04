@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
@@ -60,7 +61,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const PrimaryButton(text: 'Create Account'),
+        PrimaryButton(
+          text: 'Create Account',
+          onPressed: () => Navigator.of(context).pushNamed(Routes.signUp),
+        ),
         const SizedBox(height: 10),
         GestureDetector(
           child: Text(

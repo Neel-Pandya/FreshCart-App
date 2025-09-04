@@ -19,4 +19,7 @@ final class AppColors {
   static const Color textPrimary = Color(0xFF1F1F1F);
   static const Color textSecondary = Color(0xFF555555);
   static const Color textMuted = Color(0xFF888888);
+
+  // Icon color
+  static const Color iconColor = Color(0XFF555555);
 }

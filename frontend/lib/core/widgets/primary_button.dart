@@ -14,6 +14,7 @@ class PrimaryButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 10),
         backgroundColor: AppColors.primary,
+        shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
       child: Text(text, style: AppTypography.titleSmall.copyWith(color: Colors.white)),
