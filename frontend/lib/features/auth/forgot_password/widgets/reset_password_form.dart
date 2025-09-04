@@ -34,6 +34,13 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
   }
 
   @override
+  void dispose() {
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,

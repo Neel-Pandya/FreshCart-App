@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/auth_routes.dart';
-import 'package:frontend/core/utils/toaster.dart'; // ✅ Add this
+import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
