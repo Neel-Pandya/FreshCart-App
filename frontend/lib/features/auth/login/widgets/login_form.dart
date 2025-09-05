@@ -3,12 +3,12 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:frontend/core/routes/auth_routes.dart';
+import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/filled_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/core/widgets/secondary_button.dart';
-import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/utils/toaster.dart';
 
 class LoginForm extends StatefulWidget {
@@ -20,6 +20,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
+  bool _isPasswordVisible = false;
 
   void _handleLogin() {
     if (!_formKey.currentState!.validate()) return;
@@ -29,7 +30,7 @@ class _LoginFormState extends State<LoginForm> {
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
 
-      Navigator.of(context).pushNamed(Routes.onBoarding);
+      Navigator.of(context).pushNamed(UserRoutes.master);
     });
   }
 
@@ -57,7 +58,9 @@ class _LoginFormState extends State<LoginForm> {
             labelText: 'Password',
             hintText: 'Enter your password',
             prefixIcon: FeatherIcons.lock,
-            obscureText: true,
+            suffixIcon: _isPasswordVisible ? FeatherIcons.eye : FeatherIcons.eyeOff,
+            onSuffixTap: () => setState(() => _isPasswordVisible = !_isPasswordVisible),
+            obscureText: !_isPasswordVisible,
             validator: MultiValidator([
               RequiredValidator(errorText: 'Password is required'),
               MinLengthValidator(8, errorText: 'At least 8 characters'),

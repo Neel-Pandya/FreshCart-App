@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/validators/confirm_password_validator.dart';
 import 'package:frontend/core/widgets/filled_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
@@ -29,7 +30,11 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
 
-      Navigator.of(context).pushReplacementNamed(AuthRoutes.login);
+      // Remove all routes except onboarding from the stack and push the login route
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        AuthRoutes.login,
+        (route) => route.settings.name == Routes.onBoarding,
+      );
     });
   }
 
