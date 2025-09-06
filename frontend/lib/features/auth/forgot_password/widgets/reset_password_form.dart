@@ -24,6 +24,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
 
   void _handleSubmit() {
     if (!_formKey.currentState!.validate()) return;
+    FocusManager.instance.primaryFocus?.unfocus();
 
     Toaster.showSuccessMessage(context: context, message: 'Password Reset successful');
 

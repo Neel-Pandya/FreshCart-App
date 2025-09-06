@@ -23,6 +23,7 @@ class _SignupFormState extends State<SignupForm> {
 
   void _handleCreateAccount() {
     if (!_formKey.currentState!.validate()) return;
+    FocusManager.instance.primaryFocus?.unfocus();
 
     Toaster.showSuccessMessage(context: context, message: 'Account created');
 

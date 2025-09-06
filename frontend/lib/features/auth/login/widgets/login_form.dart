@@ -24,6 +24,7 @@ class _LoginFormState extends State<LoginForm> {
 
   void _handleLogin() {
     if (!_formKey.currentState!.validate()) return;
+    FocusManager.instance.primaryFocus?.unfocus();
 
     Toaster.showSuccessMessage(context: context, message: 'Login successful');
 

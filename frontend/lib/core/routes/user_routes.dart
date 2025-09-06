@@ -6,5 +6,5 @@ class UserRoutes {
 
   static const master = '/master';
 
-  static final routes = <String, WidgetBuilder>{master: (_) => UserMasterLayout()};
+  static final routes = <String, WidgetBuilder>{master: (_) => const UserMasterLayout()};
 }

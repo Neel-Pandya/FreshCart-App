@@ -4,7 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/core/providers/bottom_nav_provider.dart';
 
 class BottomNavigation extends ConsumerWidget {
-  const BottomNavigation({super.key});
+  const BottomNavigation({super.key, this.onTap});
+  final void Function(int)? onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -12,7 +13,7 @@ class BottomNavigation extends ConsumerWidget {
     return NavigationBar(
       backgroundColor: Colors.white,
       onDestinationSelected: (index) {
-        ref.read(bottomNavigationProvider.notifier).state = index;
+        onTap?.call(index);
       },
       selectedIndex: currentIndex,
       destinations: const <NavigationDestination>[
