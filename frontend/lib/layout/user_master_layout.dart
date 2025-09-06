@@ -4,6 +4,7 @@ import 'package:frontend/core/providers/bottom_nav_provider.dart';
 import 'package:frontend/core/widgets/bottom_navigation.dart';
 import 'package:frontend/features/home/home_screen.dart';
 import 'package:frontend/features/products/products_screen.dart';
+import 'package:frontend/features/settings/settings_screen.dart';
 
 class UserMasterLayout extends ConsumerStatefulWidget {
   const UserMasterLayout({super.key});
@@ -18,7 +19,7 @@ class _UserMasterLayoutState extends ConsumerState<UserMasterLayout> {
     const HomeScreen(),
     const ProductsScreen(),
     const Placeholder(),
-    const Placeholder(),
+    const SettingsScreen(),
   ];
 
   @override
