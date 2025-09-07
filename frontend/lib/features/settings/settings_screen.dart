@@ -4,6 +4,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/core/providers/bottom_nav_provider.dart';
 import 'package:frontend/core/routes/app_routes.dart';
+import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
@@ -96,16 +97,18 @@ class SettingsScreen extends ConsumerWidget {
                   style: AppTypography.titleMediumEmphasized.copyWith(color: AppColors.textPrimary),
                 ),
                 const SizedBox(height: 20),
-                const SettingItem(
+                SettingItem(
                   title: 'Edit Profile',
                   icon: FeatherIcons.user,
                   trailingIcon: FeatherIcons.chevronRight,
+                  onTap: () => Navigator.of(context).pushNamed(UserRoutes.editProfile),
                 ),
                 const SizedBox(height: 20),
-                const SettingItem(
+                SettingItem(
                   title: 'Change Password',
                   icon: FeatherIcons.lock,
                   trailingIcon: FeatherIcons.chevronRight,
+                  onTap: () => Navigator.of(context).pushNamed(UserRoutes.changePassword),
                 ),
                 const SizedBox(height: 30),
                 Text(

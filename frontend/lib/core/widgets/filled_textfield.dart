@@ -16,6 +16,7 @@ class FilledTextfield extends StatefulWidget {
     this.onSuffixTap,
     this.obscureText = false,
     this.keyboardType,
+    this.readonly = false,
   });
 
   final TextEditingController? controller;
@@ -29,6 +30,7 @@ class FilledTextfield extends StatefulWidget {
   final VoidCallback? onSuffixTap;
   final bool obscureText;
   final TextInputType? keyboardType;
+  final bool? readonly;
 
   @override
   State<FilledTextfield> createState() => _FilledTextfieldState();
@@ -66,6 +68,7 @@ class _FilledTextfieldState extends State<FilledTextfield> {
       controller: widget.controller,
       obscureText: widget.obscureText,
       keyboardType: widget.keyboardType,
+      readOnly: widget.readonly ?? false,
       validator: (value) {
         final error = widget.validator?.call(value);
         setState(() => _hasError = error != null);
