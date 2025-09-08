@@ -67,7 +67,7 @@ class _OtpInputState extends State<OtpInput> {
             maxLength: 1,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              counterText: "",
+              counterText: '',
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: const BorderSide(color: Color(0XFFCAC4D0)),

@@ -99,7 +99,7 @@ class _FilterSheetState extends State<FilterSheet> {
               ),
             ),
             Text(
-              "₹${_priceRange.start.round()} - ₹${_priceRange.end.round()}",
+              '₹${_priceRange.start.round()} - ₹${_priceRange.end.round()}',
               textAlign: TextAlign.center,
               style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
             ),
