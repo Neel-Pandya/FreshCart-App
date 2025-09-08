@@ -3,6 +3,8 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/widgets/filled_textfield.dart';
 import 'package:frontend/core/widgets/product_card.dart';
+import 'package:frontend/features/products/data/product_data.dart';
+import 'package:frontend/features/products/detailed_product_screen.dart';
 import 'package:frontend/features/products/widgets/filter_sheet.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -39,7 +41,7 @@ class ProductsScreen extends StatelessWidget {
               Expanded(
                 child: GridView.builder(
                   padding: const EdgeInsets.only(top: 10),
-                  itemCount: 4,
+                  itemCount: productsData.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 30,
@@ -47,13 +49,13 @@ class ProductsScreen extends StatelessWidget {
                     childAspectRatio: 0.7,
                   ),
                   itemBuilder: (context, index) => ProductCard(
-                    onTap: () {
+                    product: productsData[index],
+                    onTap: (product) {
                       FocusManager.instance.primaryFocus?.unfocus();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => DetailedProductScreen(product: product)),
+                      );
                     },
-                    imageUrl: 'assets/images/products/corn.jpg',
-                    name: 'Corn',
-                    price: 10,
-                    category: 'Vegetable',
                   ),
                 ),
               ),

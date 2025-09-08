@@ -3,6 +3,7 @@ import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/product_card.dart';
 import 'package:frontend/features/home/widgets/home_header.dart';
+import 'package:frontend/features/products/data/product_data.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -42,19 +43,14 @@ class HomeScreen extends StatelessWidget {
               Expanded(
                 child: GridView.builder(
                   padding: const EdgeInsets.only(top: 10),
-                  itemCount: 4,
+                  itemCount: productsData.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 30,
                     mainAxisSpacing: 25,
                     childAspectRatio: 0.7,
                   ),
-                  itemBuilder: (context, index) => const ProductCard(
-                    imageUrl: 'assets/images/products/corn.jpg',
-                    name: 'Corn',
-                    price: 10,
-                    category: 'Vegetable',
-                  ),
+                  itemBuilder: (context, index) => ProductCard(product: productsData[index]),
                 ),
               ),
             ],

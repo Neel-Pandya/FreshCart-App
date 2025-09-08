@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 
@@ -39,7 +40,12 @@ class HomeHeader extends StatelessWidget {
 
           const Spacer(),
 
-          const Icon(FeatherIcons.shoppingBag, color: AppColors.iconColor),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed(UserRoutes.cart);
+            },
+            child: const Icon(FeatherIcons.shoppingBag, color: AppColors.iconColor),
+          ),
         ],
       ),
     );
