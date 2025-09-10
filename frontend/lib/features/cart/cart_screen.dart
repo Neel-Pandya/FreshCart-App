@@ -18,13 +18,13 @@ class CartScreen extends StatelessWidget {
       ),
 
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Divider(height: 1, thickness: 1, color: AppColors.border),
-              Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Divider(height: 1, thickness: 1, color: AppColors.border),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: ListView.separated(
                   padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
                   itemCount: cartData.length,
@@ -33,15 +33,18 @@ class CartScreen extends StatelessWidget {
                       const Divider(height: 1, thickness: 1, color: AppColors.border),
                 ),
               ),
+            ),
 
-              PrimaryButton(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: PrimaryButton(
                 text: 'Checkout',
                 onPressed: () {
                   Navigator.of(context).pushNamed(UserRoutes.checkout);
                 },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

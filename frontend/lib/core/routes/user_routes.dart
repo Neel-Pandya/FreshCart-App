@@ -19,6 +19,6 @@ class UserRoutes {
     changePassword: (_) => const ChangePasswordScreen(),
     editProfile: (_) => const EditProfileScreen(),
     cart: (_) => const CartScreen(),
-    checkout: (_) => const CheckoutScreen(),
+    checkout: (_) => CheckoutScreen(),
   };
 }
