@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/routes/app_routes.dart';
+import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
@@ -18,6 +20,13 @@ class CheckoutScreen extends StatelessWidget {
 
     FocusManager.instance.primaryFocus?.unfocus();
     Toaster.showSuccessMessage(context: context, message: 'Checkout successful');
+    Future.delayed(const Duration(seconds: 2), () {
+      if (!context.mounted) return;
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        UserRoutes.master,
+        (route) => route.settings.name == Routes.onBoarding,
+      );
+    });
   }
 
   @override
