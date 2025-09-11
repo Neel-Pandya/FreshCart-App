@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:frontend/core/routes/admin_routes.dart';
 import 'package:frontend/core/routes/auth_routes.dart';
 import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
@@ -22,6 +23,9 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
 
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
+
   void _handleLogin() {
     if (!_formKey.currentState!.validate()) return;
     FocusManager.instance.primaryFocus?.unfocus();
@@ -31,8 +35,26 @@ class _LoginFormState extends State<LoginForm> {
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
 
-      Navigator.of(context).pushNamed(UserRoutes.master);
+      Navigator.of(context).pushNamed(
+        _emailController.text == 'admin@gmail.com' ? AdminRoutes.master : UserRoutes.master,
+      );
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _formKey.currentState?.dispose();
+    super.dispose();
   }
 
   @override
@@ -46,6 +68,7 @@ class _LoginFormState extends State<LoginForm> {
             labelText: 'Email',
             hintText: 'Enter your email',
             prefixIcon: FeatherIcons.mail,
+            controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             validator: MultiValidator([
               RequiredValidator(errorText: 'Email is required'),
@@ -59,6 +82,7 @@ class _LoginFormState extends State<LoginForm> {
             labelText: 'Password',
             hintText: 'Enter your password',
             prefixIcon: FeatherIcons.lock,
+            controller: _passwordController,
             suffixIcon: _isPasswordVisible ? FeatherIcons.eye : FeatherIcons.eyeOff,
             onSuffixTap: () => setState(() => _isPasswordVisible = !_isPasswordVisible),
             obscureText: !_isPasswordVisible,

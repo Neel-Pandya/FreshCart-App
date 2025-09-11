@@ -1,5 +1,6 @@
 // lib/core/routes/app_routes.dart
 import 'package:flutter/material.dart';
+import 'package:frontend/core/routes/admin_routes.dart';
 import 'package:frontend/core/routes/auth_routes.dart';
 import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/features/common/onboarding/onboarding_screen.dart';
@@ -16,5 +17,6 @@ class Routes {
     onBoarding: (_) => const OnboardingScreen(),
     ...AuthRoutes.routes,
     ...UserRoutes.routes,
+    ...AdminRoutes.routes,
   };
 }
