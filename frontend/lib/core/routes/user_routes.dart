@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/features/cart/cart_screen.dart';
-import 'package:frontend/features/checkout/checkout_screen.dart';
-import 'package:frontend/features/settings/edit_profile_screen.dart';
+import 'package:frontend/features/user/cart/cart_screen.dart';
+import 'package:frontend/features/user/checkout/checkout_screen.dart';
+import 'package:frontend/features/user/settings/edit_profile_screen.dart';
 import 'package:frontend/layout/user_master_layout.dart';
-import 'package:frontend/features/settings/change_password_screen.dart';
+import 'package:frontend/features/user/settings/change_password_screen.dart';
 
 class UserRoutes {
   UserRoutes._();

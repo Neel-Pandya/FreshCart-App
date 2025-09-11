@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/core/providers/bottom_nav_provider.dart';
 import 'package:frontend/core/widgets/bottom_navigation.dart';
-import 'package:frontend/features/home/home_screen.dart';
-import 'package:frontend/features/products/products_screen.dart';
-import 'package:frontend/features/orders/orders_screen.dart';
-import 'package:frontend/features/settings/settings_screen.dart';
+import 'package:frontend/features/user/home/home_screen.dart';
+import 'package:frontend/features/user/products/products_screen.dart';
+import 'package:frontend/features/user/orders/orders_screen.dart';
+import 'package:frontend/features/user/settings/settings_screen.dart';
 
 class UserMasterLayout extends ConsumerStatefulWidget {
   const UserMasterLayout({super.key});
