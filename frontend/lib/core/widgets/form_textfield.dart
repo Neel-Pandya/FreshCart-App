@@ -100,7 +100,9 @@ class _FormTextFieldState extends State<FormTextField> {
               )
             : null,
         filled: widget.filled ?? true,
-        fillColor: _isFocused ? AppColors.background : const Color(0xFFE0E0E0).withOpacity(0.35),
+        fillColor: _isFocused
+            ? AppColors.background
+            : const Color(0xFFE0E0E0).withValues(alpha: 0.35),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(color: Color(0xFFCAC4D0), width: 1),

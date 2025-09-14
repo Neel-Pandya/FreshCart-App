@@ -73,7 +73,7 @@ class _UpdateProductFormState extends State<UpdateProductForm> {
               child: widget.product.imageUrl != ''
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(100),
-                      child: Image.network(widget.product.imageUrl!, fit: BoxFit.cover),
+                      child: Image.network(widget.product.imageUrl, fit: BoxFit.cover),
                     )
                   : const Icon(Icons.camera_alt_outlined, color: AppColors.iconColor, size: 45),
             ),

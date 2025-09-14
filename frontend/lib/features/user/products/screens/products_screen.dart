@@ -4,7 +4,7 @@ import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/product_card.dart';
 import 'package:frontend/features/user/products/data/product_data.dart';
-import 'package:frontend/features/user/products/detailed_product_screen.dart';
+import 'package:frontend/features/user/products/screens/detailed_product_screen.dart';
 import 'package:frontend/features/user/products/widgets/filter_sheet.dart';
 
 class ProductsScreen extends StatelessWidget {
