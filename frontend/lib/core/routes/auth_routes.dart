@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/features/common/auth/forgot_password/forgot_password_screen.dart';
-import 'package:frontend/features/common/auth/forgot_password/forgot_password_verification_screen.dart';
-import 'package:frontend/features/common/auth/login/login_screen.dart';
-import 'package:frontend/features/common/auth/signup/signup_screen.dart';
-import 'package:frontend/features/common/auth/signup/signup_verification_screen.dart';
-import 'package:frontend/features/common/auth/forgot_password/reset_password_screen.dart';
+import 'package:frontend/features/common/auth/forgot_password/screens/forgot_password_screen.dart';
+import 'package:frontend/features/common/auth/forgot_password/screens/forgot_password_verification_screen.dart';
+import 'package:frontend/features/common/auth/login/screens/login_screen.dart';
+import 'package:frontend/features/common/auth/signup/screens/signup_screen.dart';
+import 'package:frontend/features/common/auth/signup/screens/signup_verification_screen.dart';
+import 'package:frontend/features/common/auth/forgot_password/screens/reset_password_screen.dart';
 
 class AuthRoutes {
   static const login = '/login';

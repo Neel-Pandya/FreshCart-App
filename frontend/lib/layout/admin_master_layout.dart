@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/core/providers/drawer_nav_provider.dart';
 import 'package:frontend/core/widgets/drawer_navigation.dart';
-import 'package:frontend/features/admin/dashboard/dashboard_screen.dart';
+import 'package:frontend/features/admin/dashboard/screens/dashboard_screen.dart';
 import 'package:frontend/features/admin/products/screens/products_screen.dart';
 
 class AdminMasterLayout extends ConsumerStatefulWidget {
