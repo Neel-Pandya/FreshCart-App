@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/theme/app_colors.dart';
-import 'package:frontend/core/widgets/filled_textfield.dart';
+import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/product_card.dart';
 import 'package:frontend/features/user/products/data/product_data.dart';
 import 'package:frontend/features/user/products/detailed_product_screen.dart';
@@ -29,7 +29,7 @@ class ProductsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              FilledTextfield(
+              FormTextField(
                 hintText: 'Search Products',
                 prefixIcon: FeatherIcons.search,
                 suffixIcon: FeatherIcons.filter,

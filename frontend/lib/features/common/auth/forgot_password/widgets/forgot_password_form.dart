@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/theme/app_colors.dart';
-import 'package:frontend/core/widgets/filled_textfield.dart';
+import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:frontend/core/routes/auth_routes.dart';
@@ -43,7 +43,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  FilledTextfield(
+                  FormTextField(
                     labelText: 'Email',
                     hintText: 'Enter your email',
                     prefixIcon: FeatherIcons.mail,

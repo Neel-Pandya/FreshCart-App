@@ -10,6 +10,8 @@ class DropDownField extends StatefulWidget {
     this.onChanged,
     this.hintText,
     this.validator,
+    this.prefixIcon,
+    this.labelText,
   });
 
   final List<String> items;
@@ -17,6 +19,8 @@ class DropDownField extends StatefulWidget {
   final String initialValue;
   final String? hintText;
   final String? Function(String?)? validator;
+  final IconData? prefixIcon;
+  final String? labelText;
 
   @override
   State<DropDownField> createState() => _DropDownFieldState();
@@ -58,10 +62,14 @@ class _DropDownFieldState extends State<DropDownField> {
         child: Icon(FeatherIcons.chevronDown, color: _getIconColor()),
       ),
       decoration: InputDecoration(
+        labelText: widget.labelText,
+        prefixIcon: widget.prefixIcon != null
+            ? Icon(widget.prefixIcon, color: _getIconColor())
+            : null,
         fillColor: _isFocused ? AppColors.background : Colors.white,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFFE0E0E0), width: 1),
+          borderSide: const BorderSide(color: Color(0xFFCAC4D0), width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

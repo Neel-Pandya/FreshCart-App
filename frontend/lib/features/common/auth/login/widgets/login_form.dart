@@ -7,7 +7,7 @@ import 'package:frontend/core/routes/auth_routes.dart';
 import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
-import 'package:frontend/core/widgets/filled_textfield.dart';
+import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/core/widgets/secondary_button.dart';
 import 'package:frontend/core/utils/toaster.dart';
@@ -64,7 +64,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          FilledTextfield(
+          FormTextField(
             labelText: 'Email',
             hintText: 'Enter your email',
             prefixIcon: FeatherIcons.mail,
@@ -78,7 +78,7 @@ class _LoginFormState extends State<LoginForm> {
             ]).call,
           ),
           const SizedBox(height: 20),
-          FilledTextfield(
+          FormTextField(
             labelText: 'Password',
             hintText: 'Enter your password',
             prefixIcon: FeatherIcons.lock,

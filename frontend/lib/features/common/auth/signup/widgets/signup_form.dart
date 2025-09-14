@@ -6,7 +6,7 @@ import 'package:frontend/core/routes/auth_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
-import 'package:frontend/core/widgets/filled_textfield.dart';
+import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/core/widgets/secondary_button.dart';
 
@@ -41,7 +41,7 @@ class _SignupFormState extends State<SignupForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          FilledTextfield(
+          FormTextField(
             prefixIcon: FeatherIcons.user,
             hintText: 'Enter your name',
             labelText: 'Name',
@@ -58,7 +58,7 @@ class _SignupFormState extends State<SignupForm> {
           ),
           const SizedBox(height: 20),
 
-          FilledTextfield(
+          FormTextField(
             prefixIcon: FeatherIcons.mail,
             hintText: 'Enter your email',
             labelText: 'Email',
@@ -72,7 +72,7 @@ class _SignupFormState extends State<SignupForm> {
           ),
           const SizedBox(height: 20),
 
-          FilledTextfield(
+          FormTextField(
             prefixIcon: FeatherIcons.lock,
             hintText: 'Enter your password',
             labelText: 'Password',

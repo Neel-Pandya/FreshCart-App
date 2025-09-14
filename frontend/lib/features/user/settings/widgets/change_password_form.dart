@@ -4,7 +4,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/validators/confirm_password_validator.dart';
-import 'package:frontend/core/widgets/filled_textfield.dart';
+import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 
 class ChangePasswordForm extends StatefulWidget {
@@ -60,7 +60,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          FilledTextfield(
+          FormTextField(
             labelText: 'Old Password',
             hintText: 'Enter your old password',
             prefixIcon: FeatherIcons.lock,
@@ -77,7 +77,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
 
           const SizedBox(height: 15),
 
-          FilledTextfield(
+          FormTextField(
             labelText: 'New Password',
             hintText: 'Enter your new password',
             prefixIcon: FeatherIcons.lock,
@@ -107,7 +107,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
 
           const SizedBox(height: 15),
 
-          FilledTextfield(
+          FormTextField(
             labelText: 'Confirm Password',
             hintText: 'Confirm New Password',
             prefixIcon: FeatherIcons.lock,

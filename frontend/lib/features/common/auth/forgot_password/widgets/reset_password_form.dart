@@ -3,7 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/validators/confirm_password_validator.dart';
-import 'package:frontend/core/widgets/filled_textfield.dart';
+import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/core/routes/auth_routes.dart';
 import 'package:frontend/core/utils/toaster.dart';
@@ -53,7 +53,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          FilledTextfield(
+          FormTextField(
             labelText: 'Password',
             hintText: 'Enter your password',
             prefixIcon: FeatherIcons.lock,
@@ -84,7 +84,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
             ]).call,
           ),
           const SizedBox(height: 20),
-          FilledTextfield(
+          FormTextField(
             labelText: 'Confirm Password',
             hintText: 'Enter your confirm password',
             prefixIcon: FeatherIcons.lock,

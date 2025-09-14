@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 
-class FilledTextfield extends StatefulWidget {
-  const FilledTextfield({
+class FormTextField extends StatefulWidget {
+  const FormTextField({
     super.key,
     this.controller,
     this.onChanged,
@@ -17,6 +17,8 @@ class FilledTextfield extends StatefulWidget {
     this.obscureText = false,
     this.keyboardType,
     this.readonly = false,
+    this.filled = true,
+    this.maxLines = 1,
   });
 
   final TextEditingController? controller;
@@ -31,12 +33,14 @@ class FilledTextfield extends StatefulWidget {
   final bool obscureText;
   final TextInputType? keyboardType;
   final bool? readonly;
+  final bool? filled;
+  final int? maxLines;
 
   @override
-  State<FilledTextfield> createState() => _FilledTextfieldState();
+  State<FormTextField> createState() => _FormTextFieldState();
 }
 
-class _FilledTextfieldState extends State<FilledTextfield> {
+class _FormTextFieldState extends State<FormTextField> {
   late FocusNode _focusNode;
   bool _isFocused = false;
   bool _hasError = false;
@@ -67,8 +71,10 @@ class _FilledTextfieldState extends State<FilledTextfield> {
     return TextFormField(
       controller: widget.controller,
       obscureText: widget.obscureText,
-      keyboardType: widget.keyboardType,
+      keyboardType: widget.keyboardType ?? TextInputType.multiline,
       readOnly: widget.readonly ?? false,
+      minLines: 1,
+      maxLines: widget.maxLines, // <-- multiline support
       validator: (value) {
         final error = widget.validator?.call(value);
         setState(() => _hasError = error != null);
@@ -81,11 +87,9 @@ class _FilledTextfieldState extends State<FilledTextfield> {
         labelStyle: AppTypography.bodyMedium,
         hintText: widget.hintText,
         hintStyle: AppTypography.bodyMedium,
-
         prefixIcon: widget.prefixIcon != null
             ? Icon(widget.prefixIcon, color: _getIconColor(defaultColor: widget.prefixIconColor))
             : null,
-
         suffixIcon: widget.suffixIcon != null
             ? GestureDetector(
                 onTap: widget.onSuffixTap,
@@ -95,12 +99,8 @@ class _FilledTextfieldState extends State<FilledTextfield> {
                 ),
               )
             : null,
-
-        filled: true,
-        fillColor: _isFocused
-            ? AppColors.background
-            : const Color(0xFFE0E0E0).withValues(alpha: 0.35),
-
+        filled: widget.filled ?? true,
+        fillColor: _isFocused ? AppColors.background : const Color(0xFFE0E0E0).withOpacity(0.35),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(color: Color(0xFFCAC4D0), width: 1),

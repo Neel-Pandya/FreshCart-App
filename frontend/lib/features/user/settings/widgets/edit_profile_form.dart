@@ -3,7 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/utils/toaster.dart';
-import 'package:frontend/core/widgets/filled_textfield.dart';
+import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 
 class EditProfileForm extends StatefulWidget {
@@ -92,7 +92,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
 
           const SizedBox(height: 30),
 
-          FilledTextfield(
+          FormTextField(
             prefixIcon: FeatherIcons.user,
             controller: _nameController,
             labelText: 'Name',
@@ -110,7 +110,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
 
           const SizedBox(height: 20),
 
-          FilledTextfield(
+          FormTextField(
             prefixIcon: FeatherIcons.mail,
             controller: _emailController,
             readonly: true,
