@@ -1,0 +1,30 @@
+import 'package:flutter/material.dart';
+import 'package:frontend/core/routes/admin_routes.dart';
+import 'package:frontend/modules/admin/user/data/user_data.dart';
+import 'package:frontend/modules/admin/user/widgets/user_list_item.dart';
+
+class UserScreen extends StatelessWidget {
+  const UserScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(AdminRoutes.addUser);
+        },
+        elevation: 0,
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: ListView.separated(
+          itemCount: userData.length,
+          itemBuilder: (context, index) => UserListItem(user: userData[index]),
+          separatorBuilder: (context, index) => const SizedBox(height: 10),
+        ),
+      ),
+    );
+  }
+}

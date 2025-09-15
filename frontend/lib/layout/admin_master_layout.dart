@@ -5,6 +5,7 @@ import 'package:frontend/core/widgets/drawer_navigation.dart';
 import 'package:frontend/modules/admin/category/screens/category_screen.dart';
 import 'package:frontend/modules/admin/dashboard/screens/dashboard_screen.dart';
 import 'package:frontend/modules/admin/product/screens/products_screen.dart';
+import 'package:frontend/modules/admin/user/screens/user_screen.dart';
 
 class AdminMasterLayout extends ConsumerStatefulWidget {
   const AdminMasterLayout({super.key});
@@ -19,7 +20,7 @@ class _AdminMasterLayoutState extends ConsumerState<AdminMasterLayout> {
     {'title': 'Products', 'widget': ProductsScreen()},
     {'title': 'Orders', 'widget': Placeholder()},
     {'title': 'Categories', 'widget': CategoryScreen()},
-    {'title': 'Users', 'widget': Placeholder()},
+    {'title': 'Users', 'widget': UserScreen()},
     {'title': 'Settings', 'widget': Placeholder()},
   ];
 
