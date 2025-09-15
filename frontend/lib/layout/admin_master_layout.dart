@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/core/providers/drawer_nav_provider.dart';
 import 'package:frontend/core/widgets/drawer_navigation.dart';
-import 'package:frontend/features/admin/category/screens/category_screen.dart';
-import 'package:frontend/features/admin/dashboard/screens/dashboard_screen.dart';
-import 'package:frontend/features/admin/product/screens/products_screen.dart';
+import 'package:frontend/modules/admin/category/screens/category_screen.dart';
+import 'package:frontend/modules/admin/dashboard/screens/dashboard_screen.dart';
+import 'package:frontend/modules/admin/product/screens/products_screen.dart';
 
 class AdminMasterLayout extends ConsumerStatefulWidget {
   const AdminMasterLayout({super.key});
