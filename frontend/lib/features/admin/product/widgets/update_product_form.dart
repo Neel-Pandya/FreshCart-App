@@ -6,7 +6,7 @@ import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/drop_down_field.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
-import 'package:frontend/features/admin/products/models/product.dart';
+import 'package:frontend/features/admin/product/models/product.dart';
 
 class UpdateProductForm extends StatefulWidget {
   const UpdateProductForm({super.key, required this.product});
@@ -63,19 +63,44 @@ class _UpdateProductFormState extends State<UpdateProductForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Center(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                color: AppColors.border,
-              ),
-              height: 100,
-              width: 100,
-              child: widget.product.imageUrl != ''
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.network(widget.product.imageUrl, fit: BoxFit.cover),
-                    )
-                  : const Icon(Icons.camera_alt_outlined, color: AppColors.iconColor, size: 45),
+            child: Stack(
+              alignment: Alignment.bottomRight,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.network(
+                    widget.product.imageUrl,
+                    height: 80,
+                    width: 80,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: InkWell(
+                    onTap: () {},
+                    borderRadius: BorderRadius.circular(100),
+                    child: Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        color: AppColors.background,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.textPrimary.withValues(alpha: 0.25),
+                            blurRadius: 6,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(FeatherIcons.edit2, size: 16, color: AppColors.textPrimary),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
 

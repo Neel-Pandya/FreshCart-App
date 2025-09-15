@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
+import 'package:frontend/core/utils/toaster.dart';
+import 'package:frontend/core/widgets/form_textfield.dart';
+import 'package:frontend/core/widgets/primary_button.dart';
+
+class AddCategoryForm extends StatefulWidget {
+  const AddCategoryForm({super.key});
+
+  @override
+  State<AddCategoryForm> createState() => _AddCategoryFormState();
+}
+
+class _AddCategoryFormState extends State<AddCategoryForm> {
+  late final TextEditingController _categoryNameController;
+  final _formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    super.initState();
+    _categoryNameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _categoryNameController.dispose();
+    _formKey.currentState?.dispose();
+    super.dispose();
+  }
+
+  void _handleAddCategory() {
+    if (!_formKey.currentState!.validate()) return;
+
+    Toaster.showSuccessMessage(context: context, message: 'Category added successfully');
+    // close the form after 2 seconds
+    Future.delayed(const Duration(milliseconds: 2000), () {
+      if (!mounted) return;
+      Navigator.of(context).pop();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          FormTextField(
+            controller: _categoryNameController,
+            labelText: 'Category Name',
+            prefixIcon: Icons.category,
+            filled: false,
+            validator: MultiValidator([
+              RequiredValidator(errorText: 'Category name is required'),
+              MinLengthValidator(3, errorText: 'Category name must be at least 3 characters long'),
+              MaxLengthValidator(
+                100,
+                errorText: 'Category name must be at most 100 characters long',
+              ),
+              PatternValidator(
+                r'^[a-zA-Z0-9 ]+$',
+                errorText: 'Category name must contain only letters, numbers, and spaces',
+              ),
+            ]).call,
+          ),
+          const SizedBox(height: 20),
+          PrimaryButton(text: 'Add Category', onPressed: () => _handleAddCategory()),
+        ],
+      ),
+    );
+  }
+}

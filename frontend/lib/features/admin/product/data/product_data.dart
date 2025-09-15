@@ -1,4 +1,4 @@
-import 'package:frontend/features/admin/products/models/product.dart';
+import 'package:frontend/features/admin/product/models/product.dart';
 
 final productsData = <Product>[
   Product(

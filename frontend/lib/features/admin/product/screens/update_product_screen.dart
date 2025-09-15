@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/features/admin/products/models/product.dart';
-import 'package:frontend/features/admin/products/widgets/update_product_form.dart';
+import 'package:frontend/features/admin/product/models/product.dart';
+import 'package:frontend/features/admin/product/widgets/update_product_form.dart';
 
 class UpdateProductScreen extends StatelessWidget {
   const UpdateProductScreen({super.key, required this.product});
@@ -14,7 +14,7 @@ class UpdateProductScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             child: UpdateProductForm(product: product),
           ),
         ),

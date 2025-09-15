@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/core/providers/drawer_nav_provider.dart';
 import 'package:frontend/core/widgets/drawer_navigation.dart';
+import 'package:frontend/features/admin/category/screens/category_screen.dart';
 import 'package:frontend/features/admin/dashboard/screens/dashboard_screen.dart';
-import 'package:frontend/features/admin/products/screens/products_screen.dart';
+import 'package:frontend/features/admin/product/screens/products_screen.dart';
 
 class AdminMasterLayout extends ConsumerStatefulWidget {
   const AdminMasterLayout({super.key});
@@ -17,7 +18,7 @@ class _AdminMasterLayoutState extends ConsumerState<AdminMasterLayout> {
     {'title': 'Dashboard', 'widget': DashboardScreen()},
     {'title': 'Products', 'widget': ProductsScreen()},
     {'title': 'Orders', 'widget': Placeholder()},
-    {'title': 'Categories', 'widget': Placeholder()},
+    {'title': 'Categories', 'widget': CategoryScreen()},
     {'title': 'Users', 'widget': Placeholder()},
     {'title': 'Settings', 'widget': Placeholder()},
   ];

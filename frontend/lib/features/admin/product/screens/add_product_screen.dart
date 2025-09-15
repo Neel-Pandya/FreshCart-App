@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/features/admin/products/widgets/add_product_form.dart';
+import 'package:frontend/features/admin/product/widgets/add_product_form.dart';
 
 class AddProductScreen extends StatelessWidget {
   const AddProductScreen({super.key});

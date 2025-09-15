@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/features/admin/products/data/product_data.dart';
-import 'package:frontend/features/admin/products/widgets/product_list_item.dart';
+import 'package:frontend/features/admin/product/data/product_data.dart';
+import 'package:frontend/features/admin/product/widgets/product_list_item.dart';
 
 class ProductList extends StatelessWidget {
   const ProductList({super.key});

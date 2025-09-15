@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/admin_routes.dart';
-import 'package:frontend/features/admin/products/widgets/product_list.dart';
+import 'package:frontend/features/admin/product/widgets/product_list.dart';
 
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({super.key});
