@@ -11,6 +11,7 @@ class AdminRoutes {
   static const addProduct = '/admin/addProduct';
   static const addCategory = '/admin/addCategory';
   static const addUser = '/admin/addUser';
+
   static Map<String, WidgetBuilder> routes = {
     master: (context) => const AdminMasterLayout(),
     addProduct: (context) => const AddProductScreen(),

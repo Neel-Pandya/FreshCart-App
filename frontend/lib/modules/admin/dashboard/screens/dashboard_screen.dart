@@ -10,37 +10,39 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              constraints: const BoxConstraints(minHeight: 380, maxHeight: 380),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                constraints: const BoxConstraints(minHeight: 380, maxHeight: 380),
 
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20,
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
+                  ),
+                  itemCount: analyticData.length,
+                  itemBuilder: (ctx, index) => DashboardAnalytics(analytic: analyticData[index]),
                 ),
-                itemCount: analyticData.length,
-                itemBuilder: (ctx, index) => DashboardAnalytics(analytic: analyticData[index]),
               ),
-            ),
 
-            Text(
-              'Recent Orders',
-              style: AppTypography.bodyLargeEmphasized.copyWith(color: AppColors.textPrimary),
-            ),
+              Text(
+                'Recent Orders',
+                style: AppTypography.bodyLargeEmphasized.copyWith(color: AppColors.textPrimary),
+              ),
 
-            const SizedBox(height: 18),
+              const SizedBox(height: 18),
 
-            Text(
-              'No Orders Yet',
-              style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
-            ),
-          ],
+              Text(
+                'No Orders Yet',
+                style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+              ),
+            ],
+          ),
         ),
       ),
     );

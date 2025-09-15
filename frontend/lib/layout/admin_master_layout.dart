@@ -7,6 +7,7 @@ import 'package:frontend/modules/admin/dashboard/screens/dashboard_screen.dart';
 import 'package:frontend/modules/admin/product/screens/products_screen.dart';
 import 'package:frontend/modules/admin/user/screens/user_screen.dart';
 import 'package:frontend/modules/admin/settings/screens/settings_screen.dart';
+import 'package:frontend/modules/admin/orders/screens/orders_screen.dart';
 
 class AdminMasterLayout extends ConsumerStatefulWidget {
   const AdminMasterLayout({super.key});
@@ -19,7 +20,7 @@ class _AdminMasterLayoutState extends ConsumerState<AdminMasterLayout> {
   final List<Map<String, dynamic>> _screens = const [
     {'title': 'Dashboard', 'widget': DashboardScreen()},
     {'title': 'Products', 'widget': ProductsScreen()},
-    {'title': 'Orders', 'widget': Placeholder()},
+    {'title': 'Orders', 'widget': OrdersScreen()},
     {'title': 'Categories', 'widget': CategoryScreen()},
     {'title': 'Users', 'widget': UserScreen()},
     {'title': 'Settings', 'widget': SettingsScreen()},
