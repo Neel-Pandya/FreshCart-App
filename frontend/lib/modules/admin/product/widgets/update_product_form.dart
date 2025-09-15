@@ -6,6 +6,7 @@ import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/drop_down_field.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
+import 'package:frontend/modules/admin/category/data/category_data.dart';
 import 'package:frontend/modules/admin/product/models/product.dart';
 
 class UpdateProductForm extends StatefulWidget {
@@ -146,7 +147,7 @@ class _UpdateProductFormState extends State<UpdateProductForm> {
 
           DropDownField(
             labelText: 'Category',
-            items: ['Vegetable', 'Fruit'],
+            items: categoriesData.map((e) => e.name).toList(),
             initialValue: widget.product.category,
             onChanged: (value) {},
             prefixIcon: Icons.category,
