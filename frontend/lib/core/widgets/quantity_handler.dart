@@ -58,8 +58,8 @@ class _QuantityHandlerState extends State<QuantityHandler> {
           mainAxisSize: MainAxisSize.min,
           children: [
             buildIconButton(
-              icon: FeatherIcons.plus,
-              onTap: increment,
+              icon: FeatherIcons.minus,
+              onTap: decrement,
               backgroundColor: Colors.white,
               iconColor: AppColors.textPrimary,
             ),
@@ -70,8 +70,8 @@ class _QuantityHandlerState extends State<QuantityHandler> {
             ),
             const SizedBox(width: 15),
             buildIconButton(
-              icon: FeatherIcons.minus,
-              onTap: decrement,
+              icon: FeatherIcons.plus,
+              onTap: increment,
               backgroundColor: AppColors.textPrimary,
               iconColor: Colors.white,
             ),
