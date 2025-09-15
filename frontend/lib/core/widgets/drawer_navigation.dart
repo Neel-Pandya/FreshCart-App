@@ -22,20 +22,26 @@ class DrawerNavigation extends ConsumerWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(100),
-                child: Image.asset(
-                  'assets/images/user/common_profile.png',
-                  height: 50,
-                  width: 50,
-                  fit: BoxFit.cover,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+              ref.read(drawerNavigationProvider.notifier).state = 5;
+            },
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.asset(
+                    'assets/images/user/common_profile.png',
+                    height: 50,
+                    width: 50,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 10),
-              Text('Neel Pandya', style: labelStyle),
-            ],
+                const SizedBox(width: 10),
+                Text('Neel Pandya', style: labelStyle),
+              ],
+            ),
           ),
         ),
 
