@@ -47,8 +47,8 @@ class SettingsScreen extends StatelessWidget {
               onPressed: () {
                 final authController = Get.put(AuthController());
                 authController.logout();
-                Toaster.showSuccessMessage(message: 'Logout successfully');
                 Get.back();
+                Toaster.showSuccessMessage(message: 'Logout successfully');
                 Future.delayed(const Duration(seconds: 2), () {
                   final nav = Get.find<BottomNavController>();
                   nav.setIndex(0);

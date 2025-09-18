@@ -71,6 +71,5 @@ class AuthController extends GetxController {
     const storage = FlutterSecureStorage();
     await storage.deleteAll();
     user.value = null;
-    Get.offAllNamed(Routes.onBoarding);
   }
 }
