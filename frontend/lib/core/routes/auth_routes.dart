@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:frontend/modules/common/auth/forgot_password/screens/forgot_password_screen.dart';
 import 'package:frontend/modules/common/auth/forgot_password/screens/forgot_password_verification_screen.dart';
 import 'package:frontend/modules/common/auth/login/screens/login_screen.dart';
@@ -14,12 +14,12 @@ class AuthRoutes {
   static const signUpVerification = '/signupVerification';
   static const resetPassword = '/resetPassword';
 
-  static final routes = <String, WidgetBuilder>{
-    login: (_) => const LoginScreen(),
-    forgotPassword: (_) => const ForgotPasswordScreen(),
-    forgotPasswordVerification: (_) => const ForgotPasswordVerificationScreen(),
-    signUp: (_) => const SignupScreen(),
-    signUpVerification: (_) => const SignupVerificationScreen(),
-    resetPassword: (_) => const ResetPasswordScreen(),
-  };
+  static final routes = [
+    GetPage(name: login, page: () => const LoginScreen()),
+    GetPage(name: forgotPassword, page: () => const ForgotPasswordScreen()),
+    GetPage(name: forgotPasswordVerification, page: () => const ForgotPasswordVerificationScreen()),
+    GetPage(name: signUp, page: () => const SignupScreen()),
+    GetPage(name: signUpVerification, page: () => const SignupVerificationScreen()),
+    GetPage(name: resetPassword, page: () => const ResetPasswordScreen()),
+  ];
 }

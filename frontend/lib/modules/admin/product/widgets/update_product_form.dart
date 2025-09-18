@@ -8,6 +8,7 @@ import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/modules/admin/category/data/category_data.dart';
 import 'package:frontend/modules/admin/product/models/product.dart';
+import 'package:get/get.dart';
 
 class UpdateProductForm extends StatefulWidget {
   const UpdateProductForm({super.key, required this.product});
@@ -52,7 +53,7 @@ class _UpdateProductFormState extends State<UpdateProductForm> {
     // close the form after 1.5 seconds
     Future.delayed(const Duration(milliseconds: 2000), () {
       if (!mounted) return;
-      Navigator.of(context).pop();
+      Get.back();
     });
   }
 

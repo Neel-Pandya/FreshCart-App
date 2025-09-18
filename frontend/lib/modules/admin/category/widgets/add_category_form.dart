@@ -3,6 +3,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
+import 'package:get/get.dart';
 
 class AddCategoryForm extends StatefulWidget {
   const AddCategoryForm({super.key});
@@ -34,7 +35,7 @@ class _AddCategoryFormState extends State<AddCategoryForm> {
     // close the form after 2 seconds
     Future.delayed(const Duration(milliseconds: 2000), () {
       if (!mounted) return;
-      Navigator.of(context).pop();
+      Get.back();
     });
   }
 

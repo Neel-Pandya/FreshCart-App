@@ -3,6 +3,7 @@ import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/modules/admin/orders/models/order.dart';
 import 'package:frontend/modules/admin/orders/screens/view_order_screen.dart';
+import 'package:get/get.dart';
 
 class OrderListItem extends StatelessWidget {
   const OrderListItem({super.key, required this.order, required this.imageUrl});
@@ -13,9 +14,7 @@ class OrderListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        Navigator.of(
-          context,
-        ).push(MaterialPageRoute(builder: (context) => ViewOrderScreen(order: order)));
+        Get.to(() => ViewOrderScreen(order: order));
       },
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(100),

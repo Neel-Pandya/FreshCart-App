@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/validators/confirm_password_validator.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/core/routes/auth_routes.dart';
 import 'package:frontend/core/utils/toaster.dart';
+import 'package:get/get.dart';
 
 class ResetPasswordForm extends StatefulWidget {
   const ResetPasswordForm({super.key});
@@ -32,10 +32,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
       if (!mounted) return;
 
       // Remove all routes except onboarding from the stack and push the login route
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        AuthRoutes.login,
-        (route) => route.settings.name == Routes.onBoarding,
-      );
+      Get.offAllNamed(AuthRoutes.login);
     });
   }
 

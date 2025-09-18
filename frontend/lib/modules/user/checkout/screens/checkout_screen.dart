@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
@@ -9,6 +8,7 @@ import 'package:frontend/modules/user/cart/data/cart_data.dart';
 import 'package:frontend/modules/user/checkout/widgets/checkout_address.dart';
 import 'package:frontend/modules/user/checkout/widgets/payment_method.dart';
 import 'package:frontend/modules/user/checkout/widgets/product_listing.dart';
+import 'package:get/get.dart';
 
 class CheckoutScreen extends StatelessWidget {
   CheckoutScreen({super.key});
@@ -22,10 +22,7 @@ class CheckoutScreen extends StatelessWidget {
     Toaster.showSuccessMessage(context: context, message: 'Checkout successful');
     Future.delayed(const Duration(seconds: 2), () {
       if (!context.mounted) return;
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        UserRoutes.master,
-        (route) => route.settings.name == Routes.onBoarding,
-      );
+      Get.offAllNamed(UserRoutes.master);
     });
   }
 

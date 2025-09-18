@@ -5,6 +5,7 @@ import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/core/utils/toaster.dart';
+import 'package:get/get.dart';
 
 class AddUserForm extends StatefulWidget {
   const AddUserForm({super.key});
@@ -26,7 +27,7 @@ class _AddUserFormState extends State<AddUserForm> {
     // close the form after 2 seconds
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
-      Navigator.of(context).pop();
+      Get.back();
     });
   }
 

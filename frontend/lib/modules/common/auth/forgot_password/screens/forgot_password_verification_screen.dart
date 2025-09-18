@@ -5,6 +5,7 @@ import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:get/get.dart';
 
 class ForgotPasswordVerificationScreen extends StatefulWidget {
   const ForgotPasswordVerificationScreen({super.key});
@@ -30,7 +31,7 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
 
     Toaster.showSuccessMessage(message: 'OTP Submitted: $otp', context: context);
 
-    Navigator.of(context).pushReplacementNamed(AuthRoutes.resetPassword);
+    Get.offNamed(AuthRoutes.resetPassword);
   }
 
   @override

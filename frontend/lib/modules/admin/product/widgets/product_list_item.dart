@@ -5,6 +5,7 @@ import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/modules/admin/product/models/product.dart';
 import 'package:frontend/modules/admin/product/screens/update_product_screen.dart';
+import 'package:get/get.dart';
 
 class ProductListItem extends StatelessWidget {
   const ProductListItem({super.key, required this.product});
@@ -32,7 +33,7 @@ class ProductListItem extends StatelessWidget {
               foregroundColor: AppColors.textSecondary,
               backgroundColor: Colors.transparent,
             ),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Get.back(),
             child: Text(
               'Cancel',
               style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
@@ -44,7 +45,7 @@ class ProductListItem extends StatelessWidget {
               backgroundColor: Colors.transparent,
             ),
             onPressed: () {
-              Navigator.pop(context);
+              Get.back();
               Toaster.showSuccessMessage(context: context, message: 'Product deleted successfully');
             },
             child: Text('Delete', style: AppTypography.bodyMedium.copyWith(color: AppColors.error)),
@@ -84,9 +85,7 @@ class ProductListItem extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.edit_outlined, color: AppColors.primary),
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => UpdateProductScreen(product: product)),
-              );
+              Get.to(() => UpdateProductScreen(product: product));
             },
           ),
           IconButton(

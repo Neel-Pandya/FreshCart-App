@@ -6,6 +6,7 @@ import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/validators/confirm_password_validator.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
+import 'package:get/get.dart';
 
 class ChangePasswordForm extends StatefulWidget {
   const ChangePasswordForm({super.key});
@@ -48,8 +49,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
 
     Future.delayed(const Duration(milliseconds: 1500), () {
       if (!mounted) return;
-
-      Navigator.of(context).pushNamedAndRemoveUntil(Routes.onBoarding, (route) => false);
+      Get.offAllNamed(Routes.onBoarding);
     });
   }
 

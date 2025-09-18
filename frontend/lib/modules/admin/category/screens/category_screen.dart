@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/admin_routes.dart';
 import 'package:frontend/modules/admin/category/data/category_data.dart';
 import 'package:frontend/modules/admin/category/widgets/category_list.dart';
+import 'package:get/get.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({super.key});
@@ -11,7 +12,7 @@ class CategoryScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushNamed(AdminRoutes.addCategory);
+          Get.toNamed(AdminRoutes.addCategory);
         },
         elevation: 0,
         shape: const CircleBorder(),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
+import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     _timer = Timer(
       const Duration(milliseconds: 1500),
-      () => Navigator.of(context).pushReplacementNamed(Routes.onBoarding),
+      () => Get.offNamed(Routes.onBoarding),
     );
   }
 

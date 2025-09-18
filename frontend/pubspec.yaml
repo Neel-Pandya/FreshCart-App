@@ -41,7 +41,9 @@ dependencies:
   form_field_validator: ^1.1.0
   toastification: ^3.0.3
   pin_code_fields: ^8.0.1
-  flutter_riverpod: ^2.6.1
+  dio: ^5.9.0
+  flutter_secure_storage: ^9.2.4
+  get: ^4.7.2
 
 dev_dependencies:
   flutter_test:

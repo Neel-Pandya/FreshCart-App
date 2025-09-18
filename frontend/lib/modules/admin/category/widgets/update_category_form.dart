@@ -4,6 +4,7 @@ import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/modules/admin/category/models/category.dart';
+import 'package:get/get.dart';
 
 class UpdateCategoryForm extends StatefulWidget {
   const UpdateCategoryForm({super.key, required this.category});
@@ -39,7 +40,7 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
     // close the form after 2 seconds
     Future.delayed(const Duration(milliseconds: 2000), () {
       if (!mounted) return;
-      Navigator.of(context).pop();
+      Get.back();
     });
   }
 

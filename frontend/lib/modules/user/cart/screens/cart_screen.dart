@@ -5,6 +5,7 @@ import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/modules/user/cart/data/cart_data.dart';
 import 'package:frontend/modules/user/cart/widgets/cart_item.dart';
+import 'package:get/get.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -40,7 +41,7 @@ class CartScreen extends StatelessWidget {
               child: PrimaryButton(
                 text: 'Checkout',
                 onPressed: () {
-                  Navigator.of(context).pushNamed(UserRoutes.checkout);
+                  Get.toNamed(UserRoutes.checkout);
                 },
               ),
             ),

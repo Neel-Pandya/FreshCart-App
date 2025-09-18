@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/theme/app_theme.dart';
+import 'package:frontend/core/controllers/bottom_nav_controller.dart';
+import 'package:frontend/core/controllers/drawer_nav_controller.dart';
 
 void main() {
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -12,11 +14,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      routes: Routes.routes,
+      getPages: Routes.routes,
       initialRoute: Routes.splash,
+      initialBinding: BindingsBuilder(() {
+        Get.put(BottomNavController(), permanent: true);
+        Get.put(DrawerNavController(), permanent: true);
+      }),
     );
   }
 }

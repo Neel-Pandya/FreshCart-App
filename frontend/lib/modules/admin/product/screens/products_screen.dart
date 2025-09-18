@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/admin_routes.dart';
 import 'package:frontend/modules/admin/product/widgets/product_list.dart';
+import 'package:get/get.dart';
 
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({super.key});
@@ -11,7 +12,7 @@ class ProductsScreen extends StatelessWidget {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).pushNamed(AdminRoutes.addProduct);
+            Get.toNamed(AdminRoutes.addProduct);
           },
           shape: const CircleBorder(),
           elevation: 0,

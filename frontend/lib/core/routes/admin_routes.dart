@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:frontend/modules/admin/category/screens/add_category_screen.dart';
 import 'package:frontend/modules/admin/product/screens/add_product_screen.dart';
 import 'package:frontend/modules/admin/user/screens/add_user_screen.dart';
@@ -12,10 +12,10 @@ class AdminRoutes {
   static const addCategory = '/admin/addCategory';
   static const addUser = '/admin/addUser';
 
-  static Map<String, WidgetBuilder> routes = {
-    master: (context) => const AdminMasterLayout(),
-    addProduct: (context) => const AddProductScreen(),
-    addCategory: (context) => const AddCategoryScreen(),
-    addUser: (context) => const AddUserScreen(),
-  };
+  static final routes = [
+    GetPage(name: master, page: () => const AdminMasterLayout()),
+    GetPage(name: addProduct, page: () => const AddProductScreen()),
+    GetPage(name: addCategory, page: () => const AddCategoryScreen()),
+    GetPage(name: addUser, page: () => const AddUserScreen()),
+  ];
 }

@@ -7,10 +7,14 @@ import 'package:frontend/core/routes/auth_routes.dart';
 import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
+import 'package:frontend/core/utils/api_client.dart';
+import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/core/widgets/secondary_button.dart';
-import 'package:frontend/core/utils/toaster.dart';
+import 'package:frontend/modules/common/auth/common/models/user_model.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -22,23 +26,35 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
+  bool isLoading = false;
 
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
-  void _handleLogin() {
+  void _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
     FocusManager.instance.primaryFocus?.unfocus();
-
-    Toaster.showSuccessMessage(context: context, message: 'Login successful');
-
-    Future.delayed(const Duration(seconds: 2), () {
-      if (!mounted) return;
-
-      Navigator.of(context).pushNamed(
-        _emailController.text == 'admin@gmail.com' ? AdminRoutes.master : UserRoutes.master,
+    try {
+      setState(() => isLoading = true);
+      final response = await apiClient.post(
+        'auth/login',
+        data: {'email': _emailController.text, 'password': _passwordController.text},
       );
-    });
+      final user = UserModel.fromJson(response);
+
+      const FlutterSecureStorage().write(key: 'accessToken', value: user.accessToken);
+      if (!mounted) return;
+      Toaster.showSuccessMessage(context: context, message: 'Login successful');
+
+      Future.delayed(const Duration(seconds: 2), () {
+        if (!mounted) return;
+        Get.offAllNamed(user.role == 1 ? AdminRoutes.master : UserRoutes.master);
+      });
+    } catch (e) {
+      Toaster.showErrorMessage(message: e.toString(), context: context);
+    } finally {
+      setState(() => isLoading = false);
+    }
   }
 
   @override
@@ -110,7 +126,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 10),
           GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed(AuthRoutes.forgotPassword),
+            onTap: () => Get.toNamed(AuthRoutes.forgotPassword),
             child: Text(
               'Forgot Password ?',
               textAlign: TextAlign.end,
@@ -118,7 +134,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           const SizedBox(height: 20),
-          PrimaryButton(text: 'Sign In', onPressed: _handleLogin),
+          PrimaryButton(text: 'Sign In', onPressed: _handleLogin, isLoading: isLoading),
           const SizedBox(height: 10),
           Text(
             'OR',

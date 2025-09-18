@@ -6,6 +6,7 @@ import 'package:frontend/core/widgets/product_card.dart';
 import 'package:frontend/modules/user/products/data/product_data.dart';
 import 'package:frontend/modules/user/products/screens/detailed_product_screen.dart';
 import 'package:frontend/modules/user/products/widgets/filter_sheet.dart';
+import 'package:get/get.dart';
 
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({super.key});
@@ -52,9 +53,7 @@ class ProductsScreen extends StatelessWidget {
                     product: productsData[index],
                     onTap: (product) {
                       FocusManager.instance.primaryFocus?.unfocus();
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => DetailedProductScreen(product: product)),
-                      );
+                      Get.to(() => DetailedProductScreen(product: product));
                     },
                   ),
                 ),

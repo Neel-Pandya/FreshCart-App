@@ -3,9 +3,10 @@ import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 
 class PrimaryButton extends StatelessWidget {
-  const PrimaryButton({super.key, required this.text, this.onPressed});
+  const PrimaryButton({super.key, this.text, this.onPressed, this.isLoading = false});
   final void Function()? onPressed;
-  final String text;
+  final bool isLoading;
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,13 @@ class PrimaryButton extends StatelessWidget {
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
-      child: Text(text, style: AppTypography.titleSmall.copyWith(color: Colors.white)),
+      child: isLoading
+          ? const SizedBox(
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator(color: Colors.white),
+            )
+          : Text(text!, style: AppTypography.titleSmall.copyWith(color: Colors.white)),
     );
   }
 }

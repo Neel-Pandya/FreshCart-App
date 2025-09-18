@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/core/providers/drawer_nav_provider.dart';
+import 'package:get/get.dart';
+import 'package:frontend/core/controllers/drawer_nav_controller.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 
-class DrawerNavigation extends ConsumerWidget {
+class DrawerNavigation extends StatelessWidget {
   const DrawerNavigation({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final labelStyle = AppTypography.labelLargeEmphasized;
-    final selectedIndex = ref.watch(drawerNavigationProvider);
-    return NavigationDrawer(
-      onDestinationSelected: (index) {
-        ref.read(drawerNavigationProvider.notifier).state = index;
-        Navigator.of(context).pop();
-      },
+    final controller = Get.find<DrawerNavController>();
+    return Obx(() => NavigationDrawer(
+          onDestinationSelected: (index) {
+            controller.setIndex(index);
+            Get.back();
+          },
 
-      selectedIndex: selectedIndex,
+          selectedIndex: controller.index.value,
 
-      children: [
+          children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context).pop();
-              ref.read(drawerNavigationProvider.notifier).state = 5;
+              Get.back();
+              controller.setIndex(5);
             },
             child: Row(
               children: [
@@ -77,6 +77,6 @@ class DrawerNavigation extends ConsumerWidget {
           selectedIcon: const Icon(FeatherIcons.settings),
         ),
       ],
-    );
+        ));
   }
 }

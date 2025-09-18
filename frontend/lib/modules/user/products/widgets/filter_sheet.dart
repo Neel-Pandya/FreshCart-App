@@ -4,6 +4,7 @@ import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/drop_down_field.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
+import 'package:get/get.dart';
 
 class FilterSheet extends StatefulWidget {
   const FilterSheet({super.key});
@@ -19,7 +20,7 @@ class _FilterSheetState extends State<FilterSheet> {
 
   void _applyFilters() {
     Toaster.showSuccessMessage(context: context, message: 'Filters applied successfully');
-    Navigator.pop(context);
+    Get.back();
   }
 
   @override

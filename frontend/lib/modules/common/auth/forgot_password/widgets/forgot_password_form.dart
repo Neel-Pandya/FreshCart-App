@@ -6,6 +6,7 @@ import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:frontend/core/routes/auth_routes.dart';
 import 'package:frontend/core/utils/toaster.dart';
+import 'package:get/get.dart';
 
 class ForgotPasswordForm extends StatefulWidget {
   const ForgotPasswordForm({super.key});
@@ -25,8 +26,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
 
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
-
-      Navigator.of(context).pushNamed(AuthRoutes.forgotPasswordVerification);
+      Get.toNamed(AuthRoutes.forgotPasswordVerification);
     });
   }
 

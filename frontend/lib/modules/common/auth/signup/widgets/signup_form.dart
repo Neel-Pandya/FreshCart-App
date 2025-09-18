@@ -9,6 +9,7 @@ import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/core/widgets/secondary_button.dart';
+import 'package:get/get.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
@@ -29,8 +30,7 @@ class _SignupFormState extends State<SignupForm> {
 
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
-
-      Navigator.of(context).pushNamed(AuthRoutes.signUpVerification);
+      Get.toNamed(AuthRoutes.signUpVerification);
     });
   }
 

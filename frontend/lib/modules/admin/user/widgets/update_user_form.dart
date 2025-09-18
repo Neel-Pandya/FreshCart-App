@@ -6,6 +6,7 @@ import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/modules/admin/user/models/user.dart';
+import 'package:get/get.dart';
 
 class UpdateUserForm extends StatefulWidget {
   const UpdateUserForm({super.key, required this.user});
@@ -27,7 +28,7 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
     // close the form after 2 seconds
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
-      Navigator.of(context).pop();
+      Get.back();
     });
   }
 

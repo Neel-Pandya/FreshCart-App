@@ -7,6 +7,7 @@ import 'package:frontend/core/widgets/drop_down_field.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/modules/admin/category/data/category_data.dart';
+import 'package:get/get.dart';
 
 class AddProductForm extends StatefulWidget {
   const AddProductForm({super.key});
@@ -49,7 +50,7 @@ class _AddProductFormState extends State<AddProductForm> {
     // close the form after 1.5 seconds
     Future.delayed(const Duration(milliseconds: 2000), () {
       if (!mounted) return;
-      Navigator.of(context).pop();
+      Get.back();
     });
   }
 

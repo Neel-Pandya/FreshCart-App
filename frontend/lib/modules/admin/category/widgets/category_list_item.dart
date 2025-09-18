@@ -5,6 +5,7 @@ import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/modules/admin/category/models/category.dart';
 import 'package:frontend/modules/admin/category/screens/update_category_screen.dart';
+import 'package:get/get.dart';
 
 class CategoryListItem extends StatelessWidget {
   const CategoryListItem({super.key, required this.category});
@@ -31,7 +32,7 @@ class CategoryListItem extends StatelessWidget {
               foregroundColor: AppColors.textSecondary,
               backgroundColor: Colors.transparent,
             ),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Get.back(),
             child: Text(
               'Cancel',
               style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
@@ -43,7 +44,7 @@ class CategoryListItem extends StatelessWidget {
               backgroundColor: Colors.transparent,
             ),
             onPressed: () {
-              Navigator.pop(context);
+              Get.back();
               Toaster.showSuccessMessage(
                 context: context,
                 message: 'Category deleted successfully',
@@ -75,9 +76,7 @@ class CategoryListItem extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => UpdateCategoryScreen(category: category)),
-              );
+              Get.to(() => UpdateCategoryScreen(category: category));
             },
             icon: const Icon(Icons.edit_outlined, color: AppColors.primary),
           ),

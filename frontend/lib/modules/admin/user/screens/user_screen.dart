@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/admin_routes.dart';
 import 'package:frontend/modules/admin/user/data/user_data.dart';
 import 'package:frontend/modules/admin/user/widgets/user_list_item.dart';
+import 'package:get/get.dart';
 
 class UserScreen extends StatelessWidget {
   const UserScreen({super.key});
@@ -11,7 +12,7 @@ class UserScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushNamed(AdminRoutes.addUser);
+          Get.toNamed(AdminRoutes.addUser);
         },
         elevation: 0,
         shape: const CircleBorder(),

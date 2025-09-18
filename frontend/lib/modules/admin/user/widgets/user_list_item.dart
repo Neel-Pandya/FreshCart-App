@@ -5,6 +5,7 @@ import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/modules/admin/user/models/user.dart';
 import 'package:frontend/modules/admin/user/screens/update_user_screen.dart';
+import 'package:get/get.dart';
 
 class UserListItem extends StatelessWidget {
   const UserListItem({super.key, required this.user});
@@ -31,9 +32,7 @@ class UserListItem extends StatelessWidget {
               foregroundColor: AppColors.textSecondary,
               backgroundColor: Colors.transparent,
             ),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
+            onPressed: () => Get.back(),
             child: Text(
               'Cancel',
               style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
@@ -46,7 +45,7 @@ class UserListItem extends StatelessWidget {
             ),
             onPressed: () {
               Toaster.showSuccessMessage(context: context, message: 'User deleted successfully');
-              Navigator.of(ctx).pop();
+              Get.back();
             },
             child: Text('Delete', style: AppTypography.bodyMedium.copyWith(color: AppColors.error)),
           ),
@@ -78,9 +77,7 @@ class UserListItem extends StatelessWidget {
         children: <IconButton>[
           IconButton(
             onPressed: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (context) => UpdateUserScreen(user: user)));
+              Get.to(() => UpdateUserScreen(user: user));
             },
             icon: const Icon(Icons.edit_outlined, color: AppColors.primary),
           ),
