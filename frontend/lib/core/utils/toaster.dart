@@ -7,12 +7,10 @@ class Toaster {
   static void _showMessage({
     required String title,
     required String message,
-    required BuildContext context,
     required ToastificationType type,
     IconData? icon,
   }) {
     _toastification.show(
-      context: context,
       title: Text(title),
       description: Text(message),
       style: ToastificationStyle.fillColored,
@@ -35,31 +33,17 @@ class Toaster {
 
   static void showSuccessMessage({
     String title = 'Success',
-    required BuildContext context,
     required String message,
     IconData? icon = Icons.check_circle,
   }) {
-    _showMessage(
-      title: title,
-      message: message,
-      context: context,
-      type: ToastificationType.success,
-      icon: icon,
-    );
+    _showMessage(title: title, message: message, type: ToastificationType.success, icon: icon);
   }
 
   static void showErrorMessage({
     String title = 'Error',
-    required BuildContext context,
     required String message,
     IconData? icon = Icons.error,
   }) {
-    _showMessage(
-      title: title,
-      message: message,
-      context: context,
-      type: ToastificationType.error,
-      icon: icon,
-    );
+    _showMessage(title: title, message: message, type: ToastificationType.error, icon: icon);
   }
 }

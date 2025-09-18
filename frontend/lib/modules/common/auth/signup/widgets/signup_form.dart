@@ -9,6 +9,7 @@ import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/core/widgets/secondary_button.dart';
+import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class SignupForm extends StatefulWidget {
@@ -20,17 +21,46 @@ class SignupForm extends StatefulWidget {
 
 class _SignupFormState extends State<SignupForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
 
-  void _handleCreateAccount() {
+  late final AuthController _authController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _authController = Get.put(AuthController(), permanent: false);
+  }
+
+  @override
+  void dispose() {
+    _authController.dispose();
+    super.dispose();
+  }
+
+  void _handleCreateAccount() async {
     if (!_formKey.currentState!.validate()) return;
     FocusManager.instance.primaryFocus?.unfocus();
 
-    Toaster.showSuccessMessage(context: context, message: 'Account created');
+    final result = await _authController.signup(
+      name: _nameController.text,
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+
+    if (!result) {
+      Toaster.showErrorMessage(message: _authController.error.value);
+      return;
+    }
+
+    Toaster.showSuccessMessage(message: _authController.responseMessage.value);
 
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
-      Get.toNamed(AuthRoutes.signUpVerification);
+      Get.toNamed(AuthRoutes.signUpVerification, arguments: _emailController.text);
     });
   }
 
@@ -44,6 +74,7 @@ class _SignupFormState extends State<SignupForm> {
           FormTextField(
             prefixIcon: FeatherIcons.user,
             hintText: 'Enter your name',
+            controller: _nameController,
             labelText: 'Name',
             keyboardType: TextInputType.name,
             validator: MultiValidator([
@@ -61,6 +92,7 @@ class _SignupFormState extends State<SignupForm> {
           FormTextField(
             prefixIcon: FeatherIcons.mail,
             hintText: 'Enter your email',
+            controller: _emailController,
             labelText: 'Email',
             keyboardType: TextInputType.emailAddress,
             validator: MultiValidator([
@@ -75,6 +107,7 @@ class _SignupFormState extends State<SignupForm> {
           FormTextField(
             prefixIcon: FeatherIcons.lock,
             hintText: 'Enter your password',
+            controller: _passwordController,
             labelText: 'Password',
             obscureText: _obscurePassword,
             suffixIcon: _obscurePassword ? FeatherIcons.eye : FeatherIcons.eyeOff,
@@ -105,7 +138,13 @@ class _SignupFormState extends State<SignupForm> {
 
           const SizedBox(height: 20),
 
-          PrimaryButton(text: 'Create Account', onPressed: _handleCreateAccount),
+          Obx(
+            () => PrimaryButton(
+              text: 'Create Account',
+              onPressed: _handleCreateAccount,
+              isLoading: _authController.isLoading.value,
+            ),
+          ),
 
           const SizedBox(height: 10),
 

@@ -24,7 +24,7 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
   void _handleUpdateUser() {
     if (!_formKey.currentState!.validate()) return;
     FocusManager.instance.primaryFocus?.unfocus();
-    Toaster.showSuccessMessage(context: context, message: 'User updated successfully');
+    Toaster.showSuccessMessage(message: 'User updated successfully');
     // close the form after 2 seconds
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;

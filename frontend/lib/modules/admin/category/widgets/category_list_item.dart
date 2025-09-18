@@ -45,10 +45,7 @@ class CategoryListItem extends StatelessWidget {
             ),
             onPressed: () {
               Get.back();
-              Toaster.showSuccessMessage(
-                context: context,
-                message: 'Category deleted successfully',
-              );
+              Toaster.showSuccessMessage(message: 'Category deleted successfully');
             },
             child: Text('Delete', style: AppTypography.bodyMedium.copyWith(color: AppColors.error)),
           ),

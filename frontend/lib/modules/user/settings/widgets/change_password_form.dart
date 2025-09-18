@@ -45,7 +45,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
     if (!_formKey.currentState!.validate()) return;
     FocusManager.instance.primaryFocus?.unfocus();
 
-    Toaster.showSuccessMessage(context: context, message: 'Password changed successfully');
+    Toaster.showSuccessMessage(message: 'Password changed successfully');
 
     Future.delayed(const Duration(milliseconds: 1500), () {
       if (!mounted) return;

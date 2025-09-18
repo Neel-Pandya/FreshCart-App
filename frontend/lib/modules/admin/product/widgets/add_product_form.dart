@@ -46,7 +46,7 @@ class _AddProductFormState extends State<AddProductForm> {
     if (!_formKey.currentState!.validate()) return;
 
     FocusManager.instance.primaryFocus?.unfocus();
-    Toaster.showSuccessMessage(context: context, message: 'Product added successfully');
+    Toaster.showSuccessMessage(message: 'Product added successfully');
     // close the form after 1.5 seconds
     Future.delayed(const Duration(milliseconds: 2000), () {
       if (!mounted) return;

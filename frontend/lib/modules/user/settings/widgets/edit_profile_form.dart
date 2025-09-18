@@ -31,7 +31,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
 
     FocusManager.instance.primaryFocus?.unfocus();
 
-    Toaster.showSuccessMessage(context: context, message: 'Profile updated successfully');
+    Toaster.showSuccessMessage(message: 'Profile updated successfully');
   }
 
   @override

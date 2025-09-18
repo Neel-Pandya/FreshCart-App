@@ -35,7 +35,7 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
   void _handleUpdateCategory() {
     if (!_formKey.currentState!.validate()) return;
 
-    Toaster.showSuccessMessage(context: context, message: 'Category updated successfully');
+    Toaster.showSuccessMessage(message: 'Category updated successfully');
 
     // close the form after 2 seconds
     Future.delayed(const Duration(milliseconds: 2000), () {

@@ -19,7 +19,7 @@ class CheckoutScreen extends StatelessWidget {
     if (!_formKey.currentState!.validate()) return;
 
     FocusManager.instance.primaryFocus?.unfocus();
-    Toaster.showSuccessMessage(context: context, message: 'Checkout successful');
+    Toaster.showSuccessMessage(message: 'Checkout successful');
     Future.delayed(const Duration(seconds: 2), () {
       if (!context.mounted) return;
       Get.offAllNamed(UserRoutes.master);

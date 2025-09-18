@@ -4,6 +4,7 @@ import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
+import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:get/get.dart';
 
@@ -16,28 +17,46 @@ class SignupVerificationScreen extends StatefulWidget {
 
 class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
   final TextEditingController _otpController = TextEditingController();
-
-  void _onSubmit(BuildContext context) {
-    final otp = _otpController.text.trim();
-
-    if (otp.isEmpty) {
-      Toaster.showErrorMessage(message: 'Please enter OTP', context: context);
-      return;
-    }
-    if (otp.length < 6) {
-      Toaster.showErrorMessage(message: 'Enter all 6 digits', context: context);
-      return;
-    }
-
-    Toaster.showSuccessMessage(message: 'OTP Submitted: $otp', context: context);
-
-    Get.offNamed(AuthRoutes.login);
+  late final AuthController _authController;
+  String email = Get.arguments;
+  @override
+  void initState() {
+    super.initState();
+    _authController = Get.put(AuthController(), permanent: false);
   }
 
   @override
   void dispose() {
     _otpController.dispose();
+    _authController.dispose();
     super.dispose();
+  }
+
+  void _onSubmit(BuildContext context) async {
+    final otp = _otpController.text.trim();
+
+    if (otp.isEmpty) {
+      Toaster.showErrorMessage(message: 'Please enter OTP');
+      return;
+    }
+    if (otp.length < 6) {
+      Toaster.showErrorMessage(message: 'Enter all 6 digits');
+      return;
+    }
+
+    final result = await _authController.verifyOtp(email, _otpController.text);
+
+    if (!result) {
+      Toaster.showErrorMessage(message: _authController.error.value);
+      return;
+    }
+
+    Toaster.showSuccessMessage(message: _authController.responseMessage.value);
+
+    Future.delayed(const Duration(seconds: 2), () {
+      if (!mounted) return;
+      Get.offNamed(AuthRoutes.login);
+    });
   }
 
   @override
@@ -125,7 +144,13 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                 const SizedBox(height: 12),
 
                 // ✅ Submit Button
-                PrimaryButton(text: 'Submit', onPressed: () => _onSubmit(context)),
+                Obx(
+                  () => PrimaryButton(
+                    text: 'Submit',
+                    onPressed: () => _onSubmit(context),
+                    isLoading: _authController.isLoading.value,
+                  ),
+                ),
 
                 const SizedBox(height: 5),
 

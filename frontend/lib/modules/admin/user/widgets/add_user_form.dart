@@ -23,7 +23,7 @@ class _AddUserFormState extends State<AddUserForm> {
   void _handleAddUser() {
     if (!_formKey.currentState!.validate()) return;
     FocusManager.instance.primaryFocus?.unfocus();
-    Toaster.showSuccessMessage(context: context, message: 'User added successfully');
+    Toaster.showSuccessMessage(message: 'User added successfully');
     // close the form after 2 seconds
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;

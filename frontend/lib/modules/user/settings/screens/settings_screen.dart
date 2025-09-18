@@ -6,6 +6,7 @@ import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
+import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
 import 'package:frontend/modules/user/settings/widgets/setting_item.dart';
 import 'package:get/get.dart';
 import 'package:frontend/core/controllers/bottom_nav_controller.dart';
@@ -44,7 +45,9 @@ class SettingsScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Toaster.showSuccessMessage(context: context, message: 'Logout successfully');
+                final authController = Get.put(AuthController());
+                authController.logout();
+                Toaster.showSuccessMessage(message: 'Logout successfully');
                 Get.back();
                 Future.delayed(const Duration(seconds: 2), () {
                   final nav = Get.find<BottomNavController>();

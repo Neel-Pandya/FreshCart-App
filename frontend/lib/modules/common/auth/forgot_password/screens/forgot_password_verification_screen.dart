@@ -21,15 +21,15 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
     final otp = _otpController.text.trim();
 
     if (otp.isEmpty) {
-      Toaster.showErrorMessage(message: 'Please enter OTP', context: context);
+      Toaster.showErrorMessage(message: 'Please enter OTP');
       return;
     }
     if (otp.length < 6) {
-      Toaster.showErrorMessage(message: 'Enter all 6 digits', context: context);
+      Toaster.showErrorMessage(message: 'Enter all 6 digits');
       return;
     }
 
-    Toaster.showSuccessMessage(message: 'OTP Submitted: $otp', context: context);
+    Toaster.showSuccessMessage(message: 'OTP Submitted: $otp');
 
     Get.offNamed(AuthRoutes.resetPassword);
   }

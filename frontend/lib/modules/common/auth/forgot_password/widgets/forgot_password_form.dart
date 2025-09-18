@@ -22,7 +22,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
     if (!_formKey.currentState!.validate()) return;
     FocusManager.instance.primaryFocus?.unfocus();
 
-    Toaster.showSuccessMessage(context: context, message: 'Password reset link sent');
+    Toaster.showSuccessMessage(message: 'Password reset link sent');
 
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;

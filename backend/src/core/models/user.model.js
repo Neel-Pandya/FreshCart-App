@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    status: {
+      type: String,
+      default: 'inactive',
+    },
     role: {
       type: Number,
       required: [true, 'Role is required'],

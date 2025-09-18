@@ -46,7 +46,7 @@ class ProductListItem extends StatelessWidget {
             ),
             onPressed: () {
               Get.back();
-              Toaster.showSuccessMessage(context: context, message: 'Product deleted successfully');
+              Toaster.showSuccessMessage(message: 'Product deleted successfully');
             },
             child: Text('Delete', style: AppTypography.bodyMedium.copyWith(color: AppColors.error)),
           ),

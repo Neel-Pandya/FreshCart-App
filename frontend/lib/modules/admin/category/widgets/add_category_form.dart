@@ -31,7 +31,7 @@ class _AddCategoryFormState extends State<AddCategoryForm> {
   void _handleAddCategory() {
     if (!_formKey.currentState!.validate()) return;
 
-    Toaster.showSuccessMessage(context: context, message: 'Category added successfully');
+    Toaster.showSuccessMessage(message: 'Category added successfully');
     // close the form after 2 seconds
     Future.delayed(const Duration(milliseconds: 2000), () {
       if (!mounted) return;

@@ -30,4 +30,18 @@ const loginValidation = z.strictObject({
     .max(16, { error: 'Password must be at most 16 characters long' }),
 });
 
-export { signupValidation, loginValidation };
+const resendOtpValidation = z.strictObject({
+  email: z.email({
+    error: (issue) => (issue.input == undefined ? 'Email is required' : 'Invalid email'),
+  }),
+});
+
+const verifyOtpValidation = z.strictObject({
+  email: z.email({
+    error: (issue) => (issue.input == undefined ? 'Email is required' : 'Invalid email'),
+  }),
+
+  otp: z.string({ error: 'OTP is required' }).nonempty({ error: 'OTP is required' }),
+});
+
+export { signupValidation, loginValidation, resendOtpValidation, verifyOtpValidation };

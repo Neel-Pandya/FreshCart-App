@@ -1,9 +1,13 @@
 import 'dart:async';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
+import 'package:frontend/layout/admin_master_layout.dart';
+import 'package:frontend/layout/user_master_layout.dart';
+import 'package:frontend/modules/common/auth/common/models/user_model.dart';
 import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,14 +19,19 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   late final Timer _timer;
-
   @override
   void initState() {
     super.initState();
-    _timer = Timer(
-      const Duration(milliseconds: 1500),
-      () => Get.offNamed(Routes.onBoarding),
-    );
+    _timer = Timer(const Duration(milliseconds: 1500), () async {
+      const storage = FlutterSecureStorage();
+      final userKey = await storage.read(key: 'user');
+      if (userKey == null) {
+        Get.toNamed(Routes.onBoarding);
+      } else {
+        final user = UserModel.fromJson(jsonDecode(userKey));
+        Get.to(user.role == 1 ? const AdminMasterLayout() : const UserMasterLayout());
+      }
+    });
   }
 
   @override

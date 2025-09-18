@@ -49,7 +49,7 @@ class _UpdateProductFormState extends State<UpdateProductForm> {
     if (!_formKey.currentState!.validate()) return;
 
     FocusManager.instance.primaryFocus?.unfocus();
-    Toaster.showSuccessMessage(context: context, message: 'Product updated successfully');
+    Toaster.showSuccessMessage(message: 'Product updated successfully');
     // close the form after 1.5 seconds
     Future.delayed(const Duration(milliseconds: 2000), () {
       if (!mounted) return;

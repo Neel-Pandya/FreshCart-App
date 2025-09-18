@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClient {
   final Dio _dio;
@@ -6,7 +7,7 @@ class ApiClient {
   ApiClient()
     : _dio = Dio(
         BaseOptions(
-          baseUrl: 'http://192.168.31.231:8000/api/',
+          baseUrl: 'http://172.16.3.19:8000/api/',
           connectTimeout: const Duration(seconds: 15),
           receiveTimeout: const Duration(seconds: 15),
           headers: {'Content-Type': 'application/json'},
@@ -14,7 +15,12 @@ class ApiClient {
       ) {
     _dio.interceptors.add(
       InterceptorsWrapper(
-        onRequest: (options, handler) {
+        onRequest: (options, handler) async {
+          final storage = const FlutterSecureStorage();
+          final accessToken = await storage.read(key: 'accessToken');
+          if (accessToken != null) {
+            options.headers['Authorization'] = 'Bearer $accessToken';
+          }
           return handler.next(options);
         },
         onResponse: (response, handler) {

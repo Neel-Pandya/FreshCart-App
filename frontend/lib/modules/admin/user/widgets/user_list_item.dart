@@ -44,7 +44,7 @@ class UserListItem extends StatelessWidget {
               backgroundColor: Colors.transparent,
             ),
             onPressed: () {
-              Toaster.showSuccessMessage(context: context, message: 'User deleted successfully');
+              Toaster.showSuccessMessage(message: 'User deleted successfully');
               Get.back();
             },
             child: Text('Delete', style: AppTypography.bodyMedium.copyWith(color: AppColors.error)),

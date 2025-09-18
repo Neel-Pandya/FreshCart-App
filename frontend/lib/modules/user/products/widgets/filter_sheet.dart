@@ -19,7 +19,7 @@ class _FilterSheetState extends State<FilterSheet> {
   final _maxPrice = 100;
 
   void _applyFilters() {
-    Toaster.showSuccessMessage(context: context, message: 'Filters applied successfully');
+    Toaster.showSuccessMessage(message: 'Filters applied successfully');
     Get.back();
   }
 
