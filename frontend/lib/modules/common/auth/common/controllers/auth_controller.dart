@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/utils/api_client.dart';
-import 'package:frontend/modules/common/auth/common/models/user_model.dart';
+import 'package:frontend/core/models/user.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +9,7 @@ class AuthController extends GetxController {
   var isLoading = false.obs;
   var error = ''.obs;
   var responseMessage = ''.obs;
-  var user = Rxn<UserModel>();
+  var user = Rxn<User>();
   Future<bool> login({required String email, required String password}) async {
     isLoading.value = true;
     try {
@@ -17,9 +17,9 @@ class AuthController extends GetxController {
         'auth/login',
         data: {'email': email, 'password': password},
       );
-      final user = UserModel.fromJson(response);
+      final user = User.fromJson(response['data']);
       const storage = FlutterSecureStorage();
-      await storage.write(key: 'user', value: jsonEncode(user.toJson()));
+      await storage.write(key: 'user', value: jsonEncode({'data': user.toJson()}));
 
       this.user.value = user;
       responseMessage.value = response['message'];

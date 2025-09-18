@@ -112,8 +112,9 @@ class AuthService {
     if (!existingUser) throw new ApiError(400, 'User not found');
 
     const existingOtp = await Otp.findOne({ userId: existingUser._id });
-    
-    if (existingOtp && existingOtp.expiresAt > new Date()) throw new ApiError(400, 'OTP already sent');
+
+    if (existingOtp && existingOtp.expiresAt > new Date())
+      throw new ApiError(400, 'OTP already sent');
 
     await Otp.deleteOne({ _id: existingOtp?._id });
     await this.sendOtp(existingUser);
@@ -122,4 +123,4 @@ class AuthService {
   }
 }
 
-export default new AuthService(); 
+export default new AuthService();

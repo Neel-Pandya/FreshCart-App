@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:frontend/core/models/product.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/product_card.dart';
@@ -51,7 +52,7 @@ class ProductsScreen extends StatelessWidget {
                   ),
                   itemBuilder: (context, index) => ProductCard(
                     product: productsData[index],
-                    onTap: (product) {
+                    onTap: (Product product) {
                       FocusManager.instance.primaryFocus?.unfocus();
                       Get.to(() => DetailedProductScreen(product: product));
                     },

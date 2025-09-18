@@ -7,7 +7,7 @@ import 'package:frontend/core/widgets/drop_down_field.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/modules/admin/category/data/category_data.dart';
-import 'package:frontend/modules/admin/product/models/product.dart';
+import 'package:frontend/core/models/admin_product.dart';
 import 'package:get/get.dart';
 
 class UpdateProductForm extends StatefulWidget {

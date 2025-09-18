@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
-import 'package:frontend/modules/admin/product/models/product.dart';
+import 'package:frontend/core/models/admin_product.dart';
 
 class ViewOrderItem extends StatelessWidget {
   const ViewOrderItem({super.key, required this.product});

@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:frontend/core/models/user.dart';
 
 class ApiClient {
   final Dio _dio;
@@ -7,7 +9,7 @@ class ApiClient {
   ApiClient()
     : _dio = Dio(
         BaseOptions(
-          baseUrl: 'http://172.16.3.19:8000/api/',
+          baseUrl: 'http://192.168.31.231:8000/api/',
           connectTimeout: const Duration(seconds: 15),
           receiveTimeout: const Duration(seconds: 15),
           headers: {'Content-Type': 'application/json'},
@@ -17,9 +19,22 @@ class ApiClient {
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           final storage = const FlutterSecureStorage();
-          final accessToken = await storage.read(key: 'accessToken');
-          if (accessToken != null) {
-            options.headers['Authorization'] = 'Bearer $accessToken';
+          final stored = await storage.read(key: 'user');
+          if (stored != null) {
+            final decoded = jsonDecode(stored);
+
+            final Map<String, dynamic> payload = decoded is Map<String, dynamic>
+                ? (decoded['data'] is Map<String, dynamic>
+                      ? decoded['data'] as Map<String, dynamic>
+                      : decoded)
+                : <String, dynamic>{};
+
+            if (payload.isNotEmpty) {
+              final user = User.fromJson(payload);
+              if (user.accessToken.isNotEmpty) {
+                options.headers['Authorization'] = 'Bearer ${user.accessToken}';
+              }
+            }
           }
           return handler.next(options);
         },
@@ -70,9 +85,9 @@ class ApiClient {
   }
 
   // -------------------- DELETE --------------------
-  Future<Map<String, dynamic>> delete(String path) async {
+  Future<Map<String, dynamic>> delete(String path, {dynamic data}) async {
     try {
-      final response = await _dio.delete(path);
+      final response = await _dio.delete(path, data: data);
       return response.data as Map<String, dynamic>;
     } on DioException catch (e) {
       throw _handleDioError(e);
@@ -88,8 +103,23 @@ class ApiClient {
         e.type == DioExceptionType.sendTimeout) {
       return 'Server is not responding. Please try again later.';
     } else if (e.response != null && e.response?.data != null) {
-      // Server responded with an error
-      return e.response?.data['message'] ?? 'Server error: ${e.response?.statusCode}';
+      final data = e.response?.data;
+
+      if (data is Map<String, dynamic>) {
+        // Typical JSON error
+        if (data.containsKey('message')) {
+          return data['message']?.toString() ?? 'Unknown server error';
+        }
+        // If backend uses "error" instead of "message"
+        if (data.containsKey('error')) {
+          return data['error']?.toString() ?? 'Unknown server error';
+        }
+        return 'Server error: ${e.response?.statusCode}';
+      } else if (data is String) {
+        // Raw string (HTML / plain text response)
+        return data;
+      }
+      return 'Unexpected server response';
     } else if (e.type == DioExceptionType.unknown) {
       return 'No Internet connection. Please check your network.';
     } else {

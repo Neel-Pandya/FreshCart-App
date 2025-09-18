@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
-import 'package:frontend/modules/admin/orders/models/order.dart';
+import 'package:frontend/core/models/admin_order.dart';
 import 'package:frontend/modules/admin/orders/widgets/view_order_item.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

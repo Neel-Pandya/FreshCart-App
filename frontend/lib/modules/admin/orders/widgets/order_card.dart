@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
-import 'package:frontend/modules/user/orders/models/order.dart';
+import 'package:frontend/core/models/order.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({super.key, required this.order});

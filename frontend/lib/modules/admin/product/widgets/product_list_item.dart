@@ -3,7 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
-import 'package:frontend/modules/admin/product/models/product.dart';
+import 'package:frontend/core/models/admin_product.dart';
 import 'package:frontend/modules/admin/product/screens/update_product_screen.dart';
 import 'package:get/get.dart';
 

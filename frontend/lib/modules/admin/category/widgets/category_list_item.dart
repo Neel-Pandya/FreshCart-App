@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
-import 'package:frontend/core/utils/toaster.dart';
-import 'package:frontend/modules/admin/category/models/category.dart';
 import 'package:frontend/modules/admin/category/screens/update_category_screen.dart';
+import 'package:frontend/core/models/category.dart';
 import 'package:get/get.dart';
 
 class CategoryListItem extends StatelessWidget {
-  const CategoryListItem({super.key, required this.category});
+  const CategoryListItem({super.key, required this.category, required this.onDelete});
   final Category category;
+  final Future<void> Function() onDelete;
 
   void _handleDeleteCategory(BuildContext context) {
     showDialog(
@@ -43,9 +43,9 @@ class CategoryListItem extends StatelessWidget {
               foregroundColor: AppColors.error,
               backgroundColor: Colors.transparent,
             ),
-            onPressed: () {
+            onPressed: () async {
+              await onDelete();
               Get.back();
-              Toaster.showSuccessMessage(message: 'Category deleted successfully');
             },
             child: Text('Delete', style: AppTypography.bodyMedium.copyWith(color: AppColors.error)),
           ),

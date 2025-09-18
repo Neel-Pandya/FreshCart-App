@@ -1,5 +1,5 @@
-import 'package:frontend/modules/admin/orders/models/order.dart';
-import 'package:frontend/modules/admin/product/models/product.dart';
+import 'package:frontend/core/models/admin_order.dart';
+import 'package:frontend/core/models/admin_product.dart';
 
 final orderData = <Order>[
   Order(

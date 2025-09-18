@@ -4,7 +4,7 @@ import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/primary_button_with_icon.dart';
 import 'package:frontend/core/widgets/quantity_handler.dart';
-import 'package:frontend/modules/user/products/models/product.dart';
+import 'package:frontend/core/models/product.dart';
 
 class DetailedProductScreen extends StatelessWidget {
   const DetailedProductScreen({super.key, required this.product});

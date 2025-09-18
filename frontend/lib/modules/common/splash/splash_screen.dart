@@ -7,7 +7,7 @@ import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/layout/admin_master_layout.dart';
 import 'package:frontend/layout/user_master_layout.dart';
-import 'package:frontend/modules/common/auth/common/models/user_model.dart';
+import 'package:frontend/core/models/user.dart';
 import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (userKey == null) {
         Get.toNamed(Routes.onBoarding);
       } else {
-        final user = UserModel.fromJson(jsonDecode(userKey));
+        final user = User.fromJson(jsonDecode(userKey)['data']);
         Get.to(user.role == 1 ? const AdminMasterLayout() : const UserMasterLayout());
       }
     });

@@ -1,6 +1,6 @@
-import 'package:frontend/modules/user/orders/models/order.dart';
+import 'package:frontend/core/models/order.dart';
 
-final orderData = <Order>[
+final orderData = const <Order>[
   Order(
     id: '1',
     userId: '2',

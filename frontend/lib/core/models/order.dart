@@ -9,7 +9,7 @@ class Order {
 
   double get subTotal => quantity * productAmount;
 
-  Order({
+  const Order({
     required this.id,
     required this.userId,
     this.status,
