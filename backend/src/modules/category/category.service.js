@@ -2,8 +2,7 @@ import Category from "./category.model.js";
 
 class CategoryService {
     async addCategory(name) {
-        const existingCategory = Category.find({$where: {name: name}})
-        console.log(existingCategory);
+        const existingCategory = Category.find({$where: {name: name}});
         if (existingCategory.length > 0) {
             throw new Error("Category already exists");
         }

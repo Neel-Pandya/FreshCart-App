@@ -44,4 +44,22 @@ const verifyOtpValidation = z.strictObject({
   otp: z.string({ error: 'OTP is required' }).nonempty({ error: 'OTP is required' }),
 });
 
-export { signupValidation, loginValidation, resendOtpValidation, verifyOtpValidation };
+const forgotPasswordValidation = z.strictObject({
+  email: z.email({
+    error: (issue) => (issue.input == undefined ? 'Email is required' : 'Invalid email'),
+  }),
+});
+
+const resetPasswordValidation = z.strictObject({
+  email: z.email({
+    error: (issue) => (issue.input == undefined ? 'Email is required' : 'Invalid email'),
+  }),
+  password: z
+    .string({ error: 'Password is required' })
+    .nonempty({ error: 'Password is required' })
+    .trim()
+    .min(8, { error: 'Password must be at least 8 characters long' })
+    .max(16, { error: 'Password must be at most 16 characters long' }),
+})
+
+export { signupValidation, loginValidation, resendOtpValidation, verifyOtpValidation, forgotPasswordValidation, resetPasswordValidation };

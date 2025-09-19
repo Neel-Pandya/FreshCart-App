@@ -3,6 +3,7 @@ import Otp from '../../core/models/otp.model.js';
 import ApiError from '../../core/utils/api_error.util.js';
 import nodemailer from 'nodemailer';
 import EnvConfig from '../../core/config/env.config.js';
+import bcrypt from 'bcryptjs';
 
 class AuthService {
   async signup(data) {
@@ -120,6 +121,27 @@ class AuthService {
     await this.sendOtp(existingUser);
 
     return { message: 'OTP sent to your email. Please verify.' };
+  }
+
+  async forgotPassword(email) {
+    const existingUser = await User.findOne({ email });
+
+    if (!existingUser) throw new ApiError(400, 'User not found');
+
+    await this.sendOtp(existingUser);
+
+    return { message: 'OTP sent to your email. Please verify.' };
+  }
+
+  async resetPassword(email, password) {
+    const existingUser = await User.findOne({ email });
+
+    if (!existingUser) throw new ApiError(400, 'User not found');
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.findByIdAndUpdate(existingUser._id, { password: hashedPassword }, { new: true });
+    return { user };
   }
 }
 

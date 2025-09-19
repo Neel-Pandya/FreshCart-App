@@ -6,6 +6,7 @@ import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/core/routes/auth_routes.dart';
 import 'package:frontend/core/utils/toaster.dart';
+import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class ResetPasswordForm extends StatefulWidget {
@@ -21,12 +22,20 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
   final _confirmPasswordController = TextEditingController();
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+  final AuthController _authController = Get.find<AuthController>();
+  final _email = Get.arguments as String;
 
-  void _handleSubmit() {
+  void _handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
     FocusManager.instance.primaryFocus?.unfocus();
 
-    Toaster.showSuccessMessage(message: 'Password Reset successful');
+    final result = await _authController.resetPassword(_email, _passwordController.text);
+    if (!result) {
+      Toaster.showErrorMessage(message: _authController.error.value);
+      return;
+    }
+
+    Toaster.showSuccessMessage(message: _authController.responseMessage.value);
 
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
@@ -115,7 +124,13 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
             ]).call,
           ),
           const SizedBox(height: 20),
-          PrimaryButton(text: 'Submit', onPressed: _handleSubmit),
+          Obx(
+            () => PrimaryButton(
+              text: 'Submit',
+              onPressed: _handleSubmit,
+              isLoading: _authController.isLoading.value,
+            ),
+          ),
         ],
       ),
     );

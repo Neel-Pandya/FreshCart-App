@@ -6,7 +6,7 @@ import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/drop_down_field.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
-import 'package:frontend/modules/admin/category/data/category_data.dart';
+import 'package:frontend/modules/admin/category/controllers/category_controller.dart';
 import 'package:get/get.dart';
 
 class AddProductForm extends StatefulWidget {
@@ -22,6 +22,8 @@ class _AddProductFormState extends State<AddProductForm> {
       _priceController,
       _stockController,
       _descriptionController;
+  late final CategoryController _categoryController;
+  String? _selectedCategoryName;
 
   @override
   void initState() {
@@ -30,6 +32,15 @@ class _AddProductFormState extends State<AddProductForm> {
     _priceController = TextEditingController();
     _stockController = TextEditingController();
     _descriptionController = TextEditingController();
+
+    // Ensure CategoryController is available and fetch categories
+    _categoryController = Get.isRegistered<CategoryController>()
+        ? Get.find<CategoryController>()
+        : Get.put(CategoryController());
+    // Kick off fetch if not already loaded
+    if (_categoryController.categoryList.isEmpty) {
+      _categoryController.fetchcategoryList();
+    }
   }
 
   @override
@@ -113,14 +124,29 @@ class _AddProductFormState extends State<AddProductForm> {
 
           const SizedBox(height: 15),
 
-          DropDownField(
-            labelText: 'Category',
-            items: categoriesData.map((e) => e.name).toList(),
-            initialValue: categoriesData.first.name,
-            onChanged: (value) {},
-            prefixIcon: Icons.category,
-            validator: RequiredValidator(errorText: 'Category is required').call,
-          ),
+          Obx(() {
+            if (_categoryController.isLoading.value && _categoryController.categoryList.isEmpty) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if (_categoryController.categoryList.isEmpty) {
+              return const Center(child: Text('No categories found'));
+            }
+
+            final names = _categoryController.categoryList.map((e) => e.name).toList();
+            final initial = _selectedCategoryName ?? names.first;
+
+            return DropDownField(
+              labelText: 'Category',
+              items: names,
+              initialValue: initial,
+              onChanged: (value) {
+                setState(() => _selectedCategoryName = value);
+              },
+              prefixIcon: Icons.category,
+              validator: RequiredValidator(errorText: 'Category is required').call,
+            );
+          }),
 
           const SizedBox(height: 15),
 

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:frontend/core/routes/app_routes.dart';
+import 'dart:core';
 import 'package:frontend/core/utils/api_client.dart';
 import 'package:frontend/core/models/user.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -64,6 +64,48 @@ class AuthController extends GetxController {
       return false;
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<bool> forgotPassword(String email) async {
+    try {
+      isLoading.value = true;
+      final response = await apiClient.post('auth/forgot-password', data: {'email': email});
+      responseMessage.value = response['message'];
+      return true;
+    } catch (e) {
+      error.value = e.toString();
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<bool> resetPassword(String email, String password) async {
+    isLoading.value = true;
+    try {
+      final response = await apiClient.post(
+        'auth/reset-password',
+        data: {'email': email, 'password': password},
+      );
+      responseMessage.value = response['message'];
+      return true;
+    } catch (e) {
+      error.value = e.toString();
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<bool> resendOtp(String email) async {
+    try {
+      final response = await apiClient.post('auth/resend-otp', data: {'email': email});
+      responseMessage.value = response['message'];
+      return true;
+    } catch (e) {
+      error.value = e.toString();
+      return false;
     }
   }
 

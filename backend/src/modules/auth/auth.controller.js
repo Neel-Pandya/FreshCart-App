@@ -46,4 +46,18 @@ const verifyOtp = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, 'OTP verified successfully.'));
 });
 
-export { signup, login, resendOtp, verifyOtp };
+const forgotPassword = asyncHandler(async (req, res) => {
+    const { email } = req.body;
+    await AuthService.forgotPassword(email);
+
+    return res.status(200).json(new ApiResponse(200, 'OTP sent to your email. Please verify.'));
+})
+
+const resetPassword = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+    await AuthService.resetPassword(email, password);
+
+    return res.status(200).json(new ApiResponse(200, 'Password reset successfully.'));
+})
+
+export { signup, login, resendOtp, verifyOtp, forgotPassword, resetPassword };

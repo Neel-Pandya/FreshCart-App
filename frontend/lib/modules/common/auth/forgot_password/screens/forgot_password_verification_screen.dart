@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/auth_routes.dart';
+import 'package:frontend/core/utils/api_client.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
+import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:get/get.dart';
 
@@ -16,8 +18,11 @@ class ForgotPasswordVerificationScreen extends StatefulWidget {
 
 class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerificationScreen> {
   final TextEditingController _otpController = TextEditingController();
+  final _email = Get.arguments as String;
 
-  void _onSubmit(BuildContext context) {
+  final AuthController _authController = Get.find<AuthController>();
+
+  void _onSubmit(BuildContext context) async {
     final otp = _otpController.text.trim();
 
     if (otp.isEmpty) {
@@ -29,9 +34,27 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
       return;
     }
 
-    Toaster.showSuccessMessage(message: 'OTP Submitted: $otp');
+    final result = await _authController.verifyOtp(_email, otp);
+    if (!result) {
+      Toaster.showErrorMessage(message: _authController.error.value);
+      return;
+    }
 
-    Get.offNamed(AuthRoutes.resetPassword);
+    Toaster.showSuccessMessage(message: _authController.responseMessage.value);
+    Future.delayed(const Duration(seconds: 2), () {
+      if (!mounted) return;
+      Get.offNamed(AuthRoutes.resetPassword, arguments: _email);
+    });
+  }
+
+  void _handleResendOtp() async {
+    final result = await _authController.resendOtp(_email);
+    if (!result) {
+      Toaster.showErrorMessage(message: _authController.error.value);
+      return;
+    }
+
+    Toaster.showSuccessMessage(message: _authController.responseMessage.value);
   }
 
   @override
@@ -86,7 +109,7 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  'neelpandya2601@gmail.com',
+                  _email,
                   textAlign: TextAlign.center,
                   style: AppTypography.bodyMedium.copyWith(color: AppColors.textPrimary),
                 ),
@@ -125,7 +148,13 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
                 const SizedBox(height: 12),
 
                 // ✅ Submit Button
-                PrimaryButton(text: 'Submit', onPressed: () => _onSubmit(context)),
+                Obx(
+                  () => PrimaryButton(
+                    text: 'Submit',
+                    onPressed: () => _onSubmit(context),
+                    isLoading: _authController.isLoading.value,
+                  ),
+                ),
 
                 const SizedBox(height: 5),
 
@@ -133,9 +162,12 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("Didn't receive the code ? "),
-                    Text(
-                      'Resend',
-                      style: AppTypography.bodyMedium.copyWith(color: AppColors.primary),
+                    GestureDetector(
+                      onTap: _handleResendOtp,
+                      child: Text(
+                        'Resend',
+                        style: AppTypography.bodyMedium.copyWith(color: AppColors.primary),
+                      ),
                     ),
                   ],
                 ),

@@ -9,7 +9,7 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(CategoryController());
+    Get.put(CategoryController());
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -19,15 +19,8 @@ class CategoryScreen extends StatelessWidget {
         shape: const CircleBorder(),
         child: const Icon(Icons.add),
       ),
-      body: SafeArea(
-        child: Obx(
-          () => Padding(
-            padding: const EdgeInsets.all(20),
-            child: controller.categoryList.isNotEmpty
-                ? const CategoryList()
-                : const Center(child: Text('No categories found')),
-          ),
-        ),
+      body: const SafeArea(
+        child: Padding(padding: EdgeInsets.all(20), child: CategoryList()),
       ),
     );
   }

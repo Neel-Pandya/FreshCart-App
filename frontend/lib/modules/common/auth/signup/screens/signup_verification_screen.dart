@@ -32,6 +32,16 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
     super.dispose();
   }
 
+  void _handleResetOtp() async {
+    final result = await _authController.resendOtp(email);
+    if (!result) {
+      Toaster.showErrorMessage(message: _authController.error.value);
+      return;
+    }
+
+    Toaster.showSuccessMessage(message: _authController.responseMessage.value);
+  }
+
   void _onSubmit(BuildContext context) async {
     final otp = _otpController.text.trim();
 
@@ -105,7 +115,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  'neelpandya2601@gmail.com',
+                  email,
                   textAlign: TextAlign.center,
                   style: AppTypography.bodyMedium.copyWith(color: AppColors.textPrimary),
                 ),
@@ -158,9 +168,12 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("Didn't receive the code ? "),
-                    Text(
-                      'Resend',
-                      style: AppTypography.bodyMedium.copyWith(color: AppColors.primary),
+                    GestureDetector(
+                      onTap: _handleResetOtp,
+                      child: Text(
+                        'Resend',
+                        style: AppTypography.bodyMedium.copyWith(color: AppColors.primary),
+                      ),
                     ),
                   ],
                 ),
