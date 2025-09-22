@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/modules/common/auth/signup/widgets/signup_form.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
 
-  Widget _buildTitle() {
+  Widget _buildTitle(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Create Account',
-          style: AppTypography.titleLargeEmphasized.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.titleLargeEmphasized.copyWith(
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
         ),
         const SizedBox(height: 2),
         Text(
           'Start learning with create your account',
-          style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+          style: AppTypography.bodyMedium.copyWith(
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+          ),
         ),
       ],
     );
@@ -32,7 +35,7 @@ class SignupScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [_buildTitle(), const SizedBox(height: 32), const SignupForm()],
+              children: [_buildTitle(context), const SizedBox(height: 32), const SignupForm()],
             ),
           ),
         ),

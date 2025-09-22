@@ -27,15 +27,23 @@ class SettingItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         side: const BorderSide(color: AppColors.border, width: 1.25),
       ),
-      tileColor: Colors.white,
-      leading: Icon(icon, color: iconColor ?? AppColors.iconColor),
+      tileColor: Theme.of(context).colorScheme.surface,
+      leading: Icon(
+        icon,
+        color: iconColor ?? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+      ),
       title: Text(
         title,
-        style: AppTypography.bodyMedium.copyWith(color: titleColor ?? AppColors.textSecondary),
+        style: AppTypography.bodyMedium.copyWith(
+          color: titleColor ?? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+        ),
       ),
       onTap: onTap ?? () {},
       trailing: trailingIcon != null
-          ? Icon(trailingIcon, color: iconColor ?? AppColors.iconColor)
+          ? Icon(
+              trailingIcon,
+              color: iconColor ?? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+            )
           : null,
     );
   }

@@ -11,7 +11,7 @@ class FormTextField extends StatefulWidget {
     this.labelText,
     this.hintText,
     this.prefixIcon,
-    this.prefixIconColor = AppColors.iconColor,
+    this.prefixIconColor,
     this.suffixIcon,
     this.onSuffixTap,
     this.obscureText = false,
@@ -27,7 +27,7 @@ class FormTextField extends StatefulWidget {
   final String? labelText;
   final String? hintText;
   final IconData? prefixIcon;
-  final Color prefixIconColor;
+  final Color? prefixIconColor;
   final IconData? suffixIcon;
   final VoidCallback? onSuffixTap;
   final bool obscureText;
@@ -61,7 +61,7 @@ class _FormTextFieldState extends State<FormTextField> {
   }
 
   Color _getIconColor({required Color defaultColor}) {
-    if (_hasError) return AppColors.error;
+    if (_hasError) return Theme.of(context).colorScheme.error;
     if (_isFocused) return AppColors.primary;
     return defaultColor;
   }
@@ -88,36 +88,41 @@ class _FormTextFieldState extends State<FormTextField> {
         hintText: widget.hintText,
         hintStyle: AppTypography.bodyMedium,
         prefixIcon: widget.prefixIcon != null
-            ? Icon(widget.prefixIcon, color: _getIconColor(defaultColor: widget.prefixIconColor))
+            ? Icon(
+                widget.prefixIcon,
+                color: _getIconColor(
+                  defaultColor: widget.prefixIconColor ?? Theme.of(context).colorScheme.onSurface,
+                ),
+              )
             : null,
         suffixIcon: widget.suffixIcon != null
             ? GestureDetector(
                 onTap: widget.onSuffixTap,
                 child: Icon(
                   widget.suffixIcon,
-                  color: _getIconColor(defaultColor: AppColors.iconColor),
+                  color: _getIconColor(defaultColor: Theme.of(context).colorScheme.onSurface),
                 ),
               )
             : null,
         filled: widget.filled ?? true,
         fillColor: _isFocused
-            ? AppColors.background
-            : const Color(0xFFE0E0E0).withValues(alpha: 0.35),
+            ? Theme.of(context).colorScheme.surface
+            : Theme.of(context).colorScheme.surface.withAlpha(235),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFFCAC4D0), width: 1),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1.5),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: AppColors.error, width: 1),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.error, width: 1),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: AppColors.error, width: 1.5),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.error, width: 1.5),
         ),
       ),
     );

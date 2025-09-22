@@ -22,13 +22,12 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
   @override
   void initState() {
     super.initState();
-    _authController = Get.put(AuthController(), permanent: false);
+    _authController = Get.find<AuthController>();
   }
 
   @override
   void dispose() {
     _otpController.dispose();
-    _authController.dispose();
     super.dispose();
   }
 
@@ -75,7 +74,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
       appBar: AppBar(
         title: Text(
           'Verification',
-          style: AppTypography.titleLarge.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
         centerTitle: true,
       ),
@@ -105,19 +104,25 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                 Text(
                   'Verification Code',
                   textAlign: TextAlign.center,
-                  style: AppTypography.titleMediumEmphasized.copyWith(color: AppColors.textPrimary),
+                  style: AppTypography.titleMediumEmphasized.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
                 const SizedBox(height: 5),
                 Text(
                   'We have sent the code verification to',
                   textAlign: TextAlign.center,
-                  style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                  ),
                 ),
                 const SizedBox(height: 5),
                 Text(
                   email,
                   textAlign: TextAlign.center,
-                  style: AppTypography.bodyMedium.copyWith(color: AppColors.textPrimary),
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
 
                 const SizedBox(height: 22),
@@ -132,7 +137,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                   enableActiveFill: true,
                   autoDisposeControllers: false,
                   textStyle: AppTypography.titleMediumEmphasized.copyWith(
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                   pinTheme: PinTheme(
                     shape: PinCodeFieldShape.box,

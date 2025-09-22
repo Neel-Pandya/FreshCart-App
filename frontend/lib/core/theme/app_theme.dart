@@ -12,4 +12,11 @@ final class AppTheme {
     textTheme: textTheme,
     colorScheme: AppColorSchemes.lightColorScheme,
   );
+
+  static final darkTheme = ThemeData(
+    useMaterial3: true,
+    brightness: Brightness.dark,
+    textTheme: textTheme.apply(bodyColor: Colors.white, displayColor: Colors.white),
+    colorScheme: AppColorSchemes.darkColorScheme,
+  );
 }

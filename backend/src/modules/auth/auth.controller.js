@@ -3,16 +3,9 @@ import AuthService from './auth.service.js';
 import ApiResponse from '../../core/utils/api_response.util.js';
 
 const signup = asyncHandler(async (req, res) => {
-  await AuthService.signup(req.body);
+  const { message } = await AuthService.signup(req.body);
 
-  return res
-    .status(201)
-    .json(
-      new ApiResponse(
-        201,
-        'Account registered please verify the otp sent to your email to activate your account'
-      )
-    );
+  return res.status(201).json(new ApiResponse(201, message));
 });
 
 const login = asyncHandler(async (req, res) => {
@@ -34,9 +27,9 @@ const login = asyncHandler(async (req, res) => {
 
 const resendOtp = asyncHandler(async (req, res) => {
   const { email } = req.body;
-  await AuthService.resendOtp(email);
+  const { message } = await AuthService.resendOtp(email);
 
-  return res.status(200).json(new ApiResponse(200, 'OTP sent to your email. Please verify.'));
+  return res.status(200).json(new ApiResponse(200, message));
 });
 
 const verifyOtp = asyncHandler(async (req, res) => {
@@ -47,17 +40,26 @@ const verifyOtp = asyncHandler(async (req, res) => {
 });
 
 const forgotPassword = asyncHandler(async (req, res) => {
-    const { email } = req.body;
-    await AuthService.forgotPassword(email);
+  const { email } = req.body;
+  const { message } = await AuthService.forgotPassword(email);
 
-    return res.status(200).json(new ApiResponse(200, 'OTP sent to your email. Please verify.'));
-})
+  return res.status(200).json(new ApiResponse(200, message));
+});
 
 const resetPassword = asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
-    await AuthService.resetPassword(email, password);
+  const { email, password } = req.body;
+  await AuthService.resetPassword(email, password);
 
-    return res.status(200).json(new ApiResponse(200, 'Password reset successfully.'));
-})
+  return res.status(200).json(new ApiResponse(200, 'Password reset successfully.'));
+});
 
-export { signup, login, resendOtp, verifyOtp, forgotPassword, resetPassword };
+const changePassword = asyncHandler(async (req, res) => {
+  const { user } = req;
+  const { oldPassword, newPassword } = req.body;
+
+  await AuthService.changePassword(user.email, oldPassword, newPassword);
+
+  return res.status(200).json(new ApiResponse(200, 'Password changed successfully.'));
+});
+
+export { signup, login, resendOtp, verifyOtp, forgotPassword, resetPassword, changePassword };

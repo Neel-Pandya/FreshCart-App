@@ -15,40 +15,51 @@ class ProductListItem extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        icon: const Icon(Icons.warning_amber_outlined, color: AppColors.error, size: 40),
+        icon: Icon(
+          Icons.warning_amber_outlined,
+          color: Theme.of(context).colorScheme.error,
+          size: 40,
+        ),
         title: Text(
           'Delete Product',
-          style: AppTypography.titleLarge.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
           textAlign: TextAlign.center,
         ),
         content: Text(
           'Are you sure you want to delete this product?',
           textAlign: TextAlign.center,
-          style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+          style: AppTypography.bodyMedium.copyWith(
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+          ),
         ),
         actionsAlignment: MainAxisAlignment.spaceEvenly,
         actions: [
           TextButton(
             style: TextButton.styleFrom(
-              foregroundColor: AppColors.textSecondary,
+              foregroundColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
               backgroundColor: Colors.transparent,
             ),
             onPressed: () => Get.back(),
             child: Text(
               'Cancel',
-              style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+              style: AppTypography.bodyMedium.copyWith(
+                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+              ),
             ),
           ),
           TextButton(
             style: TextButton.styleFrom(
-              foregroundColor: AppColors.error,
+              foregroundColor: Theme.of(context).colorScheme.error,
               backgroundColor: Colors.transparent,
             ),
             onPressed: () {
               Get.back();
               Toaster.showSuccessMessage(message: 'Product deleted successfully');
             },
-            child: Text('Delete', style: AppTypography.bodyMedium.copyWith(color: AppColors.error)),
+            child: Text(
+              'Delete',
+              style: AppTypography.bodyMedium.copyWith(color: Theme.of(context).colorScheme.error),
+            ),
           ),
         ],
       ),
@@ -58,7 +69,7 @@ class ProductListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: Colors.white,
+      tileColor: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: const BorderSide(color: Color(0xFFCAC4D0), width: 1),
@@ -71,12 +82,14 @@ class ProductListItem extends StatelessWidget {
 
       title: Text(
         product.name,
-        style: AppTypography.titleMedium.copyWith(color: AppColors.textPrimary),
+        style: AppTypography.titleMedium.copyWith(color: Theme.of(context).colorScheme.onSurface),
       ),
 
       subtitle: Text(
         '\u20B9 ${product.price.toStringAsFixed(0)}',
-        style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+        style: AppTypography.bodyMedium.copyWith(
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+        ),
       ),
 
       trailing: Row(
@@ -89,7 +102,7 @@ class ProductListItem extends StatelessWidget {
             },
           ),
           IconButton(
-            icon: const Icon(FeatherIcons.trash2, color: AppColors.error),
+            icon: Icon(FeatherIcons.trash2, color: Theme.of(context).colorScheme.error),
             onPressed: () => _handleDeleteProduct(context),
           ),
         ],

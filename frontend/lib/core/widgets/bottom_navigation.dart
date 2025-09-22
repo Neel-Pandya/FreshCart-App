@@ -10,19 +10,21 @@ class BottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<BottomNavController>();
-    return Obx(() => NavigationBar(
-          backgroundColor: Colors.white,
-          onDestinationSelected: (index) {
-            controller.setIndex(index);
-            onTap?.call(index);
-          },
-          selectedIndex: controller.index.value,
-          destinations: const <NavigationDestination>[
-            NavigationDestination(icon: Icon(FeatherIcons.home), label: 'Home'),
-            NavigationDestination(icon: Icon(FeatherIcons.shoppingCart), label: 'Products'),
-            NavigationDestination(icon: Icon(FeatherIcons.shoppingBag), label: 'Orders'),
-            NavigationDestination(icon: Icon(FeatherIcons.settings), label: 'Settings'),
-          ],
-        ));
+    return Obx(
+      () => NavigationBar(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        onDestinationSelected: (index) {
+          controller.setIndex(index);
+          onTap?.call(index);
+        },
+        selectedIndex: controller.index.value,
+        destinations: const <NavigationDestination>[
+          NavigationDestination(icon: Icon(FeatherIcons.home), label: 'Home'),
+          NavigationDestination(icon: Icon(FeatherIcons.shoppingCart), label: 'Products'),
+          NavigationDestination(icon: Icon(FeatherIcons.shoppingBag), label: 'Orders'),
+          NavigationDestination(icon: Icon(FeatherIcons.settings), label: 'Settings'),
+        ],
+      ),
+    );
   }
 }

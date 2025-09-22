@@ -1,32 +1,27 @@
-import Category from "./category.model.js";
+import Category from './category.model.js';
 
 class CategoryService {
-    async addCategory(name) {
-        const existingCategory = Category.find({$where: {name: name}});
-        if (existingCategory.length > 0) {
-            throw new Error("Category already exists");
-        }
-
-        const newCategory = Category.create({name});
-        return newCategory;
+  async addCategory(name) {
+    const existingCategory = Category.find({ $where: { name: name } });
+    if (existingCategory.length > 0) {
+      throw new Error('Category already exists');
     }
 
-    async getAllCategories() {
-        return await Category.find();
-    }
+    const newCategory = Category.create({ name });
+    return newCategory;
+  }
 
-    async deleteCategory(id) {
-        return await Category.findByIdAndDelete(id);
-    }
+  async getAllCategories() {
+    return await Category.find();
+  }
 
-    async updateCategory(id, name) {
-        return await Category.findByIdAndUpdate(
-            id,
-            { name },
-            { new: true, runValidators: true }
-        );
-    }
+  async deleteCategory(id) {
+    return await Category.findByIdAndDelete(id);
+  }
 
+  async updateCategory(id, name) {
+    return await Category.findByIdAndUpdate(id, { name }, { new: true, runValidators: true });
+  }
 }
 
 export default new CategoryService();

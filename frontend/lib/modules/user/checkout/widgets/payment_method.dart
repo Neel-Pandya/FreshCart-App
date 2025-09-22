@@ -18,7 +18,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => _showModalBottomSheet(context),
-      tileColor: Colors.white,
+      tileColor: Theme.of(context).colorScheme.surface,
       contentPadding: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -27,17 +27,22 @@ class _PaymentMethodState extends State<PaymentMethod> {
       leading: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: const Color(0xFFF5F5F5),
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(100),
         ),
-        child: Icon(_getIconForPaymentMethod(selectedPaymentMethod), color: AppColors.iconColor),
+        child: Icon(
+          _getIconForPaymentMethod(selectedPaymentMethod),
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
       ),
       title: Text(
         selectedPaymentMethod ?? 'RazorPay',
-        style: AppTypography.titleMediumEmphasized.copyWith(color: AppColors.textPrimary),
+        style: AppTypography.titleMediumEmphasized.copyWith(
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
       ),
       trailing: IconButton(
-        icon: const Icon(FeatherIcons.chevronRight, color: AppColors.iconColor),
+        icon: Icon(FeatherIcons.chevronRight, color: Theme.of(context).colorScheme.onSurface),
         onPressed: () => _showModalBottomSheet(context),
       ),
     );
@@ -71,23 +76,25 @@ class _PaymentMethodState extends State<PaymentMethod> {
 
   Widget _buildPaymentOptionTile(BuildContext context, String method, IconData icon) {
     return ListTile(
-      tileColor: Colors.white,
+      tileColor: Theme.of(context).colorScheme.surface,
       contentPadding: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: const BorderSide(color: AppColors.border, width: 1),
+        side: BorderSide(color: Theme.of(context).colorScheme.onSurface, width: 1),
       ),
       leading: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: const Color(0xFFF5F5F5),
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(100),
         ),
-        child: Icon(icon, color: AppColors.iconColor),
+        child: Icon(icon, color: Theme.of(context).colorScheme.onSurface),
       ),
       title: Text(
         method,
-        style: AppTypography.titleMediumEmphasized.copyWith(color: AppColors.textPrimary),
+        style: AppTypography.titleMediumEmphasized.copyWith(
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
       ),
       onTap: () => _selectPaymentMethod(context, method),
     );

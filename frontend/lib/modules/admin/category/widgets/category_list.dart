@@ -27,39 +27,37 @@ class _CategoryListState extends State<CategoryList> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
-        if (_controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
-        }
+    return Obx(() {
+      if (_controller.isLoading.value) {
+        return const Center(child: CircularProgressIndicator());
+      }
 
-        if (_controller.categoryList.isEmpty) {
-          return const Center(child: Text('No categories found'));
-        }
+      if (_controller.categoryList.isEmpty) {
+        return const Center(child: Text('No categories found'));
+      }
 
-        return ListView.separated(
-          itemCount: _controller.categoryList.length,
-          itemBuilder: (ctx, index) {
-            final item = _controller.categoryList[index];
-            return CategoryListItem(
-              category: item,
-              onDelete: () async {
-                final ok = await _controller.deleteCategory(item.id);
-                if (ok) {
-                  Toaster.showSuccessMessage(message: 'Category deleted successfully');
-                } else {
-                  Toaster.showErrorMessage(
-                    message: _controller.error.value.isNotEmpty
-                        ? _controller.error.value
-                        : 'Failed to delete category',
-                  );
-                }
-              },
-            );
-          },
-          separatorBuilder: (ctx, index) => const SizedBox(height: 15),
-        );
-      },
-    );
+      return ListView.separated(
+        itemCount: _controller.categoryList.length,
+        itemBuilder: (ctx, index) {
+          final item = _controller.categoryList[index];
+          return CategoryListItem(
+            category: item,
+            onDelete: () async {
+              final ok = await _controller.deleteCategory(item.id);
+              if (ok) {
+                Toaster.showSuccessMessage(message: 'Category deleted successfully');
+              } else {
+                Toaster.showErrorMessage(
+                  message: _controller.error.value.isNotEmpty
+                      ? _controller.error.value
+                      : 'Failed to delete category',
+                );
+              }
+            },
+          );
+        },
+        separatorBuilder: (ctx, index) => const SizedBox(height: 15),
+      );
+    });
   }
 }

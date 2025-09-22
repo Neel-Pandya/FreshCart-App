@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/modules/admin/settings/widgets/edit_profile_form.dart';
 
@@ -12,7 +11,7 @@ class EditProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Edit Profile',
-          style: AppTypography.titleLarge.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
         centerTitle: true,
       ),

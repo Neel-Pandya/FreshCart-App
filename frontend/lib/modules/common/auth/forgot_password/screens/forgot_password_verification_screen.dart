@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/auth_routes.dart';
-import 'package:frontend/core/utils/api_client.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
@@ -69,7 +68,7 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
       appBar: AppBar(
         title: Text(
           'Verification',
-          style: AppTypography.titleLarge.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
         centerTitle: true,
       ),
@@ -99,19 +98,25 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
                 Text(
                   'Verification Code',
                   textAlign: TextAlign.center,
-                  style: AppTypography.titleMediumEmphasized.copyWith(color: AppColors.textPrimary),
+                  style: AppTypography.titleMediumEmphasized.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
                 const SizedBox(height: 5),
                 Text(
                   'We have sent the code verification to',
                   textAlign: TextAlign.center,
-                  style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                  ),
                 ),
                 const SizedBox(height: 5),
                 Text(
                   _email,
                   textAlign: TextAlign.center,
-                  style: AppTypography.bodyMedium.copyWith(color: AppColors.textPrimary),
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
 
                 const SizedBox(height: 22),
@@ -126,7 +131,7 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
                   enableActiveFill: true,
                   autoDisposeControllers: false,
                   textStyle: AppTypography.titleMediumEmphasized.copyWith(
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                   pinTheme: PinTheme(
                     shape: PinCodeFieldShape.box,

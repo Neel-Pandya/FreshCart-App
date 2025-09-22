@@ -27,7 +27,7 @@ class _LoginFormState extends State<LoginForm> {
 
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
-  late final AuthController _authController;
+  final AuthController _authController = Get.find<AuthController>();
 
   void _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
@@ -55,7 +55,6 @@ class _LoginFormState extends State<LoginForm> {
   @override
   void initState() {
     super.initState();
-    _authController = Get.put(AuthController(), permanent: false);
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
   }
@@ -64,7 +63,6 @@ class _LoginFormState extends State<LoginForm> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _authController.dispose();
     _formKey.currentState?.dispose();
     super.dispose();
   }
@@ -140,7 +138,9 @@ class _LoginFormState extends State<LoginForm> {
             Text(
               'OR',
               textAlign: TextAlign.center,
-              style: AppTypography.labelLarge.copyWith(color: AppColors.textMuted),
+              style: AppTypography.labelLarge.copyWith(
+                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+              ),
             ),
             SecondaryButton(
               text: 'Sign In with Google',

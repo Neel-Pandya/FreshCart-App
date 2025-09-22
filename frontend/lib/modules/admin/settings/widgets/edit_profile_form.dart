@@ -77,13 +77,17 @@ class _EditProfileFormState extends State<EditProfileForm> {
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.textPrimary.withValues(alpha: 0.25),
+                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.25),
                           blurRadius: 6,
                           offset: const Offset(0, 2),
                         ),
                       ],
                     ),
-                    child: const Icon(FeatherIcons.edit2, size: 16, color: AppColors.textPrimary),
+                    child: Icon(
+                      FeatherIcons.edit2,
+                      size: 16,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                   ),
                 ),
               ),

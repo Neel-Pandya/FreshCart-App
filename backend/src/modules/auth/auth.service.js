@@ -18,7 +18,10 @@ class AuthService {
 
     await this.sendOtp(user);
 
-    return { message: 'OTP sent to your email. Please verify.' };
+    return {
+      message:
+        'Account registered please verify the otp sent to your email to activate your account',
+    };
   }
 
   async login(data) {
@@ -140,8 +143,26 @@ class AuthService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await User.findByIdAndUpdate(existingUser._id, { password: hashedPassword }, { new: true });
+    const user = await User.findByIdAndUpdate(
+      existingUser._id,
+      { password: hashedPassword },
+      { new: true }
+    );
     return { user };
+  }
+
+  async changePassword(email, oldPassword, newPassword) {
+    const existingUser = await User.findOne({ email });
+
+    if (!existingUser) throw new ApiError(400, 'User not found');
+
+    const isMatch = await existingUser.comparePassword(oldPassword);
+
+    if (!isMatch) throw new ApiError(400, 'Old password is incorrect');
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await User.findByIdAndUpdate(existingUser._id, { password: hashedPassword }, { new: true });
   }
 }
 

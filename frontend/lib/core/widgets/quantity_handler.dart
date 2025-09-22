@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 
 class QuantityHandler extends StatefulWidget {
-  const QuantityHandler({super.key, this.height, this.widtth});
+  const QuantityHandler({super.key, this.height, this.width});
   final double? height;
-  final double? widtth;
+  final double? width;
 
   @override
   State<QuantityHandler> createState() => _QuantityHandlerState();
@@ -39,9 +38,19 @@ class _QuantityHandlerState extends State<QuantityHandler> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: widget.widtth ?? size,
+        width: widget.width ?? size,
         height: widget.height ?? size,
-        decoration: BoxDecoration(color: backgroundColor, shape: BoxShape.circle),
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.08),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
         child: Icon(icon, size: 15, color: iconColor),
       ),
     );
@@ -52,7 +61,7 @@ class _QuantityHandlerState extends State<QuantityHandler> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(100),
       child: Container(
-        color: const Color(0xFFE0E0E0).withValues(alpha: 0.35),
+        color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.35),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -60,20 +69,22 @@ class _QuantityHandlerState extends State<QuantityHandler> {
             buildIconButton(
               icon: FeatherIcons.minus,
               onTap: decrement,
-              backgroundColor: Colors.white,
-              iconColor: AppColors.textPrimary,
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              iconColor: Theme.of(context).colorScheme.onSurface,
             ),
             const SizedBox(width: 15),
             Text(
               '$quantity',
-              style: AppTypography.labelMedium.copyWith(color: AppColors.textPrimary),
+              style: AppTypography.labelMedium.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
             const SizedBox(width: 15),
             buildIconButton(
               icon: FeatherIcons.plus,
               onTap: increment,
-              backgroundColor: AppColors.textPrimary,
-              iconColor: Colors.white,
+              backgroundColor: Theme.of(context).colorScheme.onSurface,
+              iconColor: Theme.of(context).colorScheme.surface,
             ),
           ],
         ),

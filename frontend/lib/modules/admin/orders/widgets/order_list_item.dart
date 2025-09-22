@@ -20,7 +20,7 @@ class OrderListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(100),
         child: Image.asset(imageUrl, height: 48, width: 48, fit: BoxFit.cover),
       ),
-      tileColor: Colors.white,
+      tileColor: Theme.of(context).colorScheme.surface,
       contentPadding: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -28,17 +28,21 @@ class OrderListItem extends StatelessWidget {
       ),
       title: Text(
         order.orderId,
-        style: AppTypography.titleMedium.copyWith(color: AppColors.textPrimary),
+        style: AppTypography.titleMedium.copyWith(color: Theme.of(context).colorScheme.onSurface),
       ),
 
       subtitle: Text(
         order.orderedBy,
-        style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+        style: AppTypography.bodyMedium.copyWith(
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+        ),
       ),
 
       trailing: Text(
         '\u20B9 ${order.totalAmount.toStringAsFixed(0)}',
-        style: AppTypography.bodyMediumEmphasized.copyWith(color: AppColors.textPrimary),
+        style: AppTypography.bodyMediumEmphasized.copyWith(
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
       ),
     );
   }

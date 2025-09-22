@@ -15,39 +15,50 @@ class UserListItem extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        icon: const Icon(Icons.warning_amber_outlined, color: AppColors.error),
+        icon: Icon(
+          Icons.warning_amber_outlined,
+          color: Theme.of(context).colorScheme.error,
+          size: 36,
+        ),
         title: Text(
           'Delete User',
-          style: AppTypography.titleLargeEmphasized.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.titleLargeEmphasized.copyWith(
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
         ),
         content: Text(
           textAlign: TextAlign.center,
           'Are you sure you want to delete this user?',
-          style: AppTypography.bodyMedium.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.bodyMedium.copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
         actionsAlignment: MainAxisAlignment.spaceAround,
         actions: [
           TextButton(
             style: TextButton.styleFrom(
-              foregroundColor: AppColors.textSecondary,
+              foregroundColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
               backgroundColor: Colors.transparent,
             ),
             onPressed: () => Get.back(),
             child: Text(
               'Cancel',
-              style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+              style: AppTypography.bodyMedium.copyWith(
+                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+              ),
             ),
           ),
           TextButton(
             style: TextButton.styleFrom(
-              foregroundColor: AppColors.error,
+              foregroundColor: Theme.of(context).colorScheme.error,
               backgroundColor: Colors.transparent,
             ),
             onPressed: () {
               Toaster.showSuccessMessage(message: 'User deleted successfully');
               Get.back();
             },
-            child: Text('Delete', style: AppTypography.bodyMedium.copyWith(color: AppColors.error)),
+            child: Text(
+              'Delete',
+              style: AppTypography.bodyMedium.copyWith(color: Theme.of(context).colorScheme.error),
+            ),
           ),
         ],
       ),
@@ -57,7 +68,7 @@ class UserListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: Colors.white,
+      tileColor: Theme.of(context).colorScheme.surface,
       contentPadding: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -69,7 +80,7 @@ class UserListItem extends StatelessWidget {
       ),
       title: Text(
         user.name,
-        style: AppTypography.titleMedium.copyWith(color: AppColors.textPrimary),
+        style: AppTypography.titleMedium.copyWith(color: Theme.of(context).colorScheme.onSurface),
       ),
 
       trailing: Row(
@@ -83,7 +94,7 @@ class UserListItem extends StatelessWidget {
           ),
           IconButton(
             onPressed: () => _handleDeleteUser(context),
-            icon: const Icon(FeatherIcons.trash2, color: AppColors.error),
+            icon: Icon(FeatherIcons.trash2, color: Theme.of(context).colorScheme.error),
           ),
         ],
       ),

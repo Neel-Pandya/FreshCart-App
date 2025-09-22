@@ -9,6 +9,7 @@ import 'package:frontend/layout/admin_master_layout.dart';
 import 'package:frontend/layout/user_master_layout.dart';
 import 'package:frontend/core/models/user.dart';
 import 'package:get/get.dart';
+import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,6 +19,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final _authController = Get.find<AuthController>();
   late final Timer _timer;
   @override
   void initState() {
@@ -29,7 +31,8 @@ class _SplashScreenState extends State<SplashScreen> {
         Get.toNamed(Routes.onBoarding);
       } else {
         final user = User.fromJson(jsonDecode(userKey)['data']);
-        Get.to(user.role == 1 ? const AdminMasterLayout() : const UserMasterLayout());
+        _authController.user.value = user;
+        Get.off(user.role == 1 ? const AdminMasterLayout() : const UserMasterLayout());
       }
     });
   }

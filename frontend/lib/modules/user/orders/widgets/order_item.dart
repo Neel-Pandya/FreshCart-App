@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/models/order.dart';
 
@@ -12,9 +11,12 @@ class OrderItem extends StatelessWidget {
     return ListTile(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: const BorderSide(color: AppColors.border, width: 1.25),
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.20),
+          width: 1.25,
+        ),
       ),
-      tileColor: Colors.white,
+      tileColor: Theme.of(context).colorScheme.surface,
       contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(5),
@@ -22,15 +24,21 @@ class OrderItem extends StatelessWidget {
       ),
       title: Text(
         order.productName,
-        style: AppTypography.titleMediumEmphasized.copyWith(color: AppColors.textPrimary),
+        style: AppTypography.titleMediumEmphasized.copyWith(
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
       ),
       subtitle: Text(
         'Qty - ${order.quantity}',
-        style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+        style: AppTypography.bodyMedium.copyWith(
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+        ),
       ),
       trailing: Text(
         '₹ ${order.subTotal}',
-        style: AppTypography.bodyMediumEmphasized.copyWith(color: AppColors.textPrimary),
+        style: AppTypography.bodyMediumEmphasized.copyWith(
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
       ),
     );
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/drop_down_field.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
@@ -88,17 +87,21 @@ class _UpdateProductFormState extends State<UpdateProductForm> {
                       height: 30,
                       width: 30,
                       decoration: BoxDecoration(
-                        color: AppColors.background,
+                        color: Theme.of(context).colorScheme.surface,
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.textPrimary.withValues(alpha: 0.25),
+                            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.25),
                             blurRadius: 6,
                             offset: const Offset(0, 2),
                           ),
                         ],
                       ),
-                      child: const Icon(FeatherIcons.edit2, size: 16, color: AppColors.textPrimary),
+                      child: Icon(
+                        FeatherIcons.edit2,
+                        size: 16,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                     ),
                   ),
                 ),

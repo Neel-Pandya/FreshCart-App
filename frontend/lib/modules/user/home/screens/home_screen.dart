@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/product_card.dart';
+import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
 import 'package:frontend/modules/user/home/widgets/home_header.dart';
 import 'package:frontend/modules/user/products/data/product_data.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<AuthController>();
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -17,8 +20,8 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const HomeHeader(
-                name: 'Neel Pandya',
+              HomeHeader(
+                name: controller.user.value?.name ?? '',
                 imageUrl: 'assets/images/user/common_profile.png',
               ),
               const SizedBox(height: 20),
@@ -26,7 +29,9 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Text(
                     'New Arrivals 🔥',
-                    style: AppTypography.bodyLargeEmphasized.copyWith(color: AppColors.textPrimary),
+                    style: AppTypography.bodyLargeEmphasized.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                   ),
 
                   const Spacer(),

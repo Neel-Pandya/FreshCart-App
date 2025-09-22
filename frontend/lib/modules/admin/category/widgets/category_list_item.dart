@@ -15,39 +15,50 @@ class CategoryListItem extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        icon: const Icon(Icons.warning_amber_outlined, color: AppColors.error, size: 40),
+        icon: Icon(
+          Icons.warning_amber_outlined,
+          color: Theme.of(context).colorScheme.error,
+          size: 40,
+        ),
         title: Text(
           'Delete Category',
-          style: AppTypography.titleLarge.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
         content: Text(
           'Are you sure you want to delete this category?',
           textAlign: TextAlign.center,
-          style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+          style: AppTypography.bodyMedium.copyWith(
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+          ),
         ),
 
         actions: [
           TextButton(
             style: TextButton.styleFrom(
-              foregroundColor: AppColors.textSecondary,
+              foregroundColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
               backgroundColor: Colors.transparent,
             ),
             onPressed: () => Get.back(),
             child: Text(
               'Cancel',
-              style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+              style: AppTypography.bodyMedium.copyWith(
+                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+              ),
             ),
           ),
           TextButton(
             style: TextButton.styleFrom(
-              foregroundColor: AppColors.error,
+              foregroundColor: Theme.of(context).colorScheme.error,
               backgroundColor: Colors.transparent,
             ),
             onPressed: () async {
               await onDelete();
               Get.back();
             },
-            child: Text('Delete', style: AppTypography.bodyMedium.copyWith(color: AppColors.error)),
+            child: Text(
+              'Delete',
+              style: AppTypography.bodyMedium.copyWith(color: Theme.of(context).colorScheme.error),
+            ),
           ),
         ],
         actionsAlignment: MainAxisAlignment.spaceEvenly,
@@ -58,7 +69,7 @@ class CategoryListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: Colors.white,
+      tileColor: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: const BorderSide(color: Color(0xFFCAC4D0), width: 1),
@@ -66,7 +77,7 @@ class CategoryListItem extends StatelessWidget {
       contentPadding: const EdgeInsets.all(10),
       title: Text(
         category.name,
-        style: AppTypography.titleMedium.copyWith(color: AppColors.textPrimary),
+        style: AppTypography.titleMedium.copyWith(color: Theme.of(context).colorScheme.onSurface),
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
@@ -79,7 +90,7 @@ class CategoryListItem extends StatelessWidget {
           ),
           IconButton(
             onPressed: () => _handleDeleteCategory(context),
-            icon: const Icon(FeatherIcons.trash2, color: AppColors.error),
+            icon: Icon(FeatherIcons.trash2, color: Theme.of(context).colorScheme.error),
           ),
         ],
       ),

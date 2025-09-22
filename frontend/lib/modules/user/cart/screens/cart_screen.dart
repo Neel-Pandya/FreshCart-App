@@ -14,7 +14,10 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart', style: AppTypography.titleLarge.copyWith(color: AppColors.textPrimary)),
+        title: Text(
+          'Cart',
+          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
+        ),
         centerTitle: true,
       ),
 

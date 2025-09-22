@@ -34,7 +34,7 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
       appBar: AppBar(
         title: Text(
           widget.order.orderId,
-          style: AppTypography.titleLarge.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
       ),
       body: SafeArea(
@@ -86,14 +86,18 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
                       children: [
                         Text(
                           'Ordered By - ${widget.order.orderedBy}',
-                          style: AppTypography.titleMedium.copyWith(color: AppColors.textPrimary),
+                          style: AppTypography.titleMedium.copyWith(
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
                         ),
 
                         const SizedBox(height: 10),
 
                         Text(
                           'Total Amount - \u20B9 ${widget.order.totalAmount.toStringAsFixed(0)}',
-                          style: AppTypography.titleMedium.copyWith(color: AppColors.textPrimary),
+                          style: AppTypography.titleMedium.copyWith(
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
                         ),
                       ],
                     ),

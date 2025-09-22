@@ -1,7 +1,6 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 
@@ -37,7 +36,9 @@ class _CheckoutAddressState extends State<CheckoutAddress> {
         children: [
           Text(
             'Address',
-            style: AppTypography.titleMediumEmphasized.copyWith(color: AppColors.textPrimary),
+            style: AppTypography.titleMediumEmphasized.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
           const SizedBox(height: 15),
           FormTextField(

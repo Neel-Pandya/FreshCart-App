@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
+import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
+import 'package:get/get.dart';
 
 class EditProfileForm extends StatefulWidget {
   const EditProfileForm({
@@ -25,7 +26,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _nameController;
   late final TextEditingController _emailController;
-
+  late final AuthController controller;
   void _updateProfile(BuildContext context) {
     if (!_formKey.currentState!.validate()) return;
 
@@ -37,8 +38,9 @@ class _EditProfileFormState extends State<EditProfileForm> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: widget.name);
-    _emailController = TextEditingController(text: widget.email);
+    controller = Get.find<AuthController>();
+    _nameController = TextEditingController(text: controller.user.value?.name);
+    _emailController = TextEditingController(text: controller.user.value?.email);
   }
 
   @override
@@ -73,17 +75,21 @@ class _EditProfileFormState extends State<EditProfileForm> {
                     height: 30,
                     width: 30,
                     decoration: BoxDecoration(
-                      color: AppColors.background,
+                      color: Theme.of(context).colorScheme.surface,
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.textPrimary.withValues(alpha: 0.25),
+                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.25),
                           blurRadius: 6,
                           offset: const Offset(0, 2),
                         ),
                       ],
                     ),
-                    child: const Icon(FeatherIcons.edit2, size: 16, color: AppColors.textPrimary),
+                    child: Icon(
+                      FeatherIcons.edit2,
+                      size: 16,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                   ),
                 ),
               ),

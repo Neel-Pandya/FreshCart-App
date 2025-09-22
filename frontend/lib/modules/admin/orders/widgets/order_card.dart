@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/models/order.dart';
 
@@ -17,17 +16,23 @@ class OrderCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             'Name - ${order.productName}',
-            style: AppTypography.titleMedium.copyWith(color: AppColors.textPrimary),
+            style: AppTypography.titleMedium.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
           const SizedBox(height: 10),
           Text(
             'Price - ${order.productAmount}',
-            style: AppTypography.titleMedium.copyWith(color: AppColors.textPrimary),
+            style: AppTypography.titleMedium.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
           const SizedBox(height: 10),
           Text(
             'Quantity - ${order.quantity}',
-            style: AppTypography.titleMedium.copyWith(color: AppColors.textPrimary),
+            style: AppTypography.titleMedium.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
         ],
       ),

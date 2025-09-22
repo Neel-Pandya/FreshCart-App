@@ -6,6 +6,7 @@ import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/validators/confirm_password_validator.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
+import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class ChangePasswordForm extends StatefulWidget {
@@ -20,6 +21,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
   var _isNewPasswordVisible = false;
   var _isConfirmPasswordVisible = false;
   final _formKey = GlobalKey<FormState>();
+  final _authController = Get.find<AuthController>();
 
   late final TextEditingController _oldPasswordController;
   late final TextEditingController _newPasswordController;
@@ -41,11 +43,21 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
     super.dispose();
   }
 
-  void _handleChangePassword() {
+  void _handleChangePassword() async {
     if (!_formKey.currentState!.validate()) return;
     FocusManager.instance.primaryFocus?.unfocus();
 
-    Toaster.showSuccessMessage(message: 'Password changed successfully');
+    final oldPassword = _oldPasswordController.text.trim();
+    final newPassword = _newPasswordController.text.trim();
+
+    bool result = await _authController.changePassword(oldPassword, newPassword);
+
+    if (!result) {
+      Toaster.showErrorMessage(message: _authController.error.value);
+      return;
+    }
+
+    Toaster.showSuccessMessage(message: _authController.responseMessage.value);
 
     Future.delayed(const Duration(milliseconds: 1500), () {
       if (!mounted) return;
@@ -99,7 +111,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
               ),
               PatternValidator(r'^(?=.*\d).+$', errorText: 'Must contain at least one number'),
               PatternValidator(
-                r'^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).+$',
+                r'^(?=.*[!@#\$%^&*()_+{}\[\]:;<>,.?~\\/-]).+$',
                 errorText: 'Must contain at least one special character',
               ),
             ]).call,
@@ -126,7 +138,13 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
 
           const SizedBox(height: 30),
 
-          PrimaryButton(text: 'Change Password', onPressed: _handleChangePassword),
+          Obx(
+            () => PrimaryButton(
+              text: 'Change Password',
+              onPressed: _handleChangePassword,
+              isLoading: _authController.isLoading.value,
+            ),
+          ),
         ],
       ),
     );

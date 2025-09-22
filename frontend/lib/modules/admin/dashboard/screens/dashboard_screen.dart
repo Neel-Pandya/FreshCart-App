@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/modules/admin/dashboard/data/analytic_data.dart';
 import 'package:frontend/modules/admin/dashboard/widgets/dashboard_analytics.dart';
@@ -34,7 +33,9 @@ class DashboardScreen extends StatelessWidget {
 
               Text(
                 'Recent Orders',
-                style: AppTypography.bodyLargeEmphasized.copyWith(color: AppColors.textPrimary),
+                style: AppTypography.bodyLargeEmphasized.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
 
               const SizedBox(height: 18),

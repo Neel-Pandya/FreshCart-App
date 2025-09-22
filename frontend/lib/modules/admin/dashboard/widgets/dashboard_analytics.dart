@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/modules/admin/dashboard/models/analytic.dart';
 
@@ -14,7 +13,7 @@ class DashboardAnalytics extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         border: Border.all(color: const Color(0xFFCAC4D0)),
       ),
       child: Column(
@@ -37,12 +36,16 @@ class DashboardAnalytics extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             analytic.title,
-            style: AppTypography.bodyLargeEmphasized.copyWith(color: AppColors.textPrimary),
+            style: AppTypography.bodyLargeEmphasized.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
           const SizedBox(height: 3),
           Text(
             analytic.subtitle,
-            style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+            style: AppTypography.bodyMedium.copyWith(
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+            ),
           ),
         ],
       ),

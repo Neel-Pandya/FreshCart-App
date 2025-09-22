@@ -52,14 +52,18 @@ class _FilterSheetState extends State<FilterSheet> {
             Text(
               'Filter By',
               textAlign: TextAlign.center,
-              style: AppTypography.titleLargeEmphasized.copyWith(color: AppColors.textPrimary),
+              style: AppTypography.titleLargeEmphasized.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
             const SizedBox(height: 30),
 
             // Category filter
             Text(
               'Category',
-              style: AppTypography.bodyMediumEmphasized.copyWith(color: AppColors.textPrimary),
+              style: AppTypography.bodyMediumEmphasized.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
             const SizedBox(height: 10),
             const DropDownField(
@@ -73,7 +77,9 @@ class _FilterSheetState extends State<FilterSheet> {
             // Price filter
             Text(
               'Price',
-              style: AppTypography.bodyMediumEmphasized.copyWith(color: AppColors.textPrimary),
+              style: AppTypography.bodyMediumEmphasized.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
             const SizedBox(height: 10),
             SliderTheme(
@@ -91,7 +97,7 @@ class _FilterSheetState extends State<FilterSheet> {
                 min: _minPrice.toDouble(),
                 max: _maxPrice.toDouble(),
                 divisions: _maxPrice - _minPrice,
-                inactiveColor: AppColors.textMuted,
+                inactiveColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
                 activeColor: AppColors.primary,
                 labels: RangeLabels(
                   _priceRange.start.round().toString(),
@@ -102,7 +108,9 @@ class _FilterSheetState extends State<FilterSheet> {
             Text(
               '₹${_priceRange.start.round()} - ₹${_priceRange.end.round()}',
               textAlign: TextAlign.center,
-              style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+              style: AppTypography.bodyMedium.copyWith(
+                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+              ),
             ),
 
             const Spacer(),

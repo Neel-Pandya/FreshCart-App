@@ -36,20 +36,22 @@ class CartItem extends StatelessWidget {
                         Text(
                           cart.productName,
                           style: AppTypography.titleSmallEmphasized.copyWith(
-                            color: AppColors.textPrimary,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                         const SizedBox(height: 3),
                         Text(
                           '\u20B9 ${cart.totalPrice.toStringAsFixed(0)}',
-                          style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary),
+                          style: AppTypography.bodySmall.copyWith(
+                            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                          ),
                         ),
                       ],
                     ),
                   ),
 
                   const SizedBox(height: 3),
-                  const QuantityHandler(widtth: 25, height: 25),
+                  const QuantityHandler(width: 25, height: 25),
                 ],
               ),
             ],

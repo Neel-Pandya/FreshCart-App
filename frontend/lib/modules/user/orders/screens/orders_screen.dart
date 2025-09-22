@@ -13,7 +13,7 @@ class OrdersScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Orders',
-          style: AppTypography.titleLarge.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
         leading: const SizedBox(),
         centerTitle: true,

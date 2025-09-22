@@ -32,7 +32,7 @@ class CheckoutScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Checkout',
-          style: AppTypography.titleLarge.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
         centerTitle: true,
       ),
@@ -55,7 +55,7 @@ class CheckoutScreen extends StatelessWidget {
                     Text(
                       'Products (${cartData.length})',
                       style: AppTypography.titleMediumEmphasized.copyWith(
-                        color: AppColors.textPrimary,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
 
@@ -66,7 +66,7 @@ class CheckoutScreen extends StatelessWidget {
                     Text(
                       'Payment Method',
                       style: AppTypography.titleMediumEmphasized.copyWith(
-                        color: AppColors.textPrimary,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 15),

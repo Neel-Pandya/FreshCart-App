@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/theme/app_theme.dart';
@@ -21,11 +22,14 @@ class MyApp extends StatelessWidget {
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.light,
         getPages: Routes.routes,
         initialRoute: Routes.splash,
         initialBinding: BindingsBuilder(() {
           Get.put(BottomNavController(), permanent: true);
           Get.put(DrawerNavController(), permanent: true);
+          Get.put(AuthController(), permanent: true);
         }),
       ),
     );

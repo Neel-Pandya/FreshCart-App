@@ -33,13 +33,17 @@ class OnboardingItem extends StatelessWidget {
         const SizedBox(height: 25),
         Text(
           item.heading,
-          style: AppTypography.titleLargeEmphasized.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.titleLargeEmphasized.copyWith(
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 15),
         Text(
           item.description,
-          style: AppTypography.labelMedium.copyWith(color: AppColors.textSecondary),
+          style: AppTypography.labelMedium.copyWith(
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+          ),
           textAlign: TextAlign.center,
         ),
       ],

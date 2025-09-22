@@ -3,7 +3,6 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:frontend/core/routes/auth_routes.dart';
-import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
@@ -32,12 +31,14 @@ class _SignupFormState extends State<SignupForm> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _authController = Get.put(AuthController(), permanent: false);
+    _authController = Get.find<AuthController>();
   }
 
   @override
   void dispose() {
-    _authController.dispose();
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -151,7 +152,9 @@ class _SignupFormState extends State<SignupForm> {
           Text(
             'OR',
             textAlign: TextAlign.center,
-            style: AppTypography.labelLarge.copyWith(color: AppColors.textMuted),
+            style: AppTypography.labelLarge.copyWith(
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+            ),
           ),
 
           SecondaryButton(

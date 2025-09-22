@@ -15,7 +15,11 @@ const signupValidation = z.strictObject({
     .nonempty({ error: 'Password is required' })
     .trim()
     .min(8, { error: 'Password must be at least 8 characters long' })
-    .max(16, { error: 'Password must be at most 16 characters long' }),
+    .max(16, { error: 'Password must be at most 16 characters long' })
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
+      error:
+        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+    }),
 });
 
 const loginValidation = z.strictObject({
@@ -27,7 +31,11 @@ const loginValidation = z.strictObject({
     .nonempty({ error: 'Password is required' })
     .trim()
     .min(8, { error: 'Password must be at least 8 characters long' })
-    .max(16, { error: 'Password must be at most 16 characters long' }),
+    .max(16, { error: 'Password must be at most 16 characters long' })
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
+      error:
+        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+    }),
 });
 
 const resendOtpValidation = z.strictObject({
@@ -59,7 +67,35 @@ const resetPasswordValidation = z.strictObject({
     .nonempty({ error: 'Password is required' })
     .trim()
     .min(8, { error: 'Password must be at least 8 characters long' })
-    .max(16, { error: 'Password must be at most 16 characters long' }),
-})
+    .max(16, { error: 'Password must be at most 16 characters long' })
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
+      error:
+        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+    }),
+});
 
-export { signupValidation, loginValidation, resendOtpValidation, verifyOtpValidation, forgotPasswordValidation, resetPasswordValidation };
+const changePasswordValidation = z.strictObject({
+  oldPassword: z
+    .string({ error: 'Old Password is required' })
+    .nonempty({ error: 'Old Password is required' }),
+  newPassword: z
+    .string({ error: 'New Password is required' })
+    .nonempty({ error: 'New Password is required' })
+    .trim()
+    .min(8, { error: 'New Password must be at least 8 characters long' })
+    .max(16, { error: 'New Password must be at most 16 characters long' })
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
+      error:
+        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+    }),
+});
+
+export {
+  signupValidation,
+  loginValidation,
+  resendOtpValidation,
+  verifyOtpValidation,
+  forgotPasswordValidation,
+  resetPasswordValidation,
+  changePasswordValidation,
+};

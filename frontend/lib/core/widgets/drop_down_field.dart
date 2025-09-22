@@ -49,7 +49,7 @@ class _DropDownFieldState extends State<DropDownField> {
   Color _getIconColor() {
     if (_hasError) return AppColors.error;
     if (_isFocused) return AppColors.primary;
-    return AppColors.iconColor;
+    return Theme.of(context).colorScheme.onSurface;
   }
 
   @override

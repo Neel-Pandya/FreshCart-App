@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/models/product.dart';
 
@@ -25,17 +24,23 @@ class ProductCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             product.name,
-            style: AppTypography.bodyMediumEmphasized.copyWith(color: AppColors.textPrimary),
+            style: AppTypography.bodyMediumEmphasized.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
           const SizedBox(height: 2),
           Text(
             product.category,
-            style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+            style: AppTypography.bodyMedium.copyWith(
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+            ),
           ),
           const SizedBox(height: 3),
           Text(
             '₹ ${product.price.toStringAsFixed(0)}',
-            style: AppTypography.bodyMediumEmphasized.copyWith(color: AppColors.textPrimary),
+            style: AppTypography.bodyMediumEmphasized.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
         ],
       ),

@@ -12,7 +12,7 @@ class EditProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Edit Profile',
-          style: AppTypography.titleLarge.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
         centerTitle: true,
       ),

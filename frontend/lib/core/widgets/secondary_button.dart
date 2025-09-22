@@ -37,7 +37,9 @@ class SecondaryButton extends StatelessWidget {
       style: style,
       child: Text(
         text,
-        style: AppTypography.bodyMediumEmphasized.copyWith(color: AppColors.textPrimary),
+        style: AppTypography.bodyMediumEmphasized.copyWith(
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
       ),
     );
   }

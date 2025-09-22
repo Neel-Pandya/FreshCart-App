@@ -19,15 +19,19 @@ class SettingsScreen extends StatelessWidget {
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
-          icon: const Icon(FeatherIcons.logOut, color: AppColors.error, size: 36),
+          icon: Icon(FeatherIcons.logOut, color: Theme.of(context).colorScheme.error, size: 36),
           title: Text(
             'Logout',
-            style: AppTypography.titleLarge.copyWith(color: AppColors.textPrimary),
+            style: AppTypography.titleLarge.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
             textAlign: TextAlign.center,
           ),
           content: Text(
             'Are you sure you want to logout?',
-            style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+            style: AppTypography.bodyMedium.copyWith(
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+            ),
             textAlign: TextAlign.center,
           ),
           actionsAlignment: MainAxisAlignment.spaceEvenly,
@@ -35,12 +39,14 @@ class SettingsScreen extends StatelessWidget {
             TextButton(
               onPressed: () => Get.back(),
               style: TextButton.styleFrom(
-                foregroundColor: AppColors.textSecondary,
+                foregroundColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                 backgroundColor: Colors.transparent,
               ),
               child: Text(
                 'Cancel',
-                style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+                style: AppTypography.bodyMedium.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                ),
               ),
             ),
             TextButton(
@@ -56,13 +62,13 @@ class SettingsScreen extends StatelessWidget {
                 });
               },
               style: TextButton.styleFrom(
-                foregroundColor: AppColors.error,
+                foregroundColor: Theme.of(context).colorScheme.error,
                 backgroundColor: Colors.transparent,
               ),
               child: Text(
                 'Logout',
                 style: AppTypography.bodyMedium.copyWith(
-                  color: AppColors.error,
+                  color: Theme.of(context).colorScheme.error,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -81,7 +87,7 @@ class SettingsScreen extends StatelessWidget {
         centerTitle: true,
         title: Text(
           'Settings',
-          style: AppTypography.titleLarge.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
       ),
       body: Column(
@@ -95,7 +101,9 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 Text(
                   'General',
-                  style: AppTypography.titleMediumEmphasized.copyWith(color: AppColors.textPrimary),
+                  style: AppTypography.titleMediumEmphasized.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
                 const SizedBox(height: 20),
                 SettingItem(
@@ -114,14 +122,16 @@ class SettingsScreen extends StatelessWidget {
                 const SizedBox(height: 30),
                 Text(
                   'Preferences',
-                  style: AppTypography.titleMediumEmphasized.copyWith(color: AppColors.textPrimary),
+                  style: AppTypography.titleMediumEmphasized.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
                 const SizedBox(height: 20),
                 SettingItem(
                   title: 'Logout',
                   icon: FeatherIcons.logOut,
-                  iconColor: AppColors.error,
-                  titleColor: AppColors.error,
+                  iconColor: Theme.of(context).colorScheme.error,
+                  titleColor: Theme.of(context).colorScheme.error,
                   onTap: () => _logout(context),
                 ),
               ],

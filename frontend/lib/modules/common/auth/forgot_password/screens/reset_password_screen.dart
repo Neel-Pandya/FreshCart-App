@@ -12,7 +12,7 @@ class ResetPasswordScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Reset Password',
-          style: AppTypography.titleLarge.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
         centerTitle: true,
       ),

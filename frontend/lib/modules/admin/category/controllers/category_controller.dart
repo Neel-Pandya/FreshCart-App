@@ -8,6 +8,12 @@ class CategoryController extends GetxController {
   var responseMessage = ''.obs;
   final RxList<Category> categoryList = <Category>[].obs;
 
+  @override
+  void onInit() {
+    fetchcategoryList();
+    super.onInit();
+  }
+
   Future<bool> addCategory(String name) async {
     try {
       isLoading.value = true;
