@@ -12,7 +12,9 @@ class ViewOrderItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: Theme.of(context).brightness == Brightness.light
+            ? Theme.of(context).colorScheme.surface
+            : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: AppColors.border, width: 1.25),
       ),

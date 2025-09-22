@@ -44,8 +44,7 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.generateToken = function () {
   return jwt.sign(
     { id: this._id, role: this.role, email: this.email, name: this.name },
-    EnvConfig.jwtSecret,
-    { expiresIn: '1d' }
+    EnvConfig.jwtSecret
   );
 };
 

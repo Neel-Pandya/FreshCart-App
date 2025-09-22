@@ -13,7 +13,9 @@ class DashboardAnalytics extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: Theme.of(context).colorScheme.surface,
+        color: Theme.of(context).brightness == Brightness.light
+            ? Theme.of(context).colorScheme.surface
+            : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.05),
         border: Border.all(color: const Color(0xFFCAC4D0)),
       ),
       child: Column(

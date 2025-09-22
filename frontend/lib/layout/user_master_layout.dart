@@ -20,7 +20,7 @@ class _UserMasterLayoutState extends State<UserMasterLayout> {
     const HomeScreen(),
     const ProductsScreen(),
     const OrdersScreen(),
-    const SettingsScreen(),
+    SettingsScreen(),
   ];
 
   @override

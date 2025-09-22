@@ -11,6 +11,7 @@ class SettingItem extends StatelessWidget {
     this.trailingIcon,
     this.iconColor,
     this.titleColor,
+    this.trailingWidget,
   });
 
   final String title;
@@ -19,6 +20,7 @@ class SettingItem extends StatelessWidget {
   final IconData? trailingIcon;
   final Color? iconColor;
   final Color? titleColor;
+  final Widget? trailingWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +29,14 @@ class SettingItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         side: const BorderSide(color: AppColors.border, width: 1.25),
       ),
-      tileColor: Theme.of(context).colorScheme.surface,
+      tileColor: Theme.of(context).brightness == Brightness.light
+          ? Theme.of(context).colorScheme.surface
+          : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.05),
       leading: Icon(
         icon,
-        color: iconColor ?? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+        color: Theme.of(context).brightness == Brightness.light
+            ? AppColors.iconColor
+            : Theme.of(context).colorScheme.onSurface,
       ),
       title: Text(
         title,
@@ -39,12 +45,8 @@ class SettingItem extends StatelessWidget {
         ),
       ),
       onTap: onTap ?? () {},
-      trailing: trailingIcon != null
-          ? Icon(
-              trailingIcon,
-              color: iconColor ?? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
-            )
-          : null,
+      trailing:
+          trailingWidget ?? Icon(trailingIcon, color: Theme.of(context).colorScheme.onSurface),
     );
   }
 }

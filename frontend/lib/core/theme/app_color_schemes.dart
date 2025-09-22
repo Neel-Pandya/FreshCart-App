@@ -18,7 +18,7 @@ final class AppColorSchemes {
 
   static const darkColorScheme = ColorScheme(
     brightness: Brightness.dark,
-    primary: AppColors.primaryDark, // lighter green
+    primary: AppColors.primaryDark,
     onPrimary: Colors.black,
     secondary: AppColors.successDark,
     onSecondary: Colors.black,

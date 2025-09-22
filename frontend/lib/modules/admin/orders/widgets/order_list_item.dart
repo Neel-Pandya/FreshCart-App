@@ -20,7 +20,9 @@ class OrderListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(100),
         child: Image.asset(imageUrl, height: 48, width: 48, fit: BoxFit.cover),
       ),
-      tileColor: Theme.of(context).colorScheme.surface,
+      tileColor: Theme.of(context).brightness == Brightness.light
+          ? Theme.of(context).colorScheme.surface
+          : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.05),
       contentPadding: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),

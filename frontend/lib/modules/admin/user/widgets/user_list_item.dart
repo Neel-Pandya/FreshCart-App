@@ -68,7 +68,9 @@ class UserListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: Theme.of(context).colorScheme.surface,
+      tileColor: Theme.of(context).brightness == Brightness.light
+          ? Theme.of(context).colorScheme.surface
+          : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.05),
       contentPadding: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),

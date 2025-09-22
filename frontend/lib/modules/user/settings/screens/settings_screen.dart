@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:frontend/core/controllers/theme_controller.dart';
 import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
@@ -12,7 +13,9 @@ import 'package:get/get.dart';
 import 'package:frontend/core/controllers/bottom_nav_controller.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+  SettingsScreen({super.key});
+
+  final ThemeController _themeController = Get.find<ThemeController>();
 
   void _logout(BuildContext context) {
     showDialog(
@@ -124,6 +127,19 @@ class SettingsScreen extends StatelessWidget {
                   'Preferences',
                   style: AppTypography.titleMediumEmphasized.copyWith(
                     color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                SettingItem(
+                  title: 'Dark Mode',
+                  icon: FeatherIcons.moon,
+                  trailingWidget: Switch(
+                    value: _themeController.isDarkMode.value,
+                    onChanged: (value) {
+                      _themeController.toggleTheme();
+                    },
                   ),
                 ),
                 const SizedBox(height: 20),

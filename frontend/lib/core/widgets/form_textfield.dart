@@ -91,7 +91,9 @@ class _FormTextFieldState extends State<FormTextField> {
             ? Icon(
                 widget.prefixIcon,
                 color: _getIconColor(
-                  defaultColor: widget.prefixIconColor ?? Theme.of(context).colorScheme.onSurface,
+                  defaultColor: Theme.of(context).brightness == Brightness.light
+                      ? AppColors.iconColor
+                      : Theme.of(context).colorScheme.onSurface,
                 ),
               )
             : null,
@@ -100,17 +102,28 @@ class _FormTextFieldState extends State<FormTextField> {
                 onTap: widget.onSuffixTap,
                 child: Icon(
                   widget.suffixIcon,
-                  color: _getIconColor(defaultColor: Theme.of(context).colorScheme.onSurface),
+                  color: _getIconColor(
+                    defaultColor: Theme.of(context).brightness == Brightness.light
+                        ? AppColors.iconColor
+                        : Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
               )
             : null,
         filled: widget.filled ?? true,
         fillColor: _isFocused
             ? Theme.of(context).colorScheme.surface
-            : Theme.of(context).colorScheme.surface.withAlpha(235),
+            : Theme.of(context).brightness == Brightness.light
+            ? const Color(0xFFE0E0E0).withAlpha(35)
+            : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.05),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface, width: 1),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.light
+                ? AppColors.border
+                : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+            width: 1,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
