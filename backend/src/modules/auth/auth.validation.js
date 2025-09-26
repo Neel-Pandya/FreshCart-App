@@ -22,6 +22,10 @@ const signupValidation = z.strictObject({
     }),
 });
 
+const googleSignupValidation = z.strictObject({
+  idToken: z.string({ error: 'ID Token is required' }).nonempty({ error: 'ID Token is required' }),
+});
+
 const loginValidation = z.strictObject({
   email: z.email({
     error: (issue) => (issue.input == undefined ? 'Email is required' : 'Invalid email'),
@@ -92,6 +96,7 @@ const changePasswordValidation = z.strictObject({
 
 export {
   signupValidation,
+  googleSignupValidation,
   loginValidation,
   resendOtpValidation,
   verifyOtpValidation,

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/auth_routes.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/theme/app_colors.dart';
@@ -68,7 +68,7 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
       appBar: AppBar(
         title: Text(
           'Verification',
-          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
+          style: AppTypography.titleLarge.copyWith(color: Get.theme.colorScheme.onSurface),
         ),
         centerTitle: true,
       ),
@@ -81,7 +81,7 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // ✅ Icon
+                // âœ… Icon
                 Center(
                   child: Container(
                     height: 60,
@@ -99,7 +99,7 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
                   'Verification Code',
                   textAlign: TextAlign.center,
                   style: AppTypography.titleMediumEmphasized.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Get.theme.colorScheme.onSurface,
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -107,7 +107,7 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
                   'We have sent the code verification to',
                   textAlign: TextAlign.center,
                   style: AppTypography.bodyMedium.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                    color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -115,13 +115,13 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
                   _email,
                   textAlign: TextAlign.center,
                   style: AppTypography.bodyMedium.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Get.theme.colorScheme.onSurface,
                   ),
                 ),
 
                 const SizedBox(height: 22),
 
-                // ✅ OTP Input
+                // âœ… OTP Input
                 PinCodeTextField(
                   appContext: context,
                   controller: _otpController,
@@ -131,7 +131,7 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
                   enableActiveFill: true,
                   autoDisposeControllers: false,
                   textStyle: AppTypography.titleMediumEmphasized.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Get.theme.colorScheme.onSurface,
                   ),
                   pinTheme: PinTheme(
                     shape: PinCodeFieldShape.box,
@@ -139,20 +139,25 @@ class _ForgotPasswordVerificationScreenState extends State<ForgotPasswordVerific
                     fieldHeight: 55,
                     fieldWidth: 45,
                     borderWidth: 1,
-                    activeColor: AppColors.primary,
-                    inactiveColor: const Color(0xffCAC4D0),
-                    selectedColor: AppColors.primary,
-                    errorBorderColor: AppColors.error,
-                    activeFillColor: AppColors.background,
-                    inactiveFillColor: AppColors.background,
-                    selectedFillColor: AppColors.background,
+                    activeColor: Get.theme.colorScheme.primary,
+                    inactiveColor: Get.theme.brightness == Brightness.dark
+                        ? AppColors.borderDark
+                        : AppColors.border,
+                    selectedColor: Get.theme.colorScheme.primary,
+                    errorBorderColor: Get.theme.colorScheme.error,
+                    activeFillColor: Get.theme.colorScheme.surfaceContainerHighest,
+                    inactiveFillColor: Get.theme.colorScheme.surfaceContainerHighest,
+                    selectedFillColor: Get.theme.colorScheme.surfaceContainerHighest,
                   ),
+                  cursorColor: Get.theme.brightness == Brightness.dark
+                      ? Get.theme.colorScheme.onSurface
+                      : Get.theme.colorScheme.onSurface,
                   onChanged: (_) {},
                 ),
 
                 const SizedBox(height: 12),
 
-                // ✅ Submit Button
+                // âœ… Submit Button
                 Obx(
                   () => PrimaryButton(
                     text: 'Submit',

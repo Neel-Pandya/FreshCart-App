@@ -1,4 +1,4 @@
-import 'package:form_field_validator/form_field_validator.dart';
+﻿import 'package:form_field_validator/form_field_validator.dart';
 
 class ConfirmPasswordValidator extends FieldValidator<String> {
   final String Function() getPassword;

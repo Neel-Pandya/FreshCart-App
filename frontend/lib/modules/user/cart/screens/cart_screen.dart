@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
@@ -16,7 +16,7 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Cart',
-          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
+          style: AppTypography.titleLarge.copyWith(color: Get.theme.colorScheme.onSurface),
         ),
         centerTitle: true,
       ),

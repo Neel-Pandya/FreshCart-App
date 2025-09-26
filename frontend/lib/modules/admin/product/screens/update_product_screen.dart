@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/models/admin_product.dart';
 import 'package:frontend/modules/admin/product/widgets/update_product_form.dart';
 

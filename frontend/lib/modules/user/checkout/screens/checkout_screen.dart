@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
@@ -32,7 +32,7 @@ class CheckoutScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Checkout',
-          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
+          style: AppTypography.titleLarge.copyWith(color: Get.theme.colorScheme.onSurface),
         ),
         centerTitle: true,
       ),
@@ -55,7 +55,7 @@ class CheckoutScreen extends StatelessWidget {
                     Text(
                       'Products (${cartData.length})',
                       style: AppTypography.titleMediumEmphasized.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
+                        color: Get.theme.colorScheme.onSurface,
                       ),
                     ),
 
@@ -66,7 +66,7 @@ class CheckoutScreen extends StatelessWidget {
                     Text(
                       'Payment Method',
                       style: AppTypography.titleMediumEmphasized.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
+                        color: Get.theme.colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 15),

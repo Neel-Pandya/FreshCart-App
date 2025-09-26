@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/models/order.dart';
+import 'package:get/get.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({super.key, required this.order});
@@ -17,21 +18,21 @@ class OrderCard extends StatelessWidget {
           Text(
             'Name - ${order.productName}',
             style: AppTypography.titleMedium.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
+              color: Get.theme.colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 10),
           Text(
             'Price - ${order.productAmount}',
             style: AppTypography.titleMedium.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
+              color: Get.theme.colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 10),
           Text(
             'Quantity - ${order.quantity}',
             style: AppTypography.titleMedium.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
+              color: Get.theme.colorScheme.onSurface,
             ),
           ),
         ],

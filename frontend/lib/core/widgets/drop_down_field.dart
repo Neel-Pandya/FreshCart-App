@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/theme/app_colors.dart';
+import 'package:get/get.dart';
 
 class DropDownField extends StatefulWidget {
   const DropDownField({
@@ -49,7 +50,7 @@ class _DropDownFieldState extends State<DropDownField> {
   Color _getIconColor() {
     if (_hasError) return AppColors.error;
     if (_isFocused) return AppColors.primary;
-    return Theme.of(context).colorScheme.onSurface;
+    return Get.theme.colorScheme.onSurface;
   }
 
   @override

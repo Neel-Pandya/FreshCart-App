@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/modules/admin/dashboard/data/analytic_data.dart';
 import 'package:frontend/modules/admin/dashboard/widgets/dashboard_analytics.dart';
 import 'package:frontend/modules/admin/orders/data/order_data.dart';
 import 'package:frontend/modules/admin/orders/widgets/order_list_item.dart';
+import 'package:get/get.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -34,7 +35,7 @@ class DashboardScreen extends StatelessWidget {
               Text(
                 'Recent Orders',
                 style: AppTypography.bodyLargeEmphasized.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: Get.theme.colorScheme.onSurface,
                 ),
               ),
 

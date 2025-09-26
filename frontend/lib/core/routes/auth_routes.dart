@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+﻿import 'package:get/get.dart';
 import 'package:frontend/modules/common/auth/forgot_password/screens/forgot_password_screen.dart';
 import 'package:frontend/modules/common/auth/forgot_password/screens/forgot_password_verification_screen.dart';
 import 'package:frontend/modules/common/auth/login/screens/login_screen.dart';

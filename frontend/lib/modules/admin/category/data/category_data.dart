@@ -1,4 +1,4 @@
-import 'package:frontend/core/models/category.dart';
+﻿import 'package:frontend/core/models/category.dart';
 
 final categoriesData = <Category>[
   Category(id: '1', name: 'Fruit'),

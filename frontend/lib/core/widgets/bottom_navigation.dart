@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
 import 'package:frontend/core/controllers/bottom_nav_controller.dart';
@@ -12,7 +12,7 @@ class BottomNavigation extends StatelessWidget {
     final controller = Get.find<BottomNavController>();
     return Obx(
       () => NavigationBar(
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: Get.theme.colorScheme.surface,
         onDestinationSelected: (index) {
           controller.setIndex(index);
           onTap?.call(index);

@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/primary_button_with_icon.dart';
 import 'package:frontend/core/widgets/quantity_handler.dart';
 import 'package:frontend/core/models/product.dart';
+import 'package:get/get.dart';
 
 class DetailedProductScreen extends StatelessWidget {
   const DetailedProductScreen({super.key, required this.product});
@@ -12,8 +13,8 @@ class DetailedProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final iconTheme = Theme.of(context).iconTheme;
+    final colorScheme = Get.theme.colorScheme;
+    final iconTheme = Get.theme.iconTheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -100,7 +101,7 @@ class DetailedProductScreen extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: '₹ ',
+                              text: 'â‚¹ ',
                               style: AppTypography.titleLargeEmphasized.copyWith(
                                 color: colorScheme.primary,
                               ),

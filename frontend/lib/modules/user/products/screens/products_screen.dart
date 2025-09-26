@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/models/product.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
@@ -15,7 +15,7 @@ class ProductsScreen extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isDismissible: true,
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Get.theme.colorScheme.surface,
       barrierColor: Colors.black.withValues(alpha: 0.5),
       builder: (_) => const FilterSheet(),
     );

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/modules/admin/product/data/product_data.dart';
 import 'package:frontend/modules/admin/product/widgets/product_list_item.dart';
 

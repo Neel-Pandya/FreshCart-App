@@ -1,4 +1,4 @@
-import 'package:frontend/core/utils/api_client.dart';
+﻿import 'package:frontend/core/utils/api_client.dart';
 import 'package:frontend/core/models/category.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +18,7 @@ class CategoryController extends GetxController {
     try {
       isLoading.value = true;
 
-      final response = await apiClient.post('admin/category/add', data: {'name': name});
+      final response = await apiClient.post('category/add', data: {'name': name});
       final category = Category.fromJson(response['data']);
       categoryList.add(category);
       responseMessage.value = response['message'];
@@ -35,7 +35,7 @@ class CategoryController extends GetxController {
     try {
       isLoading.value = true;
 
-      final response = await apiClient.get('admin/category/all');
+      final response = await apiClient.get('category/all');
       final data = response['data'];
 
       final List<Category> categories = (data as List)
@@ -54,7 +54,7 @@ class CategoryController extends GetxController {
 
   Future<bool> deleteCategory(String id) async {
     try {
-      final response = await apiClient.delete('admin/category/delete', data: {'id': id});
+      final response = await apiClient.delete('category/delete', data: {'id': id});
       // Optimistically update the list so UI reflects instantly
       categoryList.removeWhere((c) => c.id == id);
       responseMessage.value = response['message'];
@@ -68,7 +68,7 @@ class CategoryController extends GetxController {
   Future<bool> updateCategory(String id, String name) async {
     try {
       isLoading.value = true;
-      final response = await apiClient.put('admin/category/update', data: {'id': id, 'name': name});
+      final response = await apiClient.put('category/update', data: {'id': id, 'name': name});
 
       final index = categoryList.indexWhere((c) => c.id == id);
       if (index != -1) {

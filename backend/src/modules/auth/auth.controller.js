@@ -8,6 +8,12 @@ const signup = asyncHandler(async (req, res) => {
   return res.status(201).json(new ApiResponse(201, message));
 });
 
+const googleSignup = asyncHandler(async (req, res) => {
+  const { message, user } = await AuthService.googleSignup(req.body.idToken);
+
+  return res.status(201).json(new ApiResponse(201, message));
+});
+
 const login = asyncHandler(async (req, res) => {
   const { user, accessToken } = await AuthService.login(req.body);
 
@@ -19,7 +25,7 @@ const login = asyncHandler(async (req, res) => {
       status: user.status,
       profile: user.profile,
       role: user.role,
-
+      isGoogle: user.isGoogle,
       accessToken,
     })
   );
@@ -62,4 +68,13 @@ const changePassword = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, 'Password changed successfully.'));
 });
 
-export { signup, login, resendOtp, verifyOtp, forgotPassword, resetPassword, changePassword };
+export {
+  signup,
+  googleSignup,
+  login,
+  resendOtp,
+  verifyOtp,
+  forgotPassword,
+  resetPassword,
+  changePassword,
+};

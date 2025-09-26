@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/modules/common/onboarding/models/onboarding.dart';
+import 'package:get/get.dart';
 
 class OnboardingItem extends StatelessWidget {
   const OnboardingItem({super.key, required this.item});
@@ -34,7 +35,7 @@ class OnboardingItem extends StatelessWidget {
         Text(
           item.heading,
           style: AppTypography.titleLargeEmphasized.copyWith(
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Get.theme.colorScheme.onSurface,
           ),
           textAlign: TextAlign.center,
         ),
@@ -42,7 +43,7 @@ class OnboardingItem extends StatelessWidget {
         Text(
           item.description,
           style: AppTypography.labelMedium.copyWith(
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+            color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
           ),
           textAlign: TextAlign.center,
         ),

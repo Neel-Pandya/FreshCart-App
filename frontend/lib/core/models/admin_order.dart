@@ -1,4 +1,4 @@
-import 'package:frontend/core/models/admin_product.dart';
+﻿import 'package:frontend/core/models/admin_product.dart';
 
 class Order {
   final String orderId;

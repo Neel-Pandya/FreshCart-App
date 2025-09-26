@@ -4,6 +4,7 @@ import ApiError from '../../core/utils/api_error.util.js';
 import nodemailer from 'nodemailer';
 import EnvConfig from '../../core/config/env.config.js';
 import bcrypt from 'bcryptjs';
+import admin from '../../core/config/firebase.config.js';
 
 class AuthService {
   async signup(data) {
@@ -24,6 +25,41 @@ class AuthService {
     };
   }
 
+  async googleSignup(idToken) {
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const { uid, email } = decodedToken;
+
+    if (!email) throw new ApiError(400, 'Google account has no email associated');
+
+    // Fetch user details from Firebase
+    const firebaseUser = await admin.auth().getUser(uid);
+
+    if (!firebaseUser) throw new ApiError(401, 'Invalid or expired ID Token');
+
+    const { displayName, photoURL } = firebaseUser;
+    const name = displayName || email.split('@')[0];
+
+    // Check if user already exists
+    let user = await User.findOne({ email });
+
+    if (user) throw new ApiError(400, 'User already exists. Please login instead.');
+
+    user = await User.create({
+      email,
+      name,
+      profile: photoURL,
+      isGoogle: true,
+      status: 'active',
+    });
+
+    if (!user) throw new ApiError(500, 'User creation failed');
+
+    return {
+      message: 'Google signup successful',
+      user,
+    };
+  }
+
   async login(data) {
     const { email, password } = data;
     const user = await User.findOne({ email });
@@ -33,6 +69,9 @@ class AuthService {
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) throw new ApiError(400, 'Invalid credentials');
+
+    if (user.isGoogle)
+      throw new ApiError(400, 'This account is associated with Google. Please use Google Sign-In.');
 
     return { user, accessToken: user.generateToken() };
   }

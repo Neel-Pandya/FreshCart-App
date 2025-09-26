@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/modules/common/widgets/change_password_form.dart';
+import 'package:get/get.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
   const ChangePasswordScreen({super.key});
@@ -12,7 +13,7 @@ class ChangePasswordScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Change Password',
-          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
+          style: AppTypography.titleLarge.copyWith(color: Get.theme.colorScheme.onSurface),
         ),
         centerTitle: true,
       ),

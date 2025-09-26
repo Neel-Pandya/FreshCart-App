@@ -1,4 +1,4 @@
-import 'package:frontend/core/models/order.dart';
+﻿import 'package:frontend/core/models/order.dart';
 
 final orderData = const <Order>[
   Order(

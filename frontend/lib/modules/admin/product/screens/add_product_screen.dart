@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/modules/admin/product/widgets/add_product_form.dart';
 
 class AddProductScreen extends StatelessWidget {

@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
+import 'package:get/get.dart';
 
 class FormTextField extends StatefulWidget {
   const FormTextField({
@@ -61,7 +62,7 @@ class _FormTextFieldState extends State<FormTextField> {
   }
 
   Color _getIconColor({required Color defaultColor}) {
-    if (_hasError) return Theme.of(context).colorScheme.error;
+    if (_hasError) return Get.theme.colorScheme.error;
     if (_isFocused) return AppColors.primary;
     return defaultColor;
   }
@@ -91,9 +92,9 @@ class _FormTextFieldState extends State<FormTextField> {
             ? Icon(
                 widget.prefixIcon,
                 color: _getIconColor(
-                  defaultColor: Theme.of(context).brightness == Brightness.light
+                  defaultColor: Get.theme.brightness == Brightness.light
                       ? AppColors.iconColor
-                      : Theme.of(context).colorScheme.onSurface,
+                      : Get.theme.colorScheme.onSurface,
                 ),
               )
             : null,
@@ -103,39 +104,39 @@ class _FormTextFieldState extends State<FormTextField> {
                 child: Icon(
                   widget.suffixIcon,
                   color: _getIconColor(
-                    defaultColor: Theme.of(context).brightness == Brightness.light
+                    defaultColor: Get.theme.brightness == Brightness.light
                         ? AppColors.iconColor
-                        : Theme.of(context).colorScheme.onSurface,
+                        : Get.theme.colorScheme.onSurface,
                   ),
                 ),
               )
             : null,
         filled: widget.filled ?? true,
         fillColor: _isFocused
-            ? Theme.of(context).colorScheme.surface
-            : Theme.of(context).brightness == Brightness.light
+            ? Get.theme.colorScheme.surface
+            : Get.theme.brightness == Brightness.light
             ? const Color(0xFFE0E0E0).withAlpha(35)
-            : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.05),
+            : Get.theme.colorScheme.onSurface.withValues(alpha: 0.05),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: Theme.of(context).brightness == Brightness.light
+            color: Get.theme.brightness == Brightness.light
                 ? AppColors.border
-                : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+                : Get.theme.colorScheme.onSurface.withValues(alpha: 0.4),
             width: 1,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1.5),
+          borderSide: BorderSide(color: Get.theme.colorScheme.primary, width: 1.5),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Theme.of(context).colorScheme.error, width: 1),
+          borderSide: BorderSide(color: Get.theme.colorScheme.error, width: 1),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Theme.of(context).colorScheme.error, width: 1.5),
+          borderSide: BorderSide(color: Get.theme.colorScheme.error, width: 1.5),
         ),
       ),
     );

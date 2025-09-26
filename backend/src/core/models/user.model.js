@@ -16,7 +16,8 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, 'Password is required'],
+      required: false,
+      default: '',
     },
     profile: {
       type: String,
@@ -30,6 +31,11 @@ const userSchema = new mongoose.Schema(
       type: Number,
       required: [true, 'Role is required'],
       default: 0,
+    },
+
+    isGoogle: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

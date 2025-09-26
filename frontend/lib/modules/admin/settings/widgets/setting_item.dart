@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
+import 'package:get/get.dart';
 
 class SettingItem extends StatelessWidget {
   const SettingItem({
@@ -30,21 +31,21 @@ class SettingItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         side: const BorderSide(color: AppColors.border, width: 1.25),
       ),
-      tileColor: Theme.of(context).brightness == Brightness.light
-          ? Theme.of(context).colorScheme.surface
-          : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.05),
+      tileColor: Get.theme.brightness == Brightness.light
+          ? Colors.white
+          : Get.theme.colorScheme.onSurface.withValues(alpha: 0.05),
       leading: Icon(
         icon,
         color:
             iconColor ??
-            (Theme.of(context).brightness == Brightness.light
+            (Get.theme.brightness == Brightness.light
                 ? AppColors.iconColor
-                : Theme.of(context).colorScheme.onSurface),
+                : Get.theme.colorScheme.onSurface),
       ),
       title: Text(
         title,
         style: AppTypography.bodyMedium.copyWith(
-          color: titleColor ?? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+          color: titleColor ?? Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
         ),
       ),
       onTap: onTap ?? () {},
@@ -54,9 +55,9 @@ class SettingItem extends StatelessWidget {
             trailingIcon,
             color:
                 iconColor ??
-                (Theme.of(context).brightness == Brightness.light
+                (Get.theme.brightness == Brightness.light
                     ? AppColors.iconColor
-                    : Theme.of(context).colorScheme.onSurface),
+                    : Get.theme.colorScheme.onSurface),
           ),
     );
   }

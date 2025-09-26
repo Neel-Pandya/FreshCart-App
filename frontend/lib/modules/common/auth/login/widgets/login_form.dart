@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -139,9 +139,10 @@ class _LoginFormState extends State<LoginForm> {
               'OR',
               textAlign: TextAlign.center,
               style: AppTypography.labelLarge.copyWith(
-                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+                color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.4),
               ),
             ),
+            const SizedBox(height: 10),
             SecondaryButton(
               text: 'Sign In with Google',
               icon: SvgPicture.asset('assets/icons/google_icon.svg', width: 20, height: 20),

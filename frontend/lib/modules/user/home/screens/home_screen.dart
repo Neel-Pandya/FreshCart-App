@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/product_card.dart';
@@ -28,9 +28,9 @@ class HomeScreen extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'New Arrivals 🔥',
+                    'New Arrivals ðŸ”¥',
                     style: AppTypography.bodyLargeEmphasized.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: Get.theme.colorScheme.onSurface,
                     ),
                   ),
 

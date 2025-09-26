@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -9,6 +9,7 @@ import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/core/widgets/secondary_button.dart';
 import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
+import 'package:frontend/modules/common/auth/login/screens/login_screen.dart';
 import 'package:get/get.dart';
 
 class SignupForm extends StatefulWidget {
@@ -62,6 +63,21 @@ class _SignupFormState extends State<SignupForm> {
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
       Get.toNamed(AuthRoutes.signUpVerification, arguments: _emailController.text);
+    });
+  }
+
+  void _handleGoogleSignup() async {
+    final result = await _authController.googleSignup();
+    if (!result) {
+      Toaster.showErrorMessage(message: _authController.error.value);
+      return;
+    }
+
+    Toaster.showSuccessMessage(message: _authController.responseMessage.value);
+
+    Future.delayed(const Duration(seconds: 2), () {
+      if (!mounted) return;
+      Get.to(const LoginScreen());
     });
   }
 
@@ -153,13 +169,15 @@ class _SignupFormState extends State<SignupForm> {
             'OR',
             textAlign: TextAlign.center,
             style: AppTypography.labelLarge.copyWith(
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+              color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.4),
             ),
           ),
 
+          const SizedBox(height: 10),
           SecondaryButton(
             text: 'Sign Up with Google',
             icon: SvgPicture.asset('assets/icons/google_icon.svg', width: 20, height: 20),
+            onPressed: _handleGoogleSignup,
           ),
         ],
       ),

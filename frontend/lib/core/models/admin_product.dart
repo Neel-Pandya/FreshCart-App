@@ -1,4 +1,4 @@
-class Product {
+﻿class Product {
   final String imageUrl;
   final String productId;
   final String name;

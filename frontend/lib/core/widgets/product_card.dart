@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/models/product.dart';
+import 'package:get/get.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.product, this.onTap});
@@ -25,21 +26,21 @@ class ProductCard extends StatelessWidget {
           Text(
             product.name,
             style: AppTypography.bodyMediumEmphasized.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
+              color: Get.theme.colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 2),
           Text(
             product.category,
             style: AppTypography.bodyMedium.copyWith(
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+              color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 3),
           Text(
-            '₹ ${product.price.toStringAsFixed(0)}',
+            'â‚¹ ${product.price.toStringAsFixed(0)}',
             style: AppTypography.bodyMediumEmphasized.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
+              color: Get.theme.colorScheme.onSurface,
             ),
           ),
         ],

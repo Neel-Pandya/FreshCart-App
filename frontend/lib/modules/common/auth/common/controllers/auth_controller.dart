@@ -1,9 +1,12 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'dart:core';
+import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:frontend/core/utils/api_client.dart';
 import 'package:frontend/core/models/user.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthController extends GetxController {
   var isLoading = false.obs;
@@ -11,6 +14,8 @@ class AuthController extends GetxController {
   var responseMessage = ''.obs;
   var user = Rxn<User>();
   final _storage = const FlutterSecureStorage();
+  final _googleSignIn = GoogleSignIn.instance;
+
   Future<bool> login({required String email, required String password}) async {
     isLoading.value = true;
     try {
@@ -128,8 +133,36 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<bool> googleSignup() async {
+    await _googleSignIn.initialize();
+    try {
+      final GoogleSignInAccount googleUser = await _googleSignIn.authenticate();
+
+      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken);
+
+      final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+      final idToken = await userCredential.user?.getIdToken();
+      if (idToken == null) {
+        error.value = 'Failed to retrieve ID token from Google.';
+        return false;
+      }
+
+      final response = await apiClient.post('auth/google-signup', data: {'idToken': idToken});
+      responseMessage.value = response['message'];
+      print(responseMessage.value);
+      return true;
+    } catch (e) {
+      error.value = e.toString();
+      print(e);
+      return false;
+    }
+  }
+
   Future<void> logout() async {
-    await _storage.deleteAll();
+    await _storage.delete(key: 'user');
     user.value = null;
   }
 }

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/theme/app_typography.dart';
@@ -29,14 +29,14 @@ class HomeHeader extends StatelessWidget {
               Text(
                 name,
                 style: AppTypography.bodyMediumEmphasized.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: Get.theme.colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 1),
               Text(
                 'Let\'s go shopping',
                 style: AppTypography.bodyMedium.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                  color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
               ),
             ],
@@ -48,7 +48,7 @@ class HomeHeader extends StatelessWidget {
             onTap: () {
               Get.toNamed(UserRoutes.cart);
             },
-            child: Icon(FeatherIcons.shoppingBag, color: Theme.of(context).colorScheme.onSurface),
+            child: Icon(FeatherIcons.shoppingBag, color: Get.theme.colorScheme.onSurface),
           ),
         ],
       ),

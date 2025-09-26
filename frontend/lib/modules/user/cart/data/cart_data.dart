@@ -1,4 +1,4 @@
-import 'package:frontend/modules/user/cart/models/cart.dart';
+﻿import 'package:frontend/modules/user/cart/models/cart.dart';
 
 final cartData = <Cart>[
   Cart(

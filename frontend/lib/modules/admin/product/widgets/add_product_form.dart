@@ -1,3 +1,6 @@
+﻿import 'dart:typed_data';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -24,6 +27,8 @@ class _AddProductFormState extends State<AddProductForm> {
       _descriptionController;
   late final CategoryController _categoryController;
   String? _selectedCategoryName;
+  FilePickerResult? _pickedFile;
+  Uint8List? _fileBytes;
 
   @override
   void initState() {
@@ -65,6 +70,27 @@ class _AddProductFormState extends State<AddProductForm> {
     });
   }
 
+  Future<void> _handleFileUpload() async {
+    _pickedFile = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      type: FileType.custom,
+      withData: true,
+      allowedExtensions: ['jpg', 'png', 'jpeg'],
+    );
+
+    final file = _pickedFile!.files.first;
+    if (file.size > 1024 * 1024) {
+      Toaster.showErrorMessage(message: 'File size should be less than 1MB');
+      _pickedFile = null;
+      _fileBytes = null;
+      setState(() {});
+      return;
+    }
+    setState(() {
+      _fileBytes = file.bytes;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -73,14 +99,55 @@ class _AddProductFormState extends State<AddProductForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Center(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                color: AppColors.border,
+            child: GestureDetector(
+              onTap: _handleFileUpload,
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: AppColors.border,
+                    ),
+                    height: 100,
+                    width: 100,
+                    child: _fileBytes != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.memory(
+                              _fileBytes!,
+                              fit: BoxFit.cover,
+                              height: 100,
+                              width: 100,
+                            ),
+                          )
+                        : const Icon(
+                            Icons.camera_alt_outlined,
+                            color: AppColors.iconColor,
+                            size: 45,
+                          ),
+                  ),
+                  if (_fileBytes != null)
+                    Positioned(
+                      top: 4,
+                      right: 4,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _fileBytes = null;
+                            _pickedFile = null;
+                          });
+                        },
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.black54,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.close, color: Colors.white, size: 20),
+                        ),
+                      ),
+                    ),
+                ],
               ),
-              height: 100,
-              width: 100,
-              child: const Icon(Icons.camera_alt_outlined, color: AppColors.iconColor, size: 45),
             ),
           ),
 

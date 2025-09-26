@@ -1,9 +1,10 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/controllers/theme_controller.dart';
 import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/routes/user_routes.dart';
+import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/modules/admin/settings/widgets/setting_item.dart';
@@ -21,18 +22,18 @@ class SettingsScreen extends StatelessWidget {
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
-          icon: Icon(FeatherIcons.logOut, color: Theme.of(context).colorScheme.error, size: 36),
+          icon: Icon(FeatherIcons.logOut, color: Get.theme.colorScheme.error, size: 36),
           title: Text(
             'Logout',
             style: AppTypography.titleLarge.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
+              color: Get.theme.colorScheme.onSurface,
             ),
             textAlign: TextAlign.center,
           ),
           content: Text(
             'Are you sure you want to logout?',
             style: AppTypography.bodyMedium.copyWith(
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+              color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -41,13 +42,13 @@ class SettingsScreen extends StatelessWidget {
             TextButton(
               onPressed: () => Get.back(),
               style: TextButton.styleFrom(
-                foregroundColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                foregroundColor: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
                 backgroundColor: Colors.transparent,
               ),
               child: Text(
                 'Cancel',
                 style: AppTypography.bodyMedium.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                  color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
               ),
             ),
@@ -64,13 +65,13 @@ class SettingsScreen extends StatelessWidget {
                 });
               },
               style: TextButton.styleFrom(
-                foregroundColor: Theme.of(context).colorScheme.error,
+                foregroundColor: Get.theme.colorScheme.error,
                 backgroundColor: Colors.transparent,
               ),
               child: Text(
                 'Logout',
                 style: AppTypography.bodyMedium.copyWith(
-                  color: Theme.of(context).colorScheme.error,
+                  color: Get.theme.colorScheme.error,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -95,7 +96,7 @@ class SettingsScreen extends StatelessWidget {
                   Text(
                     'General',
                     style: AppTypography.titleMediumEmphasized.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: Get.theme.colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -116,7 +117,7 @@ class SettingsScreen extends StatelessWidget {
                   Text(
                     'Preferences',
                     style: AppTypography.titleMediumEmphasized.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: Get.theme.colorScheme.onSurface,
                     ),
                   ),
 
@@ -126,8 +127,14 @@ class SettingsScreen extends StatelessWidget {
                     title: 'Dark Mode',
                     icon: FeatherIcons.moon,
                     trailingWidget: Transform.scale(
-                      scale: 0.8, // Make the switch smaller
+                      scale: 0.8,
                       child: Switch(
+                        inactiveThumbColor: AppColors.iconColor,
+                        trackOutlineColor: WidgetStateProperty.all(
+                          Get.theme.brightness == Brightness.light
+                              ? AppColors.iconColor
+                              : Get.theme.colorScheme.secondary,
+                        ),
                         value: _themeController.isDarkMode.value,
                         onChanged: (_) {
                           _themeController.toggleTheme();
@@ -140,8 +147,8 @@ class SettingsScreen extends StatelessWidget {
                   SettingItem(
                     title: 'Logout',
                     icon: FeatherIcons.logOut,
-                    iconColor: Theme.of(context).colorScheme.error,
-                    titleColor: Theme.of(context).colorScheme.error,
+                    iconColor: Get.theme.colorScheme.error,
+                    titleColor: Get.theme.colorScheme.error,
                     onTap: () => _logout(context),
                   ),
                 ],

@@ -1,4 +1,4 @@
-// lib/core/routes/app_routes.dart
+﻿// lib/core/routes/app_routes.dart
 import 'package:get/get.dart';
 import 'package:frontend/core/routes/admin_routes.dart';
 import 'package:frontend/core/routes/auth_routes.dart';

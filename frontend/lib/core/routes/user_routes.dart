@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+﻿import 'package:get/get.dart';
 import 'package:frontend/modules/user/cart/screens/cart_screen.dart';
 import 'package:frontend/modules/user/checkout/screens/checkout_screen.dart';
 import 'package:frontend/modules/user/settings/screens/change_password_screen.dart';

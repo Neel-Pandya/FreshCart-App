@@ -1,4 +1,4 @@
-import 'package:frontend/modules/common/onboarding/models/onboarding.dart';
+﻿import 'package:frontend/modules/common/onboarding/models/onboarding.dart';
 
 final onBoardingData = <Onboarding>[
   Onboarding(

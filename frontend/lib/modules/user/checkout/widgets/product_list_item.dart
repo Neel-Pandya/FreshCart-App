@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/modules/user/cart/models/cart.dart';
+import 'package:get/get.dart';
 
 class ProductListItem extends StatelessWidget {
   const ProductListItem({super.key, required this.cart});
@@ -24,14 +25,14 @@ class ProductListItem extends StatelessWidget {
               Text(
                 cart.productName,
                 style: AppTypography.titleMediumEmphasized.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: Get.theme.colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 5),
               Text(
                 cart.quantity.toString(),
                 style: AppTypography.bodyMedium.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: Get.theme.colorScheme.onSurface,
                 ),
               ),
             ],
@@ -42,7 +43,7 @@ class ProductListItem extends StatelessWidget {
           Text(
             '\u20B9 ${cart.totalPrice.toStringAsFixed(0)}',
             style: AppTypography.bodyMedium.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
+              color: Get.theme.colorScheme.onSurface,
             ),
           ),
         ],

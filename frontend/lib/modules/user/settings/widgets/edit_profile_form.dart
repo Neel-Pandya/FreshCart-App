@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:frontend/core/utils/toaster.dart';
@@ -75,11 +75,11 @@ class _EditProfileFormState extends State<EditProfileForm> {
                     height: 30,
                     width: 30,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface,
+                      color: Get.theme.colorScheme.surface,
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.25),
+                          color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.25),
                           blurRadius: 6,
                           offset: const Offset(0, 2),
                         ),
@@ -88,7 +88,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                     child: Icon(
                       FeatherIcons.edit2,
                       size: 16,
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: Get.theme.colorScheme.onSurface,
                     ),
                   ),
                 ),

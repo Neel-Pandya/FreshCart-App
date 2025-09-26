@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/models/admin_order.dart';
 import 'package:frontend/modules/admin/orders/widgets/view_order_item.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:get/get.dart';
 
 class ViewOrderScreen extends StatefulWidget {
   const ViewOrderScreen({super.key, required this.order});
@@ -34,7 +35,7 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
       appBar: AppBar(
         title: Text(
           widget.order.orderId,
-          style: AppTypography.titleLarge.copyWith(color: Theme.of(context).colorScheme.onSurface),
+          style: AppTypography.titleLarge.copyWith(color: Get.theme.colorScheme.onSurface),
         ),
       ),
       body: SafeArea(
@@ -87,7 +88,7 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
                         Text(
                           'Ordered By - ${widget.order.orderedBy}',
                           style: AppTypography.titleMedium.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
+                            color: Get.theme.colorScheme.onSurface,
                           ),
                         ),
 
@@ -96,7 +97,7 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
                         Text(
                           'Total Amount - \u20B9 ${widget.order.totalAmount.toStringAsFixed(0)}',
                           style: AppTypography.titleMedium.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
+                            color: Get.theme.colorScheme.onSurface,
                           ),
                         ),
                       ],

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
@@ -17,38 +17,38 @@ class UserListItem extends StatelessWidget {
       builder: (ctx) => AlertDialog(
         icon: Icon(
           Icons.warning_amber_outlined,
-          color: Theme.of(context).colorScheme.error,
+          color: Get.theme.colorScheme.error,
           size: 36,
         ),
         title: Text(
           'Delete User',
           style: AppTypography.titleLargeEmphasized.copyWith(
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Get.theme.colorScheme.onSurface,
           ),
         ),
         content: Text(
           textAlign: TextAlign.center,
           'Are you sure you want to delete this user?',
-          style: AppTypography.bodyMedium.copyWith(color: Theme.of(context).colorScheme.onSurface),
+          style: AppTypography.bodyMedium.copyWith(color: Get.theme.colorScheme.onSurface),
         ),
         actionsAlignment: MainAxisAlignment.spaceAround,
         actions: [
           TextButton(
             style: TextButton.styleFrom(
-              foregroundColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+              foregroundColor: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
               backgroundColor: Colors.transparent,
             ),
             onPressed: () => Get.back(),
             child: Text(
               'Cancel',
               style: AppTypography.bodyMedium.copyWith(
-                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
               ),
             ),
           ),
           TextButton(
             style: TextButton.styleFrom(
-              foregroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Get.theme.colorScheme.error,
               backgroundColor: Colors.transparent,
             ),
             onPressed: () {
@@ -57,7 +57,7 @@ class UserListItem extends StatelessWidget {
             },
             child: Text(
               'Delete',
-              style: AppTypography.bodyMedium.copyWith(color: Theme.of(context).colorScheme.error),
+              style: AppTypography.bodyMedium.copyWith(color: Get.theme.colorScheme.error),
             ),
           ),
         ],
@@ -68,9 +68,9 @@ class UserListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: Theme.of(context).brightness == Brightness.light
-          ? Theme.of(context).colorScheme.surface
-          : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.05),
+      tileColor: Get.theme.brightness == Brightness.light
+          ? Get.theme.colorScheme.surface
+          : Get.theme.colorScheme.onSurface.withValues(alpha: 0.05),
       contentPadding: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -82,7 +82,7 @@ class UserListItem extends StatelessWidget {
       ),
       title: Text(
         user.name,
-        style: AppTypography.titleMedium.copyWith(color: Theme.of(context).colorScheme.onSurface),
+        style: AppTypography.titleMedium.copyWith(color: Get.theme.colorScheme.onSurface),
       ),
 
       trailing: Row(
@@ -96,7 +96,7 @@ class UserListItem extends StatelessWidget {
           ),
           IconButton(
             onPressed: () => _handleDeleteUser(context),
-            icon: Icon(FeatherIcons.trash2, color: Theme.of(context).colorScheme.error),
+            icon: Icon(FeatherIcons.trash2, color: Get.theme.colorScheme.error),
           ),
         ],
       ),

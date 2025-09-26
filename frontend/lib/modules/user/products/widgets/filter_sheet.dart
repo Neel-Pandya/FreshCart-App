@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
@@ -53,7 +53,7 @@ class _FilterSheetState extends State<FilterSheet> {
               'Filter By',
               textAlign: TextAlign.center,
               style: AppTypography.titleLargeEmphasized.copyWith(
-                color: Theme.of(context).colorScheme.onSurface,
+                color: Get.theme.colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 30),
@@ -62,7 +62,7 @@ class _FilterSheetState extends State<FilterSheet> {
             Text(
               'Category',
               style: AppTypography.bodyMediumEmphasized.copyWith(
-                color: Theme.of(context).colorScheme.onSurface,
+                color: Get.theme.colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 10),
@@ -78,7 +78,7 @@ class _FilterSheetState extends State<FilterSheet> {
             Text(
               'Price',
               style: AppTypography.bodyMediumEmphasized.copyWith(
-                color: Theme.of(context).colorScheme.onSurface,
+                color: Get.theme.colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 10),
@@ -97,7 +97,7 @@ class _FilterSheetState extends State<FilterSheet> {
                 min: _minPrice.toDouble(),
                 max: _maxPrice.toDouble(),
                 divisions: _maxPrice - _minPrice,
-                inactiveColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+                inactiveColor: Get.theme.colorScheme.onSurface.withValues(alpha: 0.4),
                 activeColor: AppColors.primary,
                 labels: RangeLabels(
                   _priceRange.start.round().toString(),
@@ -106,10 +106,10 @@ class _FilterSheetState extends State<FilterSheet> {
               ),
             ),
             Text(
-              '₹${_priceRange.start.round()} - ₹${_priceRange.end.round()}',
+              'â‚¹${_priceRange.start.round()} - â‚¹${_priceRange.end.round()}',
               textAlign: TextAlign.center,
               style: AppTypography.bodyMedium.copyWith(
-                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
               ),
             ),
 
