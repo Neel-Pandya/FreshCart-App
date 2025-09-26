@@ -11,8 +11,9 @@ class SettingItem extends StatelessWidget {
     this.onTap,
     this.trailingIcon,
     this.iconColor,
-    this.titleColor,
     this.trailingWidget,
+
+    this.titleColor,
   });
 
   final String title;
@@ -28,16 +29,23 @@ class SettingItem extends StatelessWidget {
     return ListTile(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: const BorderSide(color: AppColors.border, width: 1.25),
+        side: BorderSide(
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.border
+              : AppColors.borderDark,
+          width: 1.25,
+        ),
       ),
-      tileColor: Get.theme.brightness == Brightness.light
+      tileColor: Theme.of(context).brightness == Brightness.light
           ? Colors.white
           : Get.theme.colorScheme.onSurface.withValues(alpha: 0.05),
       leading: Icon(
         icon,
-        color: Get.theme.brightness == Brightness.light
-            ? AppColors.iconColor
-            : Get.theme.colorScheme.onSurface,
+        color:
+            iconColor ??
+            (Get.theme.brightness == Brightness.light
+                ? AppColors.iconColor
+                : Get.theme.colorScheme.onSurface),
       ),
       title: Text(
         title,
@@ -47,7 +55,15 @@ class SettingItem extends StatelessWidget {
       ),
       onTap: onTap ?? () {},
       trailing:
-          trailingWidget ?? Icon(trailingIcon, color: Get.theme.colorScheme.onSurface),
+          trailingWidget ??
+          Icon(
+            trailingIcon,
+            color:
+                iconColor ??
+                (Theme.of(context).brightness == Brightness.light
+                    ? AppColors.iconColor
+                    : Get.theme.colorScheme.onSurface),
+          ),
     );
   }
 }

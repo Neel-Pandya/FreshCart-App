@@ -38,7 +38,7 @@ class ProductCard extends StatelessWidget {
           ),
           const SizedBox(height: 3),
           Text(
-            'â‚¹ ${product.price.toStringAsFixed(0)}',
+            '₹ ${product.price.toStringAsFixed(0)}',
             style: AppTypography.bodyMediumEmphasized.copyWith(
               color: Get.theme.colorScheme.onSurface,
             ),

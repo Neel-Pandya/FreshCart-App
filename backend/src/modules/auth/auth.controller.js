@@ -31,6 +31,22 @@ const login = asyncHandler(async (req, res) => {
   );
 });
 
+const googleLogin = asyncHandler(async (req, res) => {
+  const {accessToken, user} = await AuthService.googleLogin(req.body.idToken);
+  return res.status(200).json(
+    new ApiResponse(200, 'User logged in successfully', {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      status: user.status,
+      profile: user.profile,
+      role: user.role,
+      isGoogle: user.isGoogle,
+      accessToken,
+    })
+  );
+});
+
 const resendOtp = asyncHandler(async (req, res) => {
   const { email } = req.body;
   const { message } = await AuthService.resendOtp(email);
@@ -72,6 +88,7 @@ export {
   signup,
   googleSignup,
   login,
+  googleLogin,
   resendOtp,
   verifyOtp,
   forgotPassword,

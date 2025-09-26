@@ -18,7 +18,7 @@ class HomeHeader extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(100),
-            child: Image.asset(imageUrl, fit: BoxFit.cover, height: 50, width: 50),
+            child: Image.network(imageUrl, fit: BoxFit.cover, height: 50, width: 50),
           ),
 
           const SizedBox(width: 13),

@@ -1,13 +1,15 @@
-﻿import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 
 class ThemeController extends GetxController {
   var isDarkMode = false.obs;
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
-  void toggleTheme() {
+  void toggleTheme() async {
     isDarkMode.value = !isDarkMode.value;
-    _storage.write(key: 'isDarkMode', value: isDarkMode.value.toString());
+    Get.changeThemeMode(isDarkMode.value ? ThemeMode.dark : ThemeMode.light);
+    await _storage.write(key: 'isDarkMode', value: isDarkMode.value.toString());
   }
 
   Future<void> isDarkModeEnabled() async {

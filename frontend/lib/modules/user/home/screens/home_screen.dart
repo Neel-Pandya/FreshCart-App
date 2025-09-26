@@ -22,13 +22,13 @@ class HomeScreen extends StatelessWidget {
             children: [
               HomeHeader(
                 name: controller.user.value?.name ?? '',
-                imageUrl: 'assets/images/user/common_profile.png',
+                imageUrl: controller.user.value!.imageUrl,
               ),
               const SizedBox(height: 20),
               Row(
                 children: [
                   Text(
-                    'New Arrivals ðŸ”¥',
+                    'New Arrivals 🔥',
                     style: AppTypography.bodyLargeEmphasized.copyWith(
                       color: Get.theme.colorScheme.onSurface,
                     ),

@@ -66,12 +66,35 @@ class AuthService {
 
     if (!user) throw new ApiError(400, 'User not found');
 
+    if (user.isGoogle)
+      throw new ApiError(400, 'This account is associated with Google. Please use Google Sign-In.');
+    
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) throw new ApiError(400, 'Invalid credentials');
 
-    if (user.isGoogle)
-      throw new ApiError(400, 'This account is associated with Google. Please use Google Sign-In.');
+
+    return { user, accessToken: user.generateToken() };
+  }
+
+  async googleLogin(idToken) {
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const { uid, email } = decodedToken;
+
+    if (!email) throw new ApiError(400, 'Google account has no email associated');
+
+    // Fetch user details from Firebase
+    const firebaseUser = await admin.auth().getUser(uid);
+
+    if (!firebaseUser) throw new ApiError(401, 'Invalid or expired ID Token');
+
+    // Check if user exists
+    const user = await User.findOne({ email });
+
+    if (!user) throw new ApiError(400, 'User not found. Please sign up first.');
+
+    if (!user.isGoogle)
+      throw new ApiError(400, 'This account is not associated with Google. Please use regular login.');
 
     return { user, accessToken: user.generateToken() };
   }

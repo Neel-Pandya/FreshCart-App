@@ -8,15 +8,7 @@ import 'package:frontend/modules/common/auth/common/controllers/auth_controller.
 import 'package:get/get.dart';
 
 class EditProfileForm extends StatefulWidget {
-  const EditProfileForm({
-    super.key,
-    required this.imageUrl,
-    required this.name,
-    required this.email,
-  });
-  final String imageUrl;
-  final String name;
-  final String email;
+  const EditProfileForm({super.key});
 
   @override
   State<EditProfileForm> createState() => _EditProfileFormState();
@@ -26,7 +18,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _nameController;
   late final TextEditingController _emailController;
-  late final AuthController controller;
+  final AuthController _authController = Get.find<AuthController>();
   void _updateProfile(BuildContext context) {
     if (!_formKey.currentState!.validate()) return;
 
@@ -38,9 +30,9 @@ class _EditProfileFormState extends State<EditProfileForm> {
   @override
   void initState() {
     super.initState();
-    controller = Get.find<AuthController>();
-    _nameController = TextEditingController(text: controller.user.value?.name);
-    _emailController = TextEditingController(text: controller.user.value?.email);
+
+    _nameController = TextEditingController(text: _authController.user.value?.name);
+    _emailController = TextEditingController(text: _authController.user.value?.email);
   }
 
   @override
@@ -62,7 +54,12 @@ class _EditProfileFormState extends State<EditProfileForm> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(100),
-                child: Image.asset(widget.imageUrl, height: 80, width: 80, fit: BoxFit.cover),
+                child: Image.network(
+                  _authController.user.value!.imageUrl,
+                  height: 80,
+                  width: 80,
+                  fit: BoxFit.cover,
+                ),
               ),
 
               Positioned(

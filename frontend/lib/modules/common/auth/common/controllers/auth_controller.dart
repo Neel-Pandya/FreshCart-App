@@ -139,12 +139,11 @@ class AuthController extends GetxController {
       final GoogleSignInAccount googleUser = await _googleSignIn.authenticate();
 
       final GoogleSignInAuthentication googleAuth = googleUser.authentication;
-
       final credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken);
 
       final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-
       final idToken = await userCredential.user?.getIdToken();
+
       if (idToken == null) {
         error.value = 'Failed to retrieve ID token from Google.';
         return false;
@@ -152,11 +151,44 @@ class AuthController extends GetxController {
 
       final response = await apiClient.post('auth/google-signup', data: {'idToken': idToken});
       responseMessage.value = response['message'];
-      print(responseMessage.value);
       return true;
     } catch (e) {
+      if (e.toString().contains('sign in aborted') || e.toString().contains('Cancelled by user')) {
+        error.value = 'Google sign-up was cancelled.';
+        return false;
+      }
       error.value = e.toString();
-      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> googleLogin() async {
+    await _googleSignIn.initialize();
+    try {
+      final GoogleSignInAccount googleUser = await _googleSignIn.authenticate();
+
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken);
+      final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      final idToken = await userCredential.user?.getIdToken();
+
+      if (idToken == null) {
+        error.value = 'Failed to retrieve ID token from Google.';
+        return false;
+      }
+
+      final response = await apiClient.post('auth/google-login', data: {'idToken': idToken});
+      final user = User.fromJson(response['data']);
+      await _storage.write(key: 'user', value: jsonEncode({'data': user.toJson()}));
+      this.user.value = user;
+      responseMessage.value = response['message'];
+      return true;
+    } catch (e) {
+      if (e.toString().contains('sign in aborted') || e.toString().contains('Cancelled by user')) {
+        error.value = 'Google sign-in was cancelled.';
+        return false;
+      }
+      error.value = e.toString();
       return false;
     }
   }

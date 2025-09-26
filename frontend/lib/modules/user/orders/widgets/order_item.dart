@@ -25,9 +25,7 @@ class OrderItem extends StatelessWidget {
       ),
       title: Text(
         order.productName,
-        style: AppTypography.titleMediumEmphasized.copyWith(
-          color: Get.theme.colorScheme.onSurface,
-        ),
+        style: AppTypography.titleMediumEmphasized.copyWith(color: Get.theme.colorScheme.onSurface),
       ),
       subtitle: Text(
         'Qty - ${order.quantity}',
@@ -36,10 +34,8 @@ class OrderItem extends StatelessWidget {
         ),
       ),
       trailing: Text(
-        'â‚¹ ${order.subTotal}',
-        style: AppTypography.bodyMediumEmphasized.copyWith(
-          color: Get.theme.colorScheme.onSurface,
-        ),
+        '₹ ${order.subTotal}',
+        style: AppTypography.bodyMediumEmphasized.copyWith(color: Get.theme.colorScheme.onSurface),
       ),
     );
   }

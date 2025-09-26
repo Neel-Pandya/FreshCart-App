@@ -29,6 +29,18 @@ class _LoginFormState extends State<LoginForm> {
   late final TextEditingController _passwordController;
   final AuthController _authController = Get.find<AuthController>();
 
+  void _handleGoogleLogin() async {
+    final result = await _authController.googleLogin();
+    if (!result) {
+      Toaster.showErrorMessage(message: _authController.error.value);
+      return;
+    }
+    Toaster.showSuccessMessage(message: _authController.responseMessage.value);
+    Future.delayed(const Duration(seconds: 2), () {
+      Get.to(const UserMasterLayout());
+    });
+  }
+
   void _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
     FocusManager.instance.primaryFocus?.unfocus();
@@ -146,7 +158,7 @@ class _LoginFormState extends State<LoginForm> {
             SecondaryButton(
               text: 'Sign In with Google',
               icon: SvgPicture.asset('assets/icons/google_icon.svg', width: 20, height: 20),
-              onPressed: () {},
+              onPressed: _handleGoogleLogin,
             ),
           ],
         ),

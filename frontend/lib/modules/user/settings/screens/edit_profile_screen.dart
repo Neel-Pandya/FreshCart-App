@@ -23,14 +23,7 @@ class EditProfileScreen extends StatelessWidget {
           children: [
             Divider(height: 1, thickness: 1, color: AppColors.border),
             SizedBox(height: 20),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: EditProfileForm(
-                imageUrl: 'assets/images/user/common_profile.png',
-                name: 'Neel Pandya',
-                email: 'neelpandya2601@gmail.com',
-              ),
-            ),
+            Padding(padding: EdgeInsets.symmetric(horizontal: 30), child: EditProfileForm()),
           ],
         ),
       ),

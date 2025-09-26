@@ -25,9 +25,7 @@ class SettingsScreen extends StatelessWidget {
           icon: Icon(FeatherIcons.logOut, color: Get.theme.colorScheme.error, size: 36),
           title: Text(
             'Logout',
-            style: AppTypography.titleLarge.copyWith(
-              color: Get.theme.colorScheme.onSurface,
-            ),
+            style: AppTypography.titleLarge.copyWith(color: Get.theme.colorScheme.onSurface),
             textAlign: TextAlign.center,
           ),
           content: Text(
@@ -126,20 +124,22 @@ class SettingsScreen extends StatelessWidget {
                   SettingItem(
                     title: 'Dark Mode',
                     icon: FeatherIcons.moon,
-                    trailingWidget: Transform.scale(
-                      scale: 0.8,
-                      child: Switch(
-                        inactiveThumbColor: AppColors.iconColor,
-                        trackOutlineColor: WidgetStateProperty.all(
-                          Get.theme.brightness == Brightness.light
-                              ? AppColors.iconColor
-                              : Get.theme.colorScheme.secondary,
+                    trailingWidget: Obx(
+                      () => Transform.scale(
+                        scale: 0.8,
+                        child: Switch(
+                          inactiveThumbColor: AppColors.iconColor,
+                          trackOutlineColor: WidgetStateProperty.all(
+                            Theme.of(context).brightness == Brightness.light
+                                ? AppColors.iconColor
+                                : Get.theme.colorScheme.secondary,
+                          ),
+                          value: _themeController.isDarkMode.value,
+                          onChanged: (_) {
+                            _themeController.toggleTheme();
+                          },
+                          activeThumbColor: Get.theme.colorScheme.secondary,
                         ),
-                        value: _themeController.isDarkMode.value,
-                        onChanged: (_) {
-                          _themeController.toggleTheme();
-                        },
-                        activeThumbColor: Get.theme.colorScheme.secondary,
                       ),
                     ),
                   ),

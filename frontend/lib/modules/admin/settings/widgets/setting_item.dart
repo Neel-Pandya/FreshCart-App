@@ -29,9 +29,14 @@ class SettingItem extends StatelessWidget {
     return ListTile(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: const BorderSide(color: AppColors.border, width: 1.25),
+        side: BorderSide(
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.border
+              : AppColors.borderDark,
+          width: 1.25,
+        ),
       ),
-      tileColor: Get.theme.brightness == Brightness.light
+      tileColor: Theme.of(context).brightness == Brightness.light
           ? Colors.white
           : Get.theme.colorScheme.onSurface.withValues(alpha: 0.05),
       leading: Icon(
@@ -55,7 +60,7 @@ class SettingItem extends StatelessWidget {
             trailingIcon,
             color:
                 iconColor ??
-                (Get.theme.brightness == Brightness.light
+                (Theme.of(context).brightness == Brightness.light
                     ? AppColors.iconColor
                     : Get.theme.colorScheme.onSurface),
           ),

@@ -12,7 +12,7 @@ class BottomNavigation extends StatelessWidget {
     final controller = Get.find<BottomNavController>();
     return Obx(
       () => NavigationBar(
-        backgroundColor: Get.theme.colorScheme.surface,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         onDestinationSelected: (index) {
           controller.setIndex(index);
           onTap?.call(index);
