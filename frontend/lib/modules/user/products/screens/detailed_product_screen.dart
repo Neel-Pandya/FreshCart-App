@@ -101,7 +101,7 @@ class DetailedProductScreen extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: 'â‚¹ ',
+                              text: '₹ ',
                               style: AppTypography.titleLargeEmphasized.copyWith(
                                 color: colorScheme.primary,
                               ),

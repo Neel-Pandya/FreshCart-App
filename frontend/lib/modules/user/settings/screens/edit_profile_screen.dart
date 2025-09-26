@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
-import 'package:frontend/modules/user/settings/widgets/edit_profile_form.dart';
+import 'package:frontend/modules/common/settings/widgets/edit_profile_form.dart';
 import 'package:get/get.dart';
 
 class EditProfileScreen extends StatelessWidget {

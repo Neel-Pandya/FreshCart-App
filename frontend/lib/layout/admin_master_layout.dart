@@ -4,7 +4,7 @@ import 'package:frontend/modules/admin/category/screens/category_screen.dart';
 import 'package:frontend/modules/admin/dashboard/screens/dashboard_screen.dart';
 import 'package:frontend/modules/admin/product/screens/products_screen.dart';
 import 'package:frontend/modules/admin/user/screens/user_screen.dart';
-import 'package:frontend/modules/admin/settings/screens/settings_screen.dart';
+import 'package:frontend/modules/common/settings/screens/settings_screen.dart';
 import 'package:frontend/modules/admin/orders/screens/orders_screen.dart';
 import 'package:get/get.dart';
 import 'package:frontend/core/controllers/drawer_nav_controller.dart';

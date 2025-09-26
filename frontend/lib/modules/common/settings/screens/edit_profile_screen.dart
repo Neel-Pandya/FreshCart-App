@@ -1,27 +1,26 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_typography.dart';
-import 'package:frontend/modules/common/widgets/change_password_form.dart';
+import 'package:frontend/modules/common/settings/widgets/edit_profile_form.dart';
 import 'package:get/get.dart';
 
-class ChangePasswordScreen extends StatelessWidget {
-  const ChangePasswordScreen({super.key});
+class EditProfileScreen extends StatelessWidget {
+  const EditProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Change Password',
+          'Edit Profile',
           style: AppTypography.titleLarge.copyWith(color: Get.theme.colorScheme.onSurface),
         ),
         centerTitle: true,
       ),
-
       body: const SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(padding: EdgeInsets.symmetric(horizontal: 30), child: ChangePasswordForm()),
+            Padding(padding: EdgeInsets.symmetric(horizontal: 30), child: EditProfileForm()),
           ],
         ),
       ),

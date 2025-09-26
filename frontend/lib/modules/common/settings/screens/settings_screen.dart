@@ -1,22 +1,22 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:frontend/core/controllers/bottom_nav_controller.dart';
 import 'package:frontend/core/controllers/theme_controller.dart';
 import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
+import 'package:frontend/modules/common/settings/widgets/setting_item.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
-import 'package:frontend/modules/user/settings/widgets/setting_item.dart';
 import 'package:get/get.dart';
-import 'package:frontend/core/controllers/bottom_nav_controller.dart';
 
 class SettingsScreen extends StatelessWidget {
   SettingsScreen({super.key});
 
   final ThemeController _themeController = Get.find<ThemeController>();
-
+  final AuthController _authController = Get.find<AuthController>();
   void _logout(BuildContext context) {
     showDialog(
       context: context,
@@ -54,8 +54,8 @@ class SettingsScreen extends StatelessWidget {
               onPressed: () {
                 final authController = Get.put(AuthController());
                 authController.logout();
+                Toaster.showSuccessMessage(message: 'Logout successful');
                 Get.back();
-                Toaster.showSuccessMessage(message: 'Logout successfully');
                 Future.delayed(const Duration(seconds: 2), () {
                   final nav = Get.find<BottomNavController>();
                   nav.setIndex(0);
@@ -83,17 +83,17 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const SizedBox(),
-        centerTitle: true,
-        title: Text(
-          'Settings',
-          style: AppTypography.titleLarge.copyWith(color: Get.theme.colorScheme.onSurface),
-        ),
-      ),
+      appBar: _authController.user.value!.role == 0
+          ? AppBar(
+              centerTitle: true,
+              title: Text(
+                'Settings',
+                style: AppTypography.titleLarge.copyWith(color: Get.theme.colorScheme.onSurface),
+              ),
+            )
+          : null,
       body: Column(
         children: [
-          const Divider(height: 1, thickness: 1, color: AppColors.border),
           const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -127,9 +127,7 @@ class SettingsScreen extends StatelessWidget {
                     color: Get.theme.colorScheme.onSurface,
                   ),
                 ),
-
                 const SizedBox(height: 20),
-
                 SettingItem(
                   title: 'Dark Mode',
                   icon: FeatherIcons.moon,

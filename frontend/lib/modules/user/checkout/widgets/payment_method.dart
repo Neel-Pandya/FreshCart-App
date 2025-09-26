@@ -18,11 +18,18 @@ class _PaymentMethodState extends State<PaymentMethod> {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => _showModalBottomSheet(context),
-      tileColor: Get.theme.colorScheme.surface,
+      tileColor: Theme.of(context).brightness == Brightness.light
+          ? Colors.white
+          : Get.theme.colorScheme.onSurface.withValues(alpha: 0.05),
       contentPadding: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: const BorderSide(color: AppColors.border, width: 1),
+        side: BorderSide(
+          color: Theme.of(context).brightness == Brightness.light
+              ? const Color.fromRGBO(224, 224, 224, 1)
+              : AppColors.borderDark,
+          width: 1,
+        ),
       ),
       leading: Container(
         padding: const EdgeInsets.all(10),
@@ -37,9 +44,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
       ),
       title: Text(
         selectedPaymentMethod ?? 'RazorPay',
-        style: AppTypography.titleMediumEmphasized.copyWith(
-          color: Get.theme.colorScheme.onSurface,
-        ),
+        style: AppTypography.titleMediumEmphasized.copyWith(color: Get.theme.colorScheme.onSurface),
       ),
       trailing: IconButton(
         icon: Icon(FeatherIcons.chevronRight, color: Get.theme.colorScheme.onSurface),
@@ -76,11 +81,18 @@ class _PaymentMethodState extends State<PaymentMethod> {
 
   Widget _buildPaymentOptionTile(BuildContext context, String method, IconData icon) {
     return ListTile(
-      tileColor: Get.theme.colorScheme.surface,
+      tileColor: Theme.of(context).brightness == Brightness.light
+          ? Colors.white
+          : Get.theme.colorScheme.onSurface.withValues(alpha: 0.05),
       contentPadding: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: BorderSide(color: Get.theme.colorScheme.onSurface, width: 1),
+        side: BorderSide(
+          color: Theme.of(context).brightness == Brightness.light
+              ? const Color.fromRGBO(224, 224, 224, 1)
+              : AppColors.borderDark,
+          width: 1,
+        ),
       ),
       leading: Container(
         padding: const EdgeInsets.all(10),
@@ -92,9 +104,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
       ),
       title: Text(
         method,
-        style: AppTypography.titleMediumEmphasized.copyWith(
-          color: Get.theme.colorScheme.onSurface,
-        ),
+        style: AppTypography.titleMediumEmphasized.copyWith(color: Get.theme.colorScheme.onSurface),
       ),
       onTap: () => _selectPaymentMethod(context, method),
     );

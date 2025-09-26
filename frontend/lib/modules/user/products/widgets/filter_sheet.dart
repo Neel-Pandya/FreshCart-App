@@ -106,7 +106,7 @@ class _FilterSheetState extends State<FilterSheet> {
               ),
             ),
             Text(
-              'â‚¹${_priceRange.start.round()} - â‚¹${_priceRange.end.round()}',
+              '₹${_priceRange.start.round()} - ₹${_priceRange.end.round()}',
               textAlign: TextAlign.center,
               style: AppTypography.bodyMedium.copyWith(
                 color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),

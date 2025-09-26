@@ -120,9 +120,9 @@ class _FormTextFieldState extends State<FormTextField> {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: Get.theme.brightness == Brightness.light
-                ? AppColors.border
-                : Get.theme.colorScheme.onSurface.withValues(alpha: 0.4),
+            color: Theme.of(context).brightness == Brightness.light
+                ? const Color.fromRGBO(224, 224, 224, 1)
+                : AppColors.borderDark,
             width: 1,
           ),
         ),

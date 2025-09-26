@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_typography.dart';
-import 'package:frontend/modules/admin/settings/widgets/edit_profile_form.dart';
+import 'package:frontend/modules/common/settings/widgets/edit_profile_form.dart';
 import 'package:get/get.dart';
 
 class EditProfileScreen extends StatelessWidget {
@@ -20,14 +20,7 @@ class EditProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: EditProfileForm(
-                imageUrl: 'assets/images/user/common_profile.png',
-                name: 'Neel Pandya',
-                email: 'neelpandya2601@gmail.com',
-              ),
-            ),
+            Padding(padding: EdgeInsets.symmetric(horizontal: 30), child: EditProfileForm()),
           ],
         ),
       ),

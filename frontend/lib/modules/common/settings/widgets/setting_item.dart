@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:get/get.dart';
@@ -12,7 +12,6 @@ class SettingItem extends StatelessWidget {
     this.trailingIcon,
     this.iconColor,
     this.trailingWidget,
-
     this.titleColor,
   });
 
@@ -31,7 +30,7 @@ class SettingItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         side: BorderSide(
           color: Theme.of(context).brightness == Brightness.light
-              ? AppColors.border
+              ? const Color.fromRGBO(224, 224, 224, 1)
               : AppColors.borderDark,
           width: 1.25,
         ),

@@ -1,22 +1,14 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:frontend/core/theme/app_colors.dart';
-import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
+import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
+import 'package:frontend/core/utils/toaster.dart';
 import 'package:get/get.dart';
 
 class EditProfileForm extends StatefulWidget {
-  const EditProfileForm({
-    super.key,
-    required this.imageUrl,
-    required this.name,
-    required this.email,
-  });
-  final String imageUrl;
-  final String name;
-  final String email;
+  const EditProfileForm({super.key});
 
   @override
   State<EditProfileForm> createState() => _EditProfileFormState();
@@ -26,20 +18,19 @@ class _EditProfileFormState extends State<EditProfileForm> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _nameController;
   late final TextEditingController _emailController;
+  final AuthController _authController = Get.find<AuthController>();
 
   void _updateProfile(BuildContext context) {
     if (!_formKey.currentState!.validate()) return;
-
     FocusManager.instance.primaryFocus?.unfocus();
-
     Toaster.showSuccessMessage(message: 'Profile updated successfully');
   }
 
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: widget.name);
-    _emailController = TextEditingController(text: widget.email);
+    _nameController = TextEditingController(text: _authController.user.value?.name);
+    _emailController = TextEditingController(text: _authController.user.value?.email);
   }
 
   @override
@@ -61,9 +52,13 @@ class _EditProfileFormState extends State<EditProfileForm> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(100),
-                child: Image.asset(widget.imageUrl, height: 80, width: 80, fit: BoxFit.cover),
+                child: Image.network(
+                  _authController.user.value!.imageUrl,
+                  height: 80,
+                  width: 80,
+                  fit: BoxFit.cover,
+                ),
               ),
-
               Positioned(
                 bottom: 0,
                 right: 0,
@@ -74,7 +69,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                     height: 30,
                     width: 30,
                     decoration: BoxDecoration(
-                      color: AppColors.background,
+                      color: Get.theme.colorScheme.surface,
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
@@ -94,9 +89,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
               ),
             ],
           ),
-
           const SizedBox(height: 30),
-
           FormTextField(
             prefixIcon: FeatherIcons.user,
             controller: _nameController,
@@ -112,9 +105,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
               ),
             ]).call,
           ),
-
           const SizedBox(height: 20),
-
           FormTextField(
             prefixIcon: FeatherIcons.mail,
             controller: _emailController,
@@ -126,9 +117,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
               EmailValidator(errorText: 'Invalid email'),
             ]).call,
           ),
-
           const SizedBox(height: 20),
-
           SizedBox(
             width: double.infinity,
             child: PrimaryButton(text: 'Save Changes', onPressed: () => _updateProfile(context)),
