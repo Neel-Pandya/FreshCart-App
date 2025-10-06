@@ -2,24 +2,20 @@
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
-import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/models/admin_product.dart';
 import 'package:frontend/modules/admin/product/screens/update_product_screen.dart';
 import 'package:get/get.dart';
 
 class ProductListItem extends StatelessWidget {
-  const ProductListItem({super.key, required this.product});
+  const ProductListItem({super.key, required this.product, required this.onDelete});
   final Product product;
+  final Future<void> Function() onDelete;
 
   void _handleDeleteProduct(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        icon: Icon(
-          Icons.warning_amber_outlined,
-          color: Get.theme.colorScheme.error,
-          size: 40,
-        ),
+      builder: (dialogContext) => AlertDialog(
+        icon: Icon(Icons.warning_amber_outlined, color: Get.theme.colorScheme.error, size: 40),
         title: Text(
           'Delete Product',
           style: AppTypography.titleLarge.copyWith(color: Get.theme.colorScheme.onSurface),
@@ -52,9 +48,10 @@ class ProductListItem extends StatelessWidget {
               foregroundColor: Get.theme.colorScheme.error,
               backgroundColor: Colors.transparent,
             ),
-            onPressed: () {
-              Get.back();
-              Toaster.showSuccessMessage(message: 'Product deleted successfully');
+            onPressed: () async {
+              await onDelete();
+              if (!dialogContext.mounted) return;
+              Navigator.of(dialogContext).pop();
             },
             child: Text(
               'Delete',

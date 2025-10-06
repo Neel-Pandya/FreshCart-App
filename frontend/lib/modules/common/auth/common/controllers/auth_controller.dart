@@ -1,6 +1,5 @@
 ﻿import 'dart:convert';
 import 'dart:core';
-import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:frontend/core/utils/api_client.dart';
 import 'package:frontend/core/models/user.dart';
@@ -167,7 +166,7 @@ class AuthController extends GetxController {
     try {
       final GoogleSignInAccount googleUser = await _googleSignIn.authenticate();
 
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
       final credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken);
       final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
       final idToken = await userCredential.user?.getIdToken();

@@ -32,7 +32,7 @@ const login = asyncHandler(async (req, res) => {
 });
 
 const googleLogin = asyncHandler(async (req, res) => {
-  const {accessToken, user} = await AuthService.googleLogin(req.body.idToken);
+  const { accessToken, user } = await AuthService.googleLogin(req.body.idToken);
   return res.status(200).json(
     new ApiResponse(200, 'User logged in successfully', {
       id: user._id,

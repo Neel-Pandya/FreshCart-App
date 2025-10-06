@@ -121,7 +121,7 @@ class _FormTextFieldState extends State<FormTextField> {
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
             color: Theme.of(context).brightness == Brightness.light
-                ? const Color.fromRGBO(224, 224, 224, 1)
+                ? const Color(0xFFCAC4D0)
                 : AppColors.borderDark,
             width: 1,
           ),

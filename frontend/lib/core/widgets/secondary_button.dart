@@ -2,7 +2,6 @@
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 
 class SecondaryButton extends StatelessWidget {
   const SecondaryButton({super.key, required this.text, this.onPressed, this.icon});
@@ -14,7 +13,7 @@ class SecondaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Get.theme;
-    final isDark = theme.brightness == Brightness.dark;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     final style = ElevatedButton.styleFrom(
       padding: const EdgeInsets.symmetric(vertical: 10),

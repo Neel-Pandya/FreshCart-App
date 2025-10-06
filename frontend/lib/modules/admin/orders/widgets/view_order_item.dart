@@ -29,37 +29,27 @@ class ViewOrderItem extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             'Name - ${product.name}',
-            style: AppTypography.titleMedium.copyWith(
-              color: Get.theme.colorScheme.onSurface,
-            ),
+            style: AppTypography.titleMedium.copyWith(color: Get.theme.colorScheme.onSurface),
           ),
           const SizedBox(height: 10),
           Text(
             'Price - \u20B9 ${product.price.toStringAsFixed(0)}',
-            style: AppTypography.titleMedium.copyWith(
-              color: Get.theme.colorScheme.onSurface,
-            ),
+            style: AppTypography.titleMedium.copyWith(color: Get.theme.colorScheme.onSurface),
           ),
           const SizedBox(height: 10),
           Text(
             'Category - ${product.category}',
-            style: AppTypography.titleMedium.copyWith(
-              color: Get.theme.colorScheme.onSurface,
-            ),
+            style: AppTypography.titleMedium.copyWith(color: Get.theme.colorScheme.onSurface),
           ),
           const SizedBox(height: 10),
           Text(
             'Quantity - ${product.quantity}',
-            style: AppTypography.titleMedium.copyWith(
-              color: Get.theme.colorScheme.onSurface,
-            ),
+            style: AppTypography.titleMedium.copyWith(color: Get.theme.colorScheme.onSurface),
           ),
           const SizedBox(height: 10),
           Text(
             'Total - \u20B9 ${(product.price * product.quantity).toStringAsFixed(0)}',
-            style: AppTypography.titleMedium.copyWith(
-              color: Get.theme.colorScheme.onSurface,
-            ),
+            style: AppTypography.titleMedium.copyWith(color: Get.theme.colorScheme.onSurface),
           ),
         ],
       ),

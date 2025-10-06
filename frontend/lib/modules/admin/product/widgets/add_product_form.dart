@@ -1,5 +1,6 @@
 ﻿import 'dart:typed_data';
 
+import 'package:dio/dio.dart' show FormData, MultipartFile;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -10,7 +11,8 @@ import 'package:frontend/core/widgets/drop_down_field.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/modules/admin/category/controllers/category_controller.dart';
-import 'package:get/get.dart';
+import 'package:frontend/modules/admin/product/controller/product_controller.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
 
 class AddProductForm extends StatefulWidget {
   const AddProductForm({super.key});
@@ -29,6 +31,7 @@ class _AddProductFormState extends State<AddProductForm> {
   String? _selectedCategoryName;
   FilePickerResult? _pickedFile;
   Uint8List? _fileBytes;
+  final ProductController _productController = Get.find<ProductController>();
 
   @override
   void initState() {
@@ -39,9 +42,7 @@ class _AddProductFormState extends State<AddProductForm> {
     _descriptionController = TextEditingController();
 
     // Ensure CategoryController is available and fetch categories
-    _categoryController = Get.isRegistered<CategoryController>()
-        ? Get.find<CategoryController>()
-        : Get.put(CategoryController());
+    _categoryController = Get.find<CategoryController>();
     // Kick off fetch if not already loaded
     if (_categoryController.categoryList.isEmpty) {
       _categoryController.fetchcategoryList();
@@ -58,13 +59,33 @@ class _AddProductFormState extends State<AddProductForm> {
     super.dispose();
   }
 
-  void _handleAddProduct() {
+  void _handleAddProduct() async {
     if (!_formKey.currentState!.validate()) return;
 
     FocusManager.instance.primaryFocus?.unfocus();
-    Toaster.showSuccessMessage(message: 'Product added successfully');
-    // close the form after 1.5 seconds
-    Future.delayed(const Duration(milliseconds: 2000), () {
+
+    if (_pickedFile == null) {
+      Toaster.showErrorMessage(message: 'Please Upload Product Image');
+      return;
+    }
+
+    final data = FormData.fromMap({
+      'image': MultipartFile.fromBytes(_fileBytes!, filename: _pickedFile!.files.first.name),
+      'name': _nameController.text.trim(),
+      'category': _selectedCategoryName ?? _categoryController.categoryList.first.name,
+      'price': _priceController.text.trim(),
+      'stock': _stockController.text.trim(),
+      'description': _descriptionController.text.trim(),
+    });
+
+    final result = await _productController.addProduct(data);
+    if (!result) {
+      Toaster.showErrorMessage(message: _productController.errorMessage.value);
+      return;
+    }
+
+    Toaster.showSuccessMessage(message: _productController.responseMessage.value);
+    Future.delayed(const Duration(milliseconds: 1500), () {
       if (!mounted) return;
       Get.back();
     });
@@ -78,16 +99,14 @@ class _AddProductFormState extends State<AddProductForm> {
       allowedExtensions: ['jpg', 'png', 'jpeg'],
     );
 
-    final file = _pickedFile!.files.first;
-    if (file.size > 1024 * 1024) {
-      Toaster.showErrorMessage(message: 'File size should be less than 1MB');
-      _pickedFile = null;
-      _fileBytes = null;
-      setState(() {});
-      return;
-    }
     setState(() {
-      _fileBytes = file.bytes;
+      if (_pickedFile!.files.first.size > 1024 * 1024) {
+        Toaster.showErrorMessage(message: 'File size should be less than 1MB');
+        _pickedFile = null;
+        _fileBytes = null;
+        return;
+      }
+      _fileBytes = _pickedFile!.files.first.bytes;
     });
   }
 
@@ -208,7 +227,9 @@ class _AddProductFormState extends State<AddProductForm> {
               items: names,
               initialValue: initial,
               onChanged: (value) {
-                setState(() => _selectedCategoryName = value);
+                setState(() {
+                  _selectedCategoryName = value;
+                });
               },
               prefixIcon: Icons.category,
               validator: RequiredValidator(errorText: 'Category is required').call,
@@ -246,7 +267,13 @@ class _AddProductFormState extends State<AddProductForm> {
 
           const SizedBox(height: 30),
 
-          PrimaryButton(text: 'Add Product', onPressed: _handleAddProduct),
+          Obx(
+            () => PrimaryButton(
+              isLoading: _productController.isLoading.value,
+              text: 'Add Product',
+              onPressed: _categoryController.categoryList.isEmpty ? null : _handleAddProduct,
+            ),
+          ),
         ],
       ),
     );

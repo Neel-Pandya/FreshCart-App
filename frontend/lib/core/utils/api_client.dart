@@ -37,6 +37,15 @@ class ApiClient {
               }
             }
           }
+
+          // --- Content Type Determination --- //
+          if (options.data != null) {
+            if (options.data is FormData) {
+              options.headers['Content-Type'] = 'multipart/form-data';
+            } else if (options.data is Map<String, dynamic>) {
+              options.headers['Content-Type'] = 'application/json';
+            }
+          }
           return handler.next(options);
         },
         onResponse: (response, handler) {

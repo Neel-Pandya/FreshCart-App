@@ -50,7 +50,9 @@ class _DropDownFieldState extends State<DropDownField> {
   Color _getIconColor() {
     if (_hasError) return AppColors.error;
     if (_isFocused) return AppColors.primary;
-    return Get.theme.colorScheme.onSurface;
+    return Theme.of(context).brightness == Brightness.light
+        ? AppColors.iconColor
+        : Get.theme.colorScheme.surface;
   }
 
   @override
@@ -70,7 +72,12 @@ class _DropDownFieldState extends State<DropDownField> {
         fillColor: _isFocused ? AppColors.background : Colors.white,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFFCAC4D0), width: 1),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.light
+                ? const Color(0xFFCAC4D0)
+                : AppColors.borderDark,
+            width: 1,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

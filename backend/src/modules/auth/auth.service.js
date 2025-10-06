@@ -68,11 +68,10 @@ class AuthService {
 
     if (user.isGoogle)
       throw new ApiError(400, 'This account is associated with Google. Please use Google Sign-In.');
-    
+
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) throw new ApiError(400, 'Invalid credentials');
-
 
     return { user, accessToken: user.generateToken() };
   }
@@ -94,7 +93,10 @@ class AuthService {
     if (!user) throw new ApiError(400, 'User not found. Please sign up first.');
 
     if (!user.isGoogle)
-      throw new ApiError(400, 'This account is not associated with Google. Please use regular login.');
+      throw new ApiError(
+        400,
+        'This account is not associated with Google. Please use regular login.'
+      );
 
     return { user, accessToken: user.generateToken() };
   }

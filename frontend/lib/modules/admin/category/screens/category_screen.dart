@@ -1,6 +1,5 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/admin_routes.dart';
-import 'package:frontend/modules/admin/category/controllers/category_controller.dart';
 import 'package:frontend/modules/admin/category/widgets/category_list.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +8,6 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(CategoryController());
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {

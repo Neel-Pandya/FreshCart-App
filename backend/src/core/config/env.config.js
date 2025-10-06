@@ -15,6 +15,11 @@ class EnvConfig {
   static emailUsername = process.env.EMAIL_USERNAME;
   static emailPassword = process.env.EMAIL_PASSWORD;
 
+  // Cloudinary
+  static cloudinaryCloudName = process.env.CLOUDINARY_CLOUD_NAME;
+  static cloudinaryApiKey = process.env.CLOUDINARY_API_KEY;
+  static cloudinaryApiSecret = process.env.CLOUDINARY_API_SECRET;
+
   // Firebase Admin
   static firebaseAccountType = process.env.FIREBASE_ACCOUNT_TYPE;
   static firebaseProjectId = process.env.FIREBASE_PROJECT_ID;

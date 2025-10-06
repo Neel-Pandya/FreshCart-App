@@ -1,13 +1,19 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'dart:developer';
+import 'dart:typed_data';
+
+import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/drop_down_field.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
-import 'package:frontend/modules/admin/category/data/category_data.dart';
+import 'package:frontend/modules/admin/category/controllers/category_controller.dart';
 import 'package:frontend/core/models/admin_product.dart';
-import 'package:get/get.dart';
+import 'package:frontend/modules/admin/product/controller/product_controller.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
 
 class UpdateProductForm extends StatefulWidget {
   const UpdateProductForm({super.key, required this.product});
@@ -24,6 +30,11 @@ class _UpdateProductFormState extends State<UpdateProductForm> {
       _priceController,
       _stockController,
       _descriptionController;
+  final CategoryController _categoryController = Get.find<CategoryController>();
+  var _selectedCategory = '';
+  Uint8List? _fileBytes;
+  FilePickerResult? _pickedFile;
+  final ProductController _productController = Get.find<ProductController>();
 
   @override
   void initState() {
@@ -44,15 +55,55 @@ class _UpdateProductFormState extends State<UpdateProductForm> {
     super.dispose();
   }
 
-  void _handleUpdateProduct() {
+  void _handleUpdateProduct() async {
     if (!_formKey.currentState!.validate()) return;
 
     FocusManager.instance.primaryFocus?.unfocus();
+
+    final data = FormData.fromMap({
+      'id': widget.product.productId,
+      'name': _nameController.text,
+      'price': _priceController.text,
+      'stock': _stockController.text,
+      'description': _descriptionController.text,
+      'category': _selectedCategory == '' ? widget.product.category : _selectedCategory,
+      'image': _fileBytes != null
+          ? MultipartFile.fromBytes(_fileBytes!, filename: _pickedFile!.files.first.name)
+          : null,
+      'imageUrl': widget.product.imageUrl,
+    });
+
+    final result = await _productController.updateProduct(data);
+    if (!result) {
+      Toaster.showErrorMessage(message: 'Failed to update product');
+      log(_productController.errorMessage.value);
+      return;
+    }
+
     Toaster.showSuccessMessage(message: 'Product updated successfully');
     // close the form after 1.5 seconds
     Future.delayed(const Duration(milliseconds: 2000), () {
       if (!mounted) return;
       Get.back();
+    });
+  }
+
+  void _handleFileUpload() async {
+    _pickedFile = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowMultiple: false,
+      allowedExtensions: ['jpg', 'png', 'jpeg'],
+      withData: true,
+    );
+
+    setState(() {
+      if (_pickedFile!.files.first.size > 1024 * 1024) {
+        Toaster.showErrorMessage(message: 'File must be less than 1 MB');
+        _pickedFile = null;
+        _fileBytes = null;
+      }
+
+      _fileBytes = _pickedFile!.files.first.bytes;
     });
   }
 
@@ -69,19 +120,28 @@ class _UpdateProductFormState extends State<UpdateProductForm> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: Image.network(
-                    widget.product.imageUrl,
-                    height: 80,
-                    width: 80,
-                    fit: BoxFit.cover,
-                  ),
+                  child: _fileBytes != null
+                      ? Image.memory(
+                          _fileBytes!,
+                          height: 80,
+                          width: 80,
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                        )
+                      : Image.network(
+                          widget.product.imageUrl,
+                          height: 80,
+                          width: 80,
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                        ),
                 ),
 
                 Positioned(
                   bottom: 0,
                   right: 0,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: _handleFileUpload,
                     borderRadius: BorderRadius.circular(100),
                     child: Container(
                       height: 30,
@@ -151,9 +211,13 @@ class _UpdateProductFormState extends State<UpdateProductForm> {
 
           DropDownField(
             labelText: 'Category',
-            items: categoriesData.map((e) => e.name).toList(),
+            items: _categoryController.categoryList.map((item) => item.name).toList(),
             initialValue: widget.product.category,
-            onChanged: (value) {},
+            onChanged: (value) {
+              setState(() {
+                _selectedCategory = value!;
+              });
+            },
             prefixIcon: Icons.category,
             validator: RequiredValidator(errorText: 'Category is required').call,
           ),
@@ -189,7 +253,13 @@ class _UpdateProductFormState extends State<UpdateProductForm> {
 
           const SizedBox(height: 30),
 
-          PrimaryButton(text: 'Update Product', onPressed: _handleUpdateProduct),
+          Obx(
+            () => PrimaryButton(
+              text: 'Update Product',
+              onPressed: _handleUpdateProduct,
+              isLoading: _productController.isLoading.value,
+            ),
+          ),
         ],
       ),
     );

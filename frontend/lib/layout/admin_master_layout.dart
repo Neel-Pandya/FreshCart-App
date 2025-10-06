@@ -18,8 +18,8 @@ class AdminMasterLayout extends StatefulWidget {
 
 class _AdminMasterLayoutState extends State<AdminMasterLayout> {
   final List<Map<String, dynamic>> _screens = [
-    {'title': 'Dashboard', 'widget': const DashboardScreen()},
-    {'title': 'Products', 'widget': const ProductsScreen()},
+    {'title': 'Dashboard', 'widget': DashboardScreen()},
+    {'title': 'Products', 'widget': ProductsScreen()},
     {'title': 'Orders', 'widget': const OrdersScreen()},
     {'title': 'Categories', 'widget': const CategoryScreen()},
     {'title': 'Users', 'widget': const UserScreen()},
