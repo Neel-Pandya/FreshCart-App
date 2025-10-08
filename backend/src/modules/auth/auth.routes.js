@@ -9,6 +9,7 @@ import {
   changePassword,
   googleSignup,
   googleLogin,
+  updateProfile
 } from './auth.controller.js';
 import validate from '../../core/middleware/zod.middleware.js';
 import {
@@ -21,8 +22,10 @@ import {
   changePasswordValidation,
   googleSignupValidation,
   googleLoginValidation,
+  updateProfileValidation,
 } from './auth.validation.js';
 import verifyJWT from '../../core/middleware/jwt.middleware.js';
+import upload from '../../core/middleware/multer.middleware.js';
 
 const router = Router();
 
@@ -35,5 +38,12 @@ router.post('/resend-otp', validate(resendOtpValidation), resendOtp);
 router.post('/forgot-password', validate(forgotPasswordValidation), forgotPassword);
 router.post('/reset-password', validate(resetPasswordValidation), resetPassword);
 router.post('/change-password', verifyJWT, validate(changePasswordValidation), changePassword);
+router.put(
+  '/update-profile',
+  verifyJWT,
+  upload.single('profile'),
+  validate(updateProfileValidation),
+  updateProfile
+);
 
 export default router;

@@ -3,12 +3,12 @@ import ApiError from '../utils/api_error.util.js';
 const validateFile = (req, isRequired = true) => {
   // If not required and no file provided, skip validation
   if (!isRequired && !req.file) return;
-  
+
   // If required but no file provided, throw error
   if (isRequired && !req.file) {
     throw new ApiError(400, 'Image file is required');
   }
-  
+
   // If file is provided (whether required or not), validate it
   if (req.file) {
     const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];

@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -5,7 +8,8 @@ import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
 import 'package:frontend/core/utils/toaster.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
+import 'package:dio/dio.dart' show FormData, MultipartFile;
 
 class EditProfileForm extends StatefulWidget {
   const EditProfileForm({super.key});
@@ -19,11 +23,25 @@ class _EditProfileFormState extends State<EditProfileForm> {
   late final TextEditingController _nameController;
   late final TextEditingController _emailController;
   final AuthController _authController = Get.find<AuthController>();
+  Uint8List? _fileBytes;
+  var _fileName = '';
 
-  void _updateProfile(BuildContext context) {
+  void _updateProfile(BuildContext context) async {
     if (!_formKey.currentState!.validate()) return;
     FocusManager.instance.primaryFocus?.unfocus();
-    Toaster.showSuccessMessage(message: 'Profile updated successfully');
+
+    final data = FormData.fromMap({
+      'name': _nameController.text.trim(),
+      if (_fileBytes != null) 'profile': MultipartFile.fromBytes(_fileBytes!, filename: _fileName),
+    });
+    final result = await _authController.updateProfile(data);
+
+    if (!result) {
+      Toaster.showErrorMessage(message: _authController.error.value);
+      return;
+    }
+
+    Toaster.showSuccessMessage(message: _authController.responseMessage.value);
   }
 
   @override
@@ -41,6 +59,22 @@ class _EditProfileFormState extends State<EditProfileForm> {
     super.dispose();
   }
 
+  _handleImagePicker() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'jpeg', 'png'],
+      allowMultiple: false,
+      withData: true,
+    );
+
+    if (result == null) return;
+
+    setState(() {
+      _fileBytes = result.files.first.bytes;
+      _fileName = result.files.first.name;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -52,18 +86,20 @@ class _EditProfileFormState extends State<EditProfileForm> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(100),
-                child: Image.network(
-                  _authController.user.value!.imageUrl,
-                  height: 80,
-                  width: 80,
-                  fit: BoxFit.cover,
-                ),
+                child: _fileBytes != null
+                    ? Image.memory(_fileBytes!, height: 80, width: 80, fit: BoxFit.cover)
+                    : Image.network(
+                        _authController.user.value!.imageUrl,
+                        height: 80,
+                        width: 80,
+                        fit: BoxFit.cover,
+                      ),
               ),
               Positioned(
                 bottom: 0,
                 right: 0,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: _handleImagePicker,
                   borderRadius: BorderRadius.circular(100),
                   child: Container(
                     height: 30,
@@ -120,7 +156,13 @@ class _EditProfileFormState extends State<EditProfileForm> {
           const SizedBox(height: 20),
           SizedBox(
             width: double.infinity,
-            child: PrimaryButton(text: 'Save Changes', onPressed: () => _updateProfile(context)),
+            child: Obx(
+              () => PrimaryButton(
+                text: 'Save Changes',
+                onPressed: () => _updateProfile(context),
+                isLoading: _authController.isLoading.value,
+              ),
+            ),
           ),
         ],
       ),

@@ -4,6 +4,7 @@ import 'package:frontend/modules/admin/category/screens/category_screen.dart';
 import 'package:frontend/modules/admin/dashboard/screens/dashboard_screen.dart';
 import 'package:frontend/modules/admin/product/screens/products_screen.dart';
 import 'package:frontend/modules/admin/user/screens/user_screen.dart';
+import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
 import 'package:frontend/modules/common/settings/screens/settings_screen.dart';
 import 'package:frontend/modules/admin/orders/screens/orders_screen.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,8 @@ class AdminMasterLayout extends StatefulWidget {
 }
 
 class _AdminMasterLayoutState extends State<AdminMasterLayout> {
+  final AuthController _authController = Get.find<AuthController>();
+
   final List<Map<String, dynamic>> _screens = [
     {'title': 'Dashboard', 'widget': DashboardScreen()},
     {'title': 'Products', 'widget': ProductsScreen()},
@@ -40,7 +43,13 @@ class _AdminMasterLayoutState extends State<AdminMasterLayout> {
           actions: [
             ClipRRect(
               borderRadius: BorderRadius.circular(100),
-              child: Image.asset('assets/images/user/common_profile.png', height: 48, width: 48),
+              child: Obx(
+                () => Image.network(
+                  _authController.user.value?.imageUrl ?? '',
+                  height: 48,
+                  width: 48,
+                ),
+              ),
             ),
           ],
           actionsPadding: const EdgeInsets.symmetric(horizontal: 10),

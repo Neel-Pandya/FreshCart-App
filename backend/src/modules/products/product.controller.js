@@ -26,7 +26,11 @@ const deleteProduct = asyncHandler(async (req, res) => {
 const updateProduct = asyncHandler(async (req, res) => {
   validateFile(req, false);
 
-  const product = await ProductService.updateProduct(req.body, req.body.imageUrl, req.file?.path ?? '');
+  const product = await ProductService.updateProduct(
+    req.body,
+    req.body.imageUrl,
+    req.file?.path ?? ''
+  );
 
   return res.status(200).json(new ApiResponse(200, 'Product updated successfully', product));
 });

@@ -98,6 +98,27 @@ const changePasswordValidation = z.strictObject({
     }),
 });
 
+const updateProfileValidation = z.strictObject({
+  name: z
+    .string({ error: 'Name is required' })
+    .nonempty({ error: 'Name is required' })
+    .trim()
+    .min(2, { error: 'Name must be at least 2 characters long' })
+    .max(50, { error: 'Name must be less than 50 characters long' })
+    .regex(/^[a-zA-Z\s]+$/, { error: 'Name can only contain letters and spaces' }),
+  profile: z
+    .any()
+    .optional()
+    .refine(
+      (file) =>
+        !file ||
+        (typeof file === 'object' &&
+          file.mimetype &&
+          ['image/jpeg', 'image/png', 'image/jpg'].includes(file.mimetype)),
+      { error: 'Profile must be an image file (jpeg, jpg, png)' }
+    ),
+});
+
 export {
   signupValidation,
   googleSignupValidation,
@@ -108,4 +129,5 @@ export {
   forgotPasswordValidation,
   resetPasswordValidation,
   changePasswordValidation,
+  updateProfileValidation,
 };

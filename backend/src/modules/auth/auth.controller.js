@@ -1,6 +1,8 @@
 import asyncHandler from 'express-async-handler';
 import AuthService from './auth.service.js';
-import ApiResponse from '../../core/utils/api_response.util.js';
+import ApiResponse from "../../core/utils/api_response.util.js";
+import validateFile from '../../core/middleware/file_validator.middleware.js';
+import cookieOptions from '../../core/config/cookie.config.js';
 
 const signup = asyncHandler(async (req, res) => {
   const { message } = await AuthService.signup(req.body);
@@ -17,7 +19,7 @@ const googleSignup = asyncHandler(async (req, res) => {
 const login = asyncHandler(async (req, res) => {
   const { user, accessToken } = await AuthService.login(req.body);
 
-  return res.status(200).json(
+  return res.status(200).cookie('accessToken', accessToken, cookieOptions).json(
     new ApiResponse(200, 'User logged in successfully', {
       id: user._id,
       name: user.name,
@@ -33,7 +35,7 @@ const login = asyncHandler(async (req, res) => {
 
 const googleLogin = asyncHandler(async (req, res) => {
   const { accessToken, user } = await AuthService.googleLogin(req.body.idToken);
-  return res.status(200).json(
+  return res.status(200).cookie('accessToken', accessToken, cookieOptions).json(
     new ApiResponse(200, 'User logged in successfully', {
       id: user._id,
       name: user.name,
@@ -84,6 +86,32 @@ const changePassword = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, 'Password changed successfully.'));
 });
 
+const updateProfile = asyncHandler(async (req, res) => {
+  validateFile(req, false);
+  const { user } = req;
+  const { name } = req.body;
+
+  const { updatedUser } = await AuthService.updateProfile(
+    user.id,
+    name,
+    user.profile,
+    req.file?.path ?? ''
+  );
+
+  return res.status(200).json(
+    new ApiResponse(200, 'Profile updated successfully', {
+      id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      status: updatedUser.status,
+      profile: updatedUser.profile,
+      role: updatedUser.role,
+      isGoogle: updatedUser.isGoogle,
+      accessToken: req.cookies.accessToken,
+    })
+  );
+});
+
 export {
   signup,
   googleSignup,
@@ -94,4 +122,5 @@ export {
   forgotPassword,
   resetPassword,
   changePassword,
+  updateProfile,
 };

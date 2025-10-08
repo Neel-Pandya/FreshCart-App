@@ -27,7 +27,7 @@
       role: json['role'],
       status: json['status'],
       imageUrl: json['profile'] ?? '',
-      accessToken: json['accessToken'],
+      accessToken: json['accessToken'] ?? '',
       isGoogle: json['isGoogle'] ?? false,
     );
   }

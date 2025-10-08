@@ -1,11 +1,14 @@
 ﻿import 'dart:convert';
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/core/models/user.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiClient {
   final Dio _dio;
+  final CookieJar _cookieJar = CookieJar();
 
   ApiClient()
     : _dio = Dio(
@@ -16,6 +19,8 @@ class ApiClient {
           headers: {'Content-Type': 'application/json'},
         ),
       ) {
+    // Add Cookie Manager
+    _dio.interceptors.add(CookieManager(_cookieJar));
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {

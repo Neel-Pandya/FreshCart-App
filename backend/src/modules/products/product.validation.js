@@ -102,8 +102,8 @@ const updateProductValidation = z.object({
     .min(10, { error: 'Description must be at least 10 characters long' })
     .max(1000, { error: 'Description cannot exceed 1,000 characters' })
     .regex(/^[a-zA-Z0-9\s\-_,\.;:()]+$/, { error: 'Description contains invalid characters' }),
-    
-    imageUrl: z.url({ message: 'Invalid image URL' }).nonempty({ message: 'Image URL is required' }),
+
+  imageUrl: z.url({ message: 'Invalid image URL' }).nonempty({ message: 'Image URL is required' }),
 });
 
 export { addProductValidation, removeProductValidation, updateProductValidation };

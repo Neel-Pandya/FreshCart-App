@@ -4,12 +4,14 @@ class EnvConfig {
   // App
   static appHost = process.env.APP_HOST;
   static appPort = process.env.APP_PORT;
+  static nodeEnv = process.env.NODE_ENV;
 
   // Database
   static mongoUri = process.env.MONGO_URI;
 
   // JWT
   static jwtSecret = process.env.JWT_SECRET;
+  static cookieSecret = process.env.COOKIE_SECRET;
 
   // Email
   static emailUsername = process.env.EMAIL_USERNAME;

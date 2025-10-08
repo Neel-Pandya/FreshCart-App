@@ -1,10 +1,12 @@
 ﻿import 'dart:convert';
 import 'dart:core';
+import 'dart:developer';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:frontend/core/utils/api_client.dart';
 import 'package:frontend/core/models/user.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData;
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthController extends GetxController {
@@ -195,5 +197,23 @@ class AuthController extends GetxController {
   Future<void> logout() async {
     await _storage.delete(key: 'user');
     user.value = null;
+  }
+
+  Future<bool> updateProfile(FormData data) async {
+    isLoading.value = true;
+    try {
+      final response = await apiClient.put('auth/update-profile', data: data);
+      log(response.toString());
+      final updated = User.fromJson(response['data']);
+      user.value = updated;
+      await _storage.write(key: 'user', value: jsonEncode({'data': updated.toJson()}));
+      responseMessage.value = response['message'];
+      return true;
+    } catch (e) {
+      error.value = e.toString();
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

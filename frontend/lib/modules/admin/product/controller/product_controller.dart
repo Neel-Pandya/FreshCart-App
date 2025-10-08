@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:frontend/core/models/admin_product.dart';
 import 'package:frontend/core/utils/api_client.dart';

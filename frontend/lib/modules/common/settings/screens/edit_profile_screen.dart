@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_typography.dart';
+import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
 import 'package:frontend/modules/common/settings/widgets/edit_profile_form.dart';
 import 'package:get/get.dart';
 
@@ -8,13 +9,14 @@ class EditProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authController = Get.find<AuthController>();
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Edit Profile',
           style: AppTypography.titleLarge.copyWith(color: Get.theme.colorScheme.onSurface),
         ),
-        centerTitle: true,
+        centerTitle: authController.user.value!.role == 0,
       ),
       body: const SafeArea(
         child: Column(

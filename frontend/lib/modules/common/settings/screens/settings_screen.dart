@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/controllers/bottom_nav_controller.dart';
@@ -54,13 +53,11 @@ class SettingsScreen extends StatelessWidget {
               onPressed: () {
                 final authController = Get.put(AuthController());
                 authController.logout();
-                Toaster.showSuccessMessage(message: 'Logout successful');
                 Get.back();
-                Future.delayed(const Duration(seconds: 2), () {
-                  final nav = Get.find<BottomNavController>();
-                  nav.setIndex(0);
-                  Get.offAllNamed(Routes.onBoarding);
-                });
+                Toaster.showSuccessMessage(message: 'Logout successful');
+                final nav = Get.find<BottomNavController>();
+                nav.setIndex(0);
+                Get.offAllNamed(Routes.onBoarding);
               },
               style: TextButton.styleFrom(
                 foregroundColor: Get.theme.colorScheme.error,

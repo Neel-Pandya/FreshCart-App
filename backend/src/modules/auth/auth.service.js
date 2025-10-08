@@ -5,6 +5,7 @@ import nodemailer from 'nodemailer';
 import EnvConfig from '../../core/config/env.config.js';
 import bcrypt from 'bcryptjs';
 import admin from '../../core/config/firebase.config.js';
+import uploadImage from "../../core/utils/cloudinary.util.js";
 
 class AuthService {
   async signup(data) {
@@ -227,6 +228,28 @@ class AuthService {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     await User.findByIdAndUpdate(existingUser._id, { password: hashedPassword }, { new: true });
+  }
+
+  async updateProfile(userId, name, oldProfile, profile) {
+    const user = await User.findById(userId);
+    if (!user) throw new ApiError(404, 'User not found');
+
+    if (user.isGoogle) throw new ApiError(400, 'Google users cannot update profile');
+
+    let newProfile = oldProfile;
+    if (profile) {
+      newProfile = await uploadImage(profile);
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { name, profile: newProfile },
+      { new: true }
+    );
+
+    if (!updatedUser) throw new ApiError(400, 'Profile update failed');
+    
+    return { updatedUser };
   }
 }
 
