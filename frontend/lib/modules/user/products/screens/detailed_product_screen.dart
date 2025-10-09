@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/primary_button_with_icon.dart';
 import 'package:frontend/core/widgets/quantity_handler.dart';
-import 'package:frontend/modules/user/products/models/product.dart';
+import 'package:frontend/core/models/product.dart';
+import 'package:get/get.dart';
 
 class DetailedProductScreen extends StatelessWidget {
   const DetailedProductScreen({super.key, required this.product});
@@ -13,17 +13,20 @@ class DetailedProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Get.theme.colorScheme;
+    final iconTheme = Get.theme.iconTheme;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Detailed Product',
-          style: AppTypography.titleLarge.copyWith(color: AppColors.textPrimary),
+          style: AppTypography.titleLarge.copyWith(color: colorScheme.onSurface),
         ),
         centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(FeatherIcons.shoppingBag, color: AppColors.iconColor),
+            icon: Icon(FeatherIcons.shoppingBag, color: iconTheme.color),
           ),
         ],
       ),
@@ -44,18 +47,18 @@ class DetailedProductScreen extends StatelessWidget {
                       Text(
                         product.name,
                         style: AppTypography.titleLargeEmphasized.copyWith(
-                          color: AppColors.textPrimary,
+                          color: colorScheme.onSurface,
                         ),
                       ),
                       const Spacer(),
                       IconButton(
                         onPressed: () {},
                         style: IconButton.styleFrom(
-                          backgroundColor: const Color(0xFFE0E0E0).withValues(alpha: 0.35),
+                          backgroundColor: colorScheme.onSurface.withValues(alpha: 0.15),
                           shape: const CircleBorder(),
                           fixedSize: const Size(40, 40),
                         ),
-                        icon: const Icon(FeatherIcons.heart, color: AppColors.iconColor),
+                        icon: Icon(FeatherIcons.heart, color: colorScheme.onSurface),
                       ),
                     ],
                   ),
@@ -64,12 +67,19 @@ class DetailedProductScreen extends StatelessWidget {
 
                   Text(
                     product.description,
-                    style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: colorScheme.onSurface.withValues(alpha: 0.7),
+                    ),
                   ),
 
                   const SizedBox(height: 15),
 
-                  const Divider(height: 1, thickness: 1, color: AppColors.border),
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    color: colorScheme.onSurface.withValues(alpha: 0.2),
+                  ),
+
                   const SizedBox(height: 15),
 
                   Row(
@@ -77,14 +87,14 @@ class DetailedProductScreen extends StatelessWidget {
                     children: [
                       Text(
                         'Choose Quantity',
-                        style: AppTypography.titleMedium.copyWith(color: AppColors.textPrimary),
+                        style: AppTypography.titleMedium.copyWith(color: colorScheme.onSurface),
                       ),
-
                       const QuantityHandler(),
                     ],
                   ),
 
                   const SizedBox(height: 30),
+
                   Row(
                     children: [
                       RichText(
@@ -93,25 +103,23 @@ class DetailedProductScreen extends StatelessWidget {
                             TextSpan(
                               text: '₹ ',
                               style: AppTypography.titleLargeEmphasized.copyWith(
-                                color: AppColors.primary,
+                                color: colorScheme.primary,
                               ),
                             ),
                             TextSpan(
                               text: product.price.toStringAsFixed(0),
                               style: AppTypography.titleLargeEmphasized.copyWith(
-                                color: AppColors.textPrimary,
+                                color: colorScheme.onSurface,
                               ),
                             ),
                           ],
                         ),
                       ),
-
                       const Spacer(),
-
                       const SizedBox(
                         width: 150,
                         child: PrimaryButtonWithIcon(
-                          text: 'Add To cart',
+                          text: 'Add To Cart',
                           icon: FeatherIcons.shoppingBag,
                         ),
                       ),

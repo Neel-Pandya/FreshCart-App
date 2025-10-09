@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/quantity_handler.dart';
 import 'package:frontend/modules/user/cart/models/cart.dart';
+import 'package:get/get.dart';
 
 class CartItem extends StatelessWidget {
   const CartItem({super.key, required this.cart});
@@ -36,20 +37,22 @@ class CartItem extends StatelessWidget {
                         Text(
                           cart.productName,
                           style: AppTypography.titleSmallEmphasized.copyWith(
-                            color: AppColors.textPrimary,
+                            color: Get.theme.colorScheme.onSurface,
                           ),
                         ),
                         const SizedBox(height: 3),
                         Text(
                           '\u20B9 ${cart.totalPrice.toStringAsFixed(0)}',
-                          style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary),
+                          style: AppTypography.bodySmall.copyWith(
+                            color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                          ),
                         ),
                       ],
                     ),
                   ),
 
                   const SizedBox(height: 3),
-                  const QuantityHandler(widtth: 25, height: 25),
+                  const QuantityHandler(width: 25, height: 25),
                 ],
               ),
             ],

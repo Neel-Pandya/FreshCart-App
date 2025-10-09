@@ -1,3 +1,7 @@
+﻿import 'dart:typed_data';
+
+import 'package:dio/dio.dart' show FormData, MultipartFile;
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -6,7 +10,9 @@ import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/drop_down_field.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
-import 'package:frontend/modules/admin/category/data/category_data.dart';
+import 'package:frontend/modules/admin/category/controllers/category_controller.dart';
+import 'package:frontend/modules/admin/product/controller/product_controller.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
 
 class AddProductForm extends StatefulWidget {
   const AddProductForm({super.key});
@@ -21,6 +27,11 @@ class _AddProductFormState extends State<AddProductForm> {
       _priceController,
       _stockController,
       _descriptionController;
+  late final CategoryController _categoryController;
+  String? _selectedCategoryName;
+  FilePickerResult? _pickedFile;
+  Uint8List? _fileBytes;
+  final ProductController _productController = Get.find<ProductController>();
 
   @override
   void initState() {
@@ -29,6 +40,13 @@ class _AddProductFormState extends State<AddProductForm> {
     _priceController = TextEditingController();
     _stockController = TextEditingController();
     _descriptionController = TextEditingController();
+
+    // Ensure CategoryController is available and fetch categories
+    _categoryController = Get.find<CategoryController>();
+    // Kick off fetch if not already loaded
+    if (_categoryController.categoryList.isEmpty) {
+      _categoryController.fetchcategoryList();
+    }
   }
 
   @override
@@ -41,15 +59,54 @@ class _AddProductFormState extends State<AddProductForm> {
     super.dispose();
   }
 
-  void _handleAddProduct() {
+  void _handleAddProduct() async {
     if (!_formKey.currentState!.validate()) return;
 
     FocusManager.instance.primaryFocus?.unfocus();
-    Toaster.showSuccessMessage(context: context, message: 'Product added successfully');
-    // close the form after 1.5 seconds
-    Future.delayed(const Duration(milliseconds: 2000), () {
+
+    if (_pickedFile == null) {
+      Toaster.showErrorMessage(message: 'Please Upload Product Image');
+      return;
+    }
+
+    final data = FormData.fromMap({
+      'image': MultipartFile.fromBytes(_fileBytes!, filename: _pickedFile!.files.first.name),
+      'name': _nameController.text.trim(),
+      'category': _selectedCategoryName ?? _categoryController.categoryList.first.name,
+      'price': _priceController.text.trim(),
+      'stock': _stockController.text.trim(),
+      'description': _descriptionController.text.trim(),
+    });
+
+    final result = await _productController.addProduct(data);
+    if (!result) {
+      Toaster.showErrorMessage(message: _productController.errorMessage.value);
+      return;
+    }
+
+    Toaster.showSuccessMessage(message: _productController.responseMessage.value);
+    Future.delayed(const Duration(milliseconds: 1500), () {
       if (!mounted) return;
-      Navigator.of(context).pop();
+      Get.back();
+    });
+  }
+
+  Future<void> _handleFileUpload() async {
+    _pickedFile = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      type: FileType.custom,
+      withData: true,
+      allowedExtensions: ['jpg', 'png', 'jpeg'],
+    );
+
+    setState(() {
+      if (_pickedFile!.files.first.size > 1024 * 1024) {
+        Toaster.showErrorMessage(message: 'File size should be less than 1MB');
+        _pickedFile = null;
+        _fileBytes = null;
+        return;
+      }
+      _fileBytes = _pickedFile!.files.first.bytes;
     });
   }
 
@@ -61,14 +118,55 @@ class _AddProductFormState extends State<AddProductForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Center(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                color: AppColors.border,
+            child: GestureDetector(
+              onTap: _handleFileUpload,
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: AppColors.border,
+                    ),
+                    height: 100,
+                    width: 100,
+                    child: _fileBytes != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.memory(
+                              _fileBytes!,
+                              fit: BoxFit.cover,
+                              height: 100,
+                              width: 100,
+                            ),
+                          )
+                        : const Icon(
+                            Icons.camera_alt_outlined,
+                            color: AppColors.iconColor,
+                            size: 45,
+                          ),
+                  ),
+                  if (_fileBytes != null)
+                    Positioned(
+                      top: 4,
+                      right: 4,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _fileBytes = null;
+                            _pickedFile = null;
+                          });
+                        },
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.black54,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.close, color: Colors.white, size: 20),
+                        ),
+                      ),
+                    ),
+                ],
               ),
-              height: 100,
-              width: 100,
-              child: const Icon(Icons.camera_alt_outlined, color: AppColors.iconColor, size: 45),
             ),
           ),
 
@@ -112,14 +210,31 @@ class _AddProductFormState extends State<AddProductForm> {
 
           const SizedBox(height: 15),
 
-          DropDownField(
-            labelText: 'Category',
-            items: categoriesData.map((e) => e.name).toList(),
-            initialValue: categoriesData.first.name,
-            onChanged: (value) {},
-            prefixIcon: Icons.category,
-            validator: RequiredValidator(errorText: 'Category is required').call,
-          ),
+          Obx(() {
+            if (_categoryController.isLoading.value && _categoryController.categoryList.isEmpty) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if (_categoryController.categoryList.isEmpty) {
+              return const Center(child: Text('No categories found'));
+            }
+
+            final names = _categoryController.categoryList.map((e) => e.name).toList();
+            final initial = _selectedCategoryName ?? names.first;
+
+            return DropDownField(
+              labelText: 'Category',
+              items: names,
+              initialValue: initial,
+              onChanged: (value) {
+                setState(() {
+                  _selectedCategoryName = value;
+                });
+              },
+              prefixIcon: Icons.category,
+              validator: RequiredValidator(errorText: 'Category is required').call,
+            );
+          }),
 
           const SizedBox(height: 15),
 
@@ -152,7 +267,13 @@ class _AddProductFormState extends State<AddProductForm> {
 
           const SizedBox(height: 30),
 
-          PrimaryButton(text: 'Add Product', onPressed: _handleAddProduct),
+          Obx(
+            () => PrimaryButton(
+              isLoading: _productController.isLoading.value,
+              text: 'Add Product',
+              onPressed: _categoryController.categoryList.isEmpty ? null : _handleAddProduct,
+            ),
+          ),
         ],
       ),
     );

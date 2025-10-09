@@ -1,4 +1,4 @@
-import 'package:frontend/modules/user/products/models/product.dart';
+﻿import 'package:frontend/core/models/product.dart';
 
 const productsData = <Product>[
   Product(

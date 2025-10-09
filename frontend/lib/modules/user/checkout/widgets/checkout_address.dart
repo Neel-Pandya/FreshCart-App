@@ -1,9 +1,9 @@
-import 'package:flutter/widgets.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
+import 'package:get/get.dart';
 
 class CheckoutAddress extends StatefulWidget {
   const CheckoutAddress({super.key, required this.formKey});
@@ -37,7 +37,9 @@ class _CheckoutAddressState extends State<CheckoutAddress> {
         children: [
           Text(
             'Address',
-            style: AppTypography.titleMediumEmphasized.copyWith(color: AppColors.textPrimary),
+            style: AppTypography.titleMediumEmphasized.copyWith(
+              color: Get.theme.colorScheme.onSurface,
+            ),
           ),
           const SizedBox(height: 15),
           FormTextField(

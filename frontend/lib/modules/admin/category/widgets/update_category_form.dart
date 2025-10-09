@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
-import 'package:frontend/modules/admin/category/models/category.dart';
+import 'package:frontend/modules/admin/category/controllers/category_controller.dart';
+import 'package:frontend/core/models/category.dart';
+import 'package:get/get.dart';
 
 class UpdateCategoryForm extends StatefulWidget {
   const UpdateCategoryForm({super.key, required this.category});
@@ -16,11 +18,13 @@ class UpdateCategoryForm extends StatefulWidget {
 
 class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
   late final TextEditingController _categoryNameController;
+  late final CategoryController _controller;
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
+    _controller = Get.find<CategoryController>();
     _categoryNameController = TextEditingController(text: widget.category.name);
   }
 
@@ -31,15 +35,23 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
     super.dispose();
   }
 
-  void _handleUpdateCategory() {
+  void _handleUpdateCategory() async {
     if (!_formKey.currentState!.validate()) return;
 
-    Toaster.showSuccessMessage(context: context, message: 'Category updated successfully');
+    final result = await _controller.updateCategory(
+      widget.category.id,
+      _categoryNameController.text,
+    );
+    if (!result) {
+      Toaster.showErrorMessage(message: _controller.error.value);
+      return;
+    }
+    Toaster.showSuccessMessage(message: 'Category updated successfully');
 
     // close the form after 2 seconds
     Future.delayed(const Duration(milliseconds: 2000), () {
       if (!mounted) return;
-      Navigator.of(context).pop();
+      Get.back();
     });
   }
 
@@ -70,7 +82,13 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
           ),
 
           const SizedBox(height: 20),
-          PrimaryButton(text: 'Update Category', onPressed: _handleUpdateCategory),
+          Obx(
+            () => PrimaryButton(
+              text: 'Update Category',
+              onPressed: _handleUpdateCategory,
+              isLoading: _controller.isLoading.value,
+            ),
+          ),
         ],
       ),
     );

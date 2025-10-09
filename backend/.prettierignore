@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+build/
+dist/
+coverage/
+.cache/
+
+# Logs
+logs/
+*.log
+
+# Env files
+.env
+.env.*
+
+# Temporary
+.tmp/
+tmp/
+
+# Lock files (optional)
+package-lock.json

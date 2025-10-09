@@ -1,63 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
-import 'package:frontend/core/utils/toaster.dart';
-import 'package:frontend/modules/admin/product/models/product.dart';
+import 'package:frontend/core/models/admin_product.dart';
+import 'package:frontend/core/utils/app_dialog.dart';
 import 'package:frontend/modules/admin/product/screens/update_product_screen.dart';
+import 'package:get/get.dart';
 
 class ProductListItem extends StatelessWidget {
-  const ProductListItem({super.key, required this.product});
+  const ProductListItem({super.key, required this.product, required this.onDelete});
   final Product product;
+  final Future<void> Function() onDelete;
 
-  void _handleDeleteProduct(BuildContext context) {
-    showDialog(
+  Future<void> _handleDeleteProduct(BuildContext context) async {
+    await AppDialog.showDeleteDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        icon: const Icon(Icons.warning_amber_outlined, color: AppColors.error, size: 40),
-        title: Text(
-          'Delete Product',
-          style: AppTypography.titleLarge.copyWith(color: AppColors.textPrimary),
-          textAlign: TextAlign.center,
-        ),
-        content: Text(
-          'Are you sure you want to delete this product?',
-          textAlign: TextAlign.center,
-          style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
-        ),
-        actionsAlignment: MainAxisAlignment.spaceEvenly,
-        actions: [
-          TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.textSecondary,
-              backgroundColor: Colors.transparent,
-            ),
-            onPressed: () => Navigator.pop(context),
-            child: Text(
-              'Cancel',
-              style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
-            ),
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.error,
-              backgroundColor: Colors.transparent,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-              Toaster.showSuccessMessage(context: context, message: 'Product deleted successfully');
-            },
-            child: Text('Delete', style: AppTypography.bodyMedium.copyWith(color: AppColors.error)),
-          ),
-        ],
-      ),
+      itemName: 'product',
+      onConfirm: () async {
+        await onDelete();
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: Colors.white,
+      tileColor: Get.theme.brightness == Brightness.light
+          ? Get.theme.colorScheme.surface
+          : Get.theme.colorScheme.onSurface.withValues(alpha: 0.05),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: const BorderSide(color: Color(0xFFCAC4D0), width: 1),
@@ -70,12 +39,14 @@ class ProductListItem extends StatelessWidget {
 
       title: Text(
         product.name,
-        style: AppTypography.titleMedium.copyWith(color: AppColors.textPrimary),
+        style: AppTypography.titleMedium.copyWith(color: Get.theme.colorScheme.onSurface),
       ),
 
       subtitle: Text(
         '\u20B9 ${product.price.toStringAsFixed(0)}',
-        style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+        style: AppTypography.bodyMedium.copyWith(
+          color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
+        ),
       ),
 
       trailing: Row(
@@ -84,13 +55,11 @@ class ProductListItem extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.edit_outlined, color: AppColors.primary),
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => UpdateProductScreen(product: product)),
-              );
+              Get.to(() => UpdateProductScreen(product: product));
             },
           ),
           IconButton(
-            icon: const Icon(FeatherIcons.trash2, color: AppColors.error),
+            icon: Icon(Icons.delete, color: Get.theme.colorScheme.error),
             onPressed: () => _handleDeleteProduct(context),
           ),
         ],

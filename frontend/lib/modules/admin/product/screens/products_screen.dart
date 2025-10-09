@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/admin_routes.dart';
+import 'package:frontend/modules/admin/category/controllers/category_controller.dart';
+import 'package:frontend/modules/admin/product/controller/product_controller.dart';
 import 'package:frontend/modules/admin/product/widgets/product_list.dart';
+import 'package:get/get.dart';
 
 class ProductsScreen extends StatelessWidget {
-  const ProductsScreen({super.key});
+  ProductsScreen({super.key});
+  final productController = Get.find<ProductController>();
+  final categoryController = Get.find<CategoryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -11,14 +16,23 @@ class ProductsScreen extends StatelessWidget {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).pushNamed(AdminRoutes.addProduct);
+            Get.toNamed(AdminRoutes.addProduct);
           },
           shape: const CircleBorder(),
           elevation: 0,
           child: const Icon(Icons.add),
         ),
 
-        body: const Padding(padding: EdgeInsets.all(20), child: ProductList()),
+        body: Obx(
+          () => Padding(
+            padding: const EdgeInsets.all(20),
+            child: productController.isLoading.value
+                ? const Center(child: CircularProgressIndicator())
+                : productController.products.isEmpty
+                ? const Center(child: Text('No products found. Add some products.'))
+                : ProductList(),
+          ),
+        ),
       ),
     );
   }

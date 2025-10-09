@@ -1,14 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:frontend/core/theme/app_colors.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_typography.dart';
+import 'package:frontend/modules/admin/category/controllers/category_controller.dart';
 import 'package:frontend/modules/admin/dashboard/data/analytic_data.dart';
 import 'package:frontend/modules/admin/dashboard/widgets/dashboard_analytics.dart';
 import 'package:frontend/modules/admin/orders/data/order_data.dart';
 import 'package:frontend/modules/admin/orders/widgets/order_list_item.dart';
+import 'package:frontend/modules/admin/product/controller/product_controller.dart';
+import 'package:get/get.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
-
+  DashboardScreen({super.key});
+  final productsController = Get.put(ProductController(), permanent: true);
+  final categoryController = Get.put(CategoryController(), permanent: true);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +37,9 @@ class DashboardScreen extends StatelessWidget {
 
               Text(
                 'Recent Orders',
-                style: AppTypography.bodyLargeEmphasized.copyWith(color: AppColors.textPrimary),
+                style: AppTypography.bodyLargeEmphasized.copyWith(
+                  color: Get.theme.colorScheme.onSurface,
+                ),
               ),
 
               const SizedBox(height: 18),

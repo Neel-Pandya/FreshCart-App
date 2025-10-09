@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/auth_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
@@ -6,6 +6,7 @@ import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/modules/common/onboarding/data/onboarding_data.dart';
 import 'package:frontend/modules/common/onboarding/widgets/onboarding_item.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:get/get.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -63,11 +64,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       children: [
         PrimaryButton(
           text: 'Create Account',
-          onPressed: () => Navigator.of(context).pushNamed(AuthRoutes.signUp),
+          onPressed: () => Get.toNamed(AuthRoutes.signUp),
         ),
         const SizedBox(height: 10),
         GestureDetector(
-          onTap: () => Navigator.of(context).pushNamed(AuthRoutes.login),
+          onTap: () => Get.toNamed(AuthRoutes.login),
           child: Text(
             'Already Have An Account',
             textAlign: TextAlign.center,

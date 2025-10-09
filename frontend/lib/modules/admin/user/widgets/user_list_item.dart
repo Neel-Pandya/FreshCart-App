@@ -1,64 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
+import 'package:frontend/core/utils/app_dialog.dart';
 import 'package:frontend/core/utils/toaster.dart';
+import 'package:frontend/core/routes/admin_routes.dart';
 import 'package:frontend/modules/admin/user/models/user.dart';
-import 'package:frontend/modules/admin/user/screens/update_user_screen.dart';
+import 'package:frontend/modules/admin/user/controller/user_controller.dart';
+import 'package:get/get.dart';
 
-class UserListItem extends StatelessWidget {
+class UserListItem extends StatefulWidget {
   const UserListItem({super.key, required this.user});
   final User user;
 
-  void _handleDeleteUser(BuildContext context) {
-    showDialog(
+  @override
+  State<UserListItem> createState() => _UserListItemState();
+}
+
+class _UserListItemState extends State<UserListItem> {
+  Future<void> _handleDeleteUser() async {
+    final userController = Get.find<UserController>();
+
+    await AppDialog.showDeleteDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        icon: const Icon(Icons.warning_amber_outlined, color: AppColors.error),
-        title: Text(
-          'Delete User',
-          style: AppTypography.titleLargeEmphasized.copyWith(color: AppColors.textPrimary),
-        ),
-        content: Text(
-          textAlign: TextAlign.center,
-          'Are you sure you want to delete this user?',
-          style: AppTypography.bodyMedium.copyWith(color: AppColors.textPrimary),
-        ),
-        actionsAlignment: MainAxisAlignment.spaceAround,
-        actions: [
-          TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.textSecondary,
-              backgroundColor: Colors.transparent,
-            ),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-            child: Text(
-              'Cancel',
-              style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
-            ),
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.error,
-              backgroundColor: Colors.transparent,
-            ),
-            onPressed: () {
-              Toaster.showSuccessMessage(context: context, message: 'User deleted successfully');
-              Navigator.of(ctx).pop();
-            },
-            child: Text('Delete', style: AppTypography.bodyMedium.copyWith(color: AppColors.error)),
-          ),
-        ],
-      ),
+      itemName: 'user',
+      onConfirm: () async {
+        final success = await userController.deleteUser(widget.user.userId);
+        if (success) {
+          Toaster.showSuccessMessage(message: 'User deleted successfully');
+        } else {
+          Toaster.showErrorMessage(
+            message: userController.errorMessage.value.isNotEmpty
+                ? userController.errorMessage.value
+                : 'Failed to delete user',
+          );
+        }
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: Colors.white,
+      tileColor: Get.theme.brightness == Brightness.light
+          ? Get.theme.colorScheme.surface
+          : Get.theme.colorScheme.onSurface.withValues(alpha: 0.05),
       contentPadding: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -66,11 +51,37 @@ class UserListItem extends StatelessWidget {
       ),
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(100),
-        child: Image.asset(user.imageUrl, height: 48, width: 48),
+        child: widget.user.imageUrl.isNotEmpty
+            ? Image.network(
+                widget.user.imageUrl,
+                height: 48,
+                width: 48,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    height: 48,
+                    width: 48,
+                    decoration: BoxDecoration(
+                      color: Get.theme.colorScheme.surface,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.person, size: 24, color: Get.theme.colorScheme.onSurface),
+                  );
+                },
+              )
+            : Container(
+                height: 48,
+                width: 48,
+                decoration: BoxDecoration(
+                  color: Get.theme.colorScheme.surface,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.person, size: 24, color: Get.theme.colorScheme.onSurface),
+              ),
       ),
       title: Text(
-        user.name,
-        style: AppTypography.titleMedium.copyWith(color: AppColors.textPrimary),
+        widget.user.name,
+        style: AppTypography.titleMedium.copyWith(color: Get.theme.colorScheme.onSurface),
       ),
 
       trailing: Row(
@@ -78,15 +89,13 @@ class UserListItem extends StatelessWidget {
         children: <IconButton>[
           IconButton(
             onPressed: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (context) => UpdateUserScreen(user: user)));
+              Get.toNamed(AdminRoutes.updateUser, arguments: widget.user);
             },
             icon: const Icon(Icons.edit_outlined, color: AppColors.primary),
           ),
           IconButton(
-            onPressed: () => _handleDeleteUser(context),
-            icon: const Icon(FeatherIcons.trash2, color: AppColors.error),
+            onPressed: _handleDeleteUser,
+            icon: Icon(Icons.delete, color: Get.theme.colorScheme.error),
           ),
         ],
       ),

@@ -1,4 +1,6 @@
+# -------------------------
 # Miscellaneous
+# -------------------------
 *.class
 *.log
 *.pyc
@@ -12,36 +14,90 @@
 .swiftpm/
 migrate_working_dir/
 
-# IntelliJ related
+# -------------------------
+# IntelliJ / IDEs
+# -------------------------
 *.iml
 *.ipr
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
+# VS Code - include if you want to ignore workspace settings
 #.vscode/
 
-# Flutter/Dart/Pub related
+# -------------------------
+# Flutter / Dart / Pub
+# -------------------------
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
-/coverage/
+build/
+coverage/
+.env
 
-# Symbolication related
-app.*.symbols
-
-# Obfuscation related
-app.*.map.json
-
-# Android Studio will place build artifacts here
+# -------------------------
+# Android build artifacts & gradle caches
+# -------------------------
 /android/app/debug
 /android/app/profile
 /android/app/release
+**/gradle-wrapper.jar
+.gradle/
+local.properties
 
-.env
+# -------------------------
+# iOS build artifacts
+# -------------------------
+/ios/Pods/
+/ios/Flutter/Flutter.framework
+/ios/Flutter/Flutter.podspec
+/ios/Runner.xcworkspace/
+**/xcuserdata/
+**/DerivedData/
+
+# -------------------------
+# Firebase & Google config (DO NOT push to public repos)
+# -------------------------
+# Android - google-services.json (contains API keys / client IDs)
+android/app/google-services.json
+# iOS - GoogleService-Info.plist
+ios/Runner/GoogleService-Info.plist
+ios/GoogleService-Info.plist
+
+# Firebase Admin service account keys (if you keep them in repo root or config folder)
+firebase-service-account.json
+**/serviceAccountKey*.json
+
+# Firebase local emulator state or auth tokens
+.firebase/
+.firebaserc
+.firebase_functions/
+
+# -------------------------
+# Secrets & config
+# -------------------------
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+secrets.json
+
+# -------------------------
+# Node / npm
+# -------------------------
+node_modules/
+npm-debug.log*
+yarn-error.log
+.pnpm-debug.log
+
+# -------------------------
+# Misc build / tooling
+# -------------------------
+dist/
+tmp/
+temp/
+*.tmp

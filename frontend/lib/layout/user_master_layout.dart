@@ -1,26 +1,26 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/core/providers/bottom_nav_provider.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/widgets/bottom_navigation.dart';
 import 'package:frontend/modules/user/home/screens/home_screen.dart';
 import 'package:frontend/modules/user/products/screens/products_screen.dart';
 import 'package:frontend/modules/user/orders/screens/orders_screen.dart';
-import 'package:frontend/modules/user/settings/screens/settings_screen.dart';
+import 'package:frontend/modules/common/settings/screens/settings_screen.dart';
+import 'package:get/get.dart';
+import 'package:frontend/core/controllers/bottom_nav_controller.dart';
 
-class UserMasterLayout extends ConsumerStatefulWidget {
+class UserMasterLayout extends StatefulWidget {
   const UserMasterLayout({super.key});
 
   @override
-  ConsumerState<UserMasterLayout> createState() => _UserMasterLayoutState();
+  State<UserMasterLayout> createState() => _UserMasterLayoutState();
 }
 
-class _UserMasterLayoutState extends ConsumerState<UserMasterLayout> {
+class _UserMasterLayoutState extends State<UserMasterLayout> {
   late final PageController _pageController;
   final screens = [
     const HomeScreen(),
     const ProductsScreen(),
     const OrdersScreen(),
-    const SettingsScreen(),
+    SettingsScreen(),
   ];
 
   @override
@@ -37,11 +37,12 @@ class _UserMasterLayoutState extends ConsumerState<UserMasterLayout> {
 
   @override
   Widget build(BuildContext context) {
+    final nav = Get.find<BottomNavController>();
     return Scaffold(
       body: PageView.builder(
         controller: _pageController,
         onPageChanged: (index) {
-          ref.read(bottomNavigationProvider.notifier).state = index;
+          nav.setIndex(index);
         },
         itemBuilder: (context, index) => screens[index],
         itemCount: screens.length,

@@ -1,4 +1,4 @@
-import 'package:flutter/painting.dart';
+﻿import 'package:flutter/painting.dart';
 import 'package:frontend/modules/admin/dashboard/models/analytic.dart';
 
 final analyticData = <Analytic>[

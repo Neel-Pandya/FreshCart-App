@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/drop_down_field.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
+import 'package:get/get.dart';
 
 class FilterSheet extends StatefulWidget {
   const FilterSheet({super.key});
@@ -18,8 +19,8 @@ class _FilterSheetState extends State<FilterSheet> {
   final _maxPrice = 100;
 
   void _applyFilters() {
-    Toaster.showSuccessMessage(context: context, message: 'Filters applied successfully');
-    Navigator.pop(context);
+    Toaster.showSuccessMessage(message: 'Filters applied successfully');
+    Get.back();
   }
 
   @override
@@ -51,14 +52,18 @@ class _FilterSheetState extends State<FilterSheet> {
             Text(
               'Filter By',
               textAlign: TextAlign.center,
-              style: AppTypography.titleLargeEmphasized.copyWith(color: AppColors.textPrimary),
+              style: AppTypography.titleLargeEmphasized.copyWith(
+                color: Get.theme.colorScheme.onSurface,
+              ),
             ),
             const SizedBox(height: 30),
 
             // Category filter
             Text(
               'Category',
-              style: AppTypography.bodyMediumEmphasized.copyWith(color: AppColors.textPrimary),
+              style: AppTypography.bodyMediumEmphasized.copyWith(
+                color: Get.theme.colorScheme.onSurface,
+              ),
             ),
             const SizedBox(height: 10),
             const DropDownField(
@@ -72,7 +77,9 @@ class _FilterSheetState extends State<FilterSheet> {
             // Price filter
             Text(
               'Price',
-              style: AppTypography.bodyMediumEmphasized.copyWith(color: AppColors.textPrimary),
+              style: AppTypography.bodyMediumEmphasized.copyWith(
+                color: Get.theme.colorScheme.onSurface,
+              ),
             ),
             const SizedBox(height: 10),
             SliderTheme(
@@ -90,7 +97,7 @@ class _FilterSheetState extends State<FilterSheet> {
                 min: _minPrice.toDouble(),
                 max: _maxPrice.toDouble(),
                 divisions: _maxPrice - _minPrice,
-                inactiveColor: AppColors.textMuted,
+                inactiveColor: Get.theme.colorScheme.onSurface.withValues(alpha: 0.4),
                 activeColor: AppColors.primary,
                 labels: RangeLabels(
                   _priceRange.start.round().toString(),
@@ -101,7 +108,9 @@ class _FilterSheetState extends State<FilterSheet> {
             Text(
               '₹${_priceRange.start.round()} - ₹${_priceRange.end.round()}',
               textAlign: TextAlign.center,
-              style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+              style: AppTypography.bodyMedium.copyWith(
+                color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
+              ),
             ),
 
             const Spacer(),

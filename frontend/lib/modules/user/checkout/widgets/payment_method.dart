@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
+import 'package:get/get.dart';
 
 class PaymentMethod extends StatefulWidget {
   const PaymentMethod({super.key});
@@ -17,26 +18,36 @@ class _PaymentMethodState extends State<PaymentMethod> {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => _showModalBottomSheet(context),
-      tileColor: Colors.white,
+      tileColor: Theme.of(context).brightness == Brightness.light
+          ? Colors.white
+          : Get.theme.colorScheme.onSurface.withValues(alpha: 0.05),
       contentPadding: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: const BorderSide(color: AppColors.border, width: 1),
+        side: BorderSide(
+          color: Theme.of(context).brightness == Brightness.light
+              ? const Color.fromRGBO(224, 224, 224, 1)
+              : AppColors.borderDark,
+          width: 1,
+        ),
       ),
       leading: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: const Color(0xFFF5F5F5),
+          color: Get.theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(100),
         ),
-        child: Icon(_getIconForPaymentMethod(selectedPaymentMethod), color: AppColors.iconColor),
+        child: Icon(
+          _getIconForPaymentMethod(selectedPaymentMethod),
+          color: Get.theme.colorScheme.onSurface,
+        ),
       ),
       title: Text(
         selectedPaymentMethod ?? 'RazorPay',
-        style: AppTypography.titleMediumEmphasized.copyWith(color: AppColors.textPrimary),
+        style: AppTypography.titleMediumEmphasized.copyWith(color: Get.theme.colorScheme.onSurface),
       ),
       trailing: IconButton(
-        icon: const Icon(FeatherIcons.chevronRight, color: AppColors.iconColor),
+        icon: Icon(FeatherIcons.chevronRight, color: Get.theme.colorScheme.onSurface),
         onPressed: () => _showModalBottomSheet(context),
       ),
     );
@@ -70,23 +81,30 @@ class _PaymentMethodState extends State<PaymentMethod> {
 
   Widget _buildPaymentOptionTile(BuildContext context, String method, IconData icon) {
     return ListTile(
-      tileColor: Colors.white,
+      tileColor: Theme.of(context).brightness == Brightness.light
+          ? Colors.white
+          : Get.theme.colorScheme.onSurface.withValues(alpha: 0.05),
       contentPadding: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: const BorderSide(color: AppColors.border, width: 1),
+        side: BorderSide(
+          color: Theme.of(context).brightness == Brightness.light
+              ? const Color.fromRGBO(224, 224, 224, 1)
+              : AppColors.borderDark,
+          width: 1,
+        ),
       ),
       leading: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: const Color(0xFFF5F5F5),
+          color: Get.theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(100),
         ),
-        child: Icon(icon, color: AppColors.iconColor),
+        child: Icon(icon, color: Get.theme.colorScheme.onSurface),
       ),
       title: Text(
         method,
-        style: AppTypography.titleMediumEmphasized.copyWith(color: AppColors.textPrimary),
+        style: AppTypography.titleMediumEmphasized.copyWith(color: Get.theme.colorScheme.onSurface),
       ),
       onTap: () => _selectPaymentMethod(context, method),
     );
@@ -106,6 +124,6 @@ class _PaymentMethodState extends State<PaymentMethod> {
     setState(() {
       selectedPaymentMethod = paymentMethod;
     });
-    Navigator.pop(context);
+    Get.back();
   }
 }

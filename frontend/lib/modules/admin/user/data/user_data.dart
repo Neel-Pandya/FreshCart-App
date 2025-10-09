@@ -1,4 +1,4 @@
-import 'package:frontend/modules/admin/user/models/user.dart';
+﻿import 'package:frontend/modules/admin/user/models/user.dart';
 
 final userData = const <User>[
   User(

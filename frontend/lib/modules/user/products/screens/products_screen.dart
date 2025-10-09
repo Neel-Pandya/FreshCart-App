@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:frontend/core/theme/app_colors.dart';
+import 'package:frontend/core/models/product.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
 import 'package:frontend/core/widgets/product_card.dart';
 import 'package:frontend/modules/user/products/data/product_data.dart';
 import 'package:frontend/modules/user/products/screens/detailed_product_screen.dart';
 import 'package:frontend/modules/user/products/widgets/filter_sheet.dart';
+import 'package:get/get.dart';
 
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({super.key});
@@ -14,7 +15,7 @@ class ProductsScreen extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isDismissible: true,
-      backgroundColor: AppColors.background,
+      backgroundColor: Get.theme.colorScheme.surface,
       barrierColor: Colors.black.withValues(alpha: 0.5),
       builder: (_) => const FilterSheet(),
     );
@@ -50,11 +51,9 @@ class ProductsScreen extends StatelessWidget {
                   ),
                   itemBuilder: (context, index) => ProductCard(
                     product: productsData[index],
-                    onTap: (product) {
+                    onTap: (Product product) {
                       FocusManager.instance.primaryFocus?.unfocus();
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => DetailedProductScreen(product: product)),
-                      );
+                      Get.to(() => DetailedProductScreen(product: product));
                     },
                   ),
                 ),

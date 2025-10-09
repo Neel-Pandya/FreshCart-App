@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
-import 'package:frontend/modules/admin/orders/models/order.dart';
+import 'package:frontend/core/models/admin_order.dart';
 import 'package:frontend/modules/admin/orders/screens/view_order_screen.dart';
+import 'package:get/get.dart';
 
 class OrderListItem extends StatelessWidget {
   const OrderListItem({super.key, required this.order, required this.imageUrl});
@@ -13,15 +14,15 @@ class OrderListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        Navigator.of(
-          context,
-        ).push(MaterialPageRoute(builder: (context) => ViewOrderScreen(order: order)));
+        Get.to(() => ViewOrderScreen(order: order));
       },
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(100),
         child: Image.asset(imageUrl, height: 48, width: 48, fit: BoxFit.cover),
       ),
-      tileColor: Colors.white,
+      tileColor: Get.theme.brightness == Brightness.light
+          ? Get.theme.colorScheme.surface
+          : Get.theme.colorScheme.onSurface.withValues(alpha: 0.05),
       contentPadding: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -29,17 +30,21 @@ class OrderListItem extends StatelessWidget {
       ),
       title: Text(
         order.orderId,
-        style: AppTypography.titleMedium.copyWith(color: AppColors.textPrimary),
+        style: AppTypography.titleMedium.copyWith(color: Get.theme.colorScheme.onSurface),
       ),
 
       subtitle: Text(
         order.orderedBy,
-        style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+        style: AppTypography.bodyMedium.copyWith(
+          color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
+        ),
       ),
 
       trailing: Text(
         '\u20B9 ${order.totalAmount.toStringAsFixed(0)}',
-        style: AppTypography.bodyMediumEmphasized.copyWith(color: AppColors.textPrimary),
+        style: AppTypography.bodyMediumEmphasized.copyWith(
+          color: Get.theme.colorScheme.onSurface,
+        ),
       ),
     );
   }

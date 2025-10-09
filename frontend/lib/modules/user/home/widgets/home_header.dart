@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/routes/user_routes.dart';
-import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
+import 'package:get/get.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key, required this.imageUrl, required this.name});
@@ -18,7 +18,7 @@ class HomeHeader extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(100),
-            child: Image.asset(imageUrl, fit: BoxFit.cover, height: 50, width: 50),
+            child: Image.network(imageUrl, fit: BoxFit.cover, height: 50, width: 50),
           ),
 
           const SizedBox(width: 13),
@@ -28,12 +28,16 @@ class HomeHeader extends StatelessWidget {
             children: [
               Text(
                 name,
-                style: AppTypography.bodyMediumEmphasized.copyWith(color: AppColors.textPrimary),
+                style: AppTypography.bodyMediumEmphasized.copyWith(
+                  color: Get.theme.colorScheme.onSurface,
+                ),
               ),
               const SizedBox(height: 1),
               Text(
                 'Let\'s go shopping',
-                style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+                style: AppTypography.bodyMedium.copyWith(
+                  color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                ),
               ),
             ],
           ),
@@ -42,9 +46,9 @@ class HomeHeader extends StatelessWidget {
 
           GestureDetector(
             onTap: () {
-              Navigator.of(context).pushNamed(UserRoutes.cart);
+              Get.toNamed(UserRoutes.cart);
             },
-            child: const Icon(FeatherIcons.shoppingBag, color: AppColors.iconColor),
+            child: Icon(FeatherIcons.shoppingBag, color: Get.theme.colorScheme.onSurface),
           ),
         ],
       ),
