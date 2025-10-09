@@ -40,12 +40,6 @@ class UserService {
       imageUrl = await uploadImage(filePath);
     }
 
-    // Check if email is being changed and if it already exists
-    if (data.email && data.email !== user.email) {
-      const existingUser = await User.findOne({ email: data.email });
-      if (existingUser) throw new ApiError(400, 'User with this email already exists');
-    }
-
     const updated = await User.findByIdAndUpdate(
       userId,
       { ...data, profile: imageUrl },

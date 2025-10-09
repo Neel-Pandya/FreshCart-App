@@ -31,9 +31,7 @@ class ProductListItem extends StatelessWidget {
               const SizedBox(height: 5),
               Text(
                 cart.quantity.toString(),
-                style: AppTypography.bodyMedium.copyWith(
-                  color: Get.theme.colorScheme.onSurface,
-                ),
+                style: AppTypography.bodyMedium.copyWith(color: Get.theme.colorScheme.onSurface),
               ),
             ],
           ),
@@ -42,9 +40,7 @@ class ProductListItem extends StatelessWidget {
 
           Text(
             '\u20B9 ${cart.totalPrice.toStringAsFixed(0)}',
-            style: AppTypography.bodyMedium.copyWith(
-              color: Get.theme.colorScheme.onSurface,
-            ),
+            style: AppTypography.bodyMedium.copyWith(color: Get.theme.colorScheme.onSurface),
           ),
         ],
       ),
