@@ -4,6 +4,9 @@ import 'package:frontend/modules/admin/category/screens/category_screen.dart';
 import 'package:frontend/modules/admin/dashboard/screens/dashboard_screen.dart';
 import 'package:frontend/modules/admin/product/screens/products_screen.dart';
 import 'package:frontend/modules/admin/user/screens/user_screen.dart';
+import 'package:frontend/modules/admin/user/controller/user_controller.dart';
+import 'package:frontend/modules/admin/product/controller/product_controller.dart';
+import 'package:frontend/modules/admin/category/controllers/category_controller.dart';
 import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
 import 'package:frontend/modules/common/settings/screens/settings_screen.dart';
 import 'package:frontend/modules/admin/orders/screens/orders_screen.dart';
@@ -19,6 +22,15 @@ class AdminMasterLayout extends StatefulWidget {
 
 class _AdminMasterLayoutState extends State<AdminMasterLayout> {
   final AuthController _authController = Get.find<AuthController>();
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize admin controllers
+    Get.put(ProductController(), permanent: true);
+    Get.put(CategoryController(), permanent: true);
+    Get.put(UserController(), permanent: true);
+  }
 
   final List<Map<String, dynamic>> _screens = [
     {'title': 'Dashboard', 'widget': DashboardScreen()},

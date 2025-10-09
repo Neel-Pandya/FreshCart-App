@@ -9,7 +9,7 @@ import {
   changePassword,
   googleSignup,
   googleLogin,
-  updateProfile
+  updateProfile,
 } from './auth.controller.js';
 import validate from '../../core/middleware/zod.middleware.js';
 import {

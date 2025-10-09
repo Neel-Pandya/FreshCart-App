@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import AuthService from './auth.service.js';
-import ApiResponse from "../../core/utils/api_response.util.js";
+import ApiResponse from '../../core/utils/api_response.util.js';
 import validateFile from '../../core/middleware/file_validator.middleware.js';
 import cookieOptions from '../../core/config/cookie.config.js';
 
@@ -19,34 +19,40 @@ const googleSignup = asyncHandler(async (req, res) => {
 const login = asyncHandler(async (req, res) => {
   const { user, accessToken } = await AuthService.login(req.body);
 
-  return res.status(200).cookie('accessToken', accessToken, cookieOptions).json(
-    new ApiResponse(200, 'User logged in successfully', {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      status: user.status,
-      profile: user.profile,
-      role: user.role,
-      isGoogle: user.isGoogle,
-      accessToken,
-    })
-  );
+  return res
+    .status(200)
+    .cookie('accessToken', accessToken, cookieOptions)
+    .json(
+      new ApiResponse(200, 'User logged in successfully', {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        status: user.status,
+        profile: user.profile,
+        role: user.role,
+        isGoogle: user.isGoogle,
+        accessToken,
+      })
+    );
 });
 
 const googleLogin = asyncHandler(async (req, res) => {
   const { accessToken, user } = await AuthService.googleLogin(req.body.idToken);
-  return res.status(200).cookie('accessToken', accessToken, cookieOptions).json(
-    new ApiResponse(200, 'User logged in successfully', {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      status: user.status,
-      profile: user.profile,
-      role: user.role,
-      isGoogle: user.isGoogle,
-      accessToken,
-    })
-  );
+  return res
+    .status(200)
+    .cookie('accessToken', accessToken, cookieOptions)
+    .json(
+      new ApiResponse(200, 'User logged in successfully', {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        status: user.status,
+        profile: user.profile,
+        role: user.role,
+        isGoogle: user.isGoogle,
+        accessToken,
+      })
+    );
 });
 
 const resendOtp = asyncHandler(async (req, res) => {
@@ -107,7 +113,6 @@ const updateProfile = asyncHandler(async (req, res) => {
       profile: updatedUser.profile,
       role: updatedUser.role,
       isGoogle: updatedUser.isGoogle,
-      accessToken: req.cookies.accessToken,
     })
   );
 });

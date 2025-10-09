@@ -1,4 +1,4 @@
-﻿import 'dart:convert';
+import 'dart:convert';
 import 'dart:core';
 import 'dart:developer';
 import 'package:dio/dio.dart';
@@ -24,8 +24,12 @@ class AuthController extends GetxController {
         'auth/login',
         data: {'email': email, 'password': password},
       );
+
+      final accessToken = response['data']['accessToken'];
       final user = User.fromJson(response['data']);
+
       await _storage.write(key: 'user', value: jsonEncode({'data': user.toJson()}));
+      await _storage.write(key: 'accessToken', value: accessToken);
 
       this.user.value = user;
       responseMessage.value = response['message'];
@@ -179,8 +183,13 @@ class AuthController extends GetxController {
       }
 
       final response = await apiClient.post('auth/google-login', data: {'idToken': idToken});
+
+      final accessToken = response['data']['accessToken'];
       final user = User.fromJson(response['data']);
+
       await _storage.write(key: 'user', value: jsonEncode({'data': user.toJson()}));
+      await _storage.write(key: 'accessToken', value: accessToken);
+
       this.user.value = user;
       responseMessage.value = response['message'];
       return true;
@@ -194,8 +203,13 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<String?> getAccessToken() async {
+    return await _storage.read(key: 'accessToken');
+  }
+
   Future<void> logout() async {
     await _storage.delete(key: 'user');
+    await _storage.delete(key: 'accessToken');
     user.value = null;
   }
 
@@ -204,9 +218,12 @@ class AuthController extends GetxController {
     try {
       final response = await apiClient.put('auth/update-profile', data: data);
       log(response.toString());
+
       final updated = User.fromJson(response['data']);
+
       user.value = updated;
       await _storage.write(key: 'user', value: jsonEncode({'data': updated.toJson()}));
+
       responseMessage.value = response['message'];
       return true;
     } catch (e) {

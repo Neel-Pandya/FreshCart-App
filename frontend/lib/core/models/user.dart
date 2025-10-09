@@ -1,11 +1,10 @@
-﻿class User {
+class User {
   final String id;
   final String name;
   final String email;
   final int? role;
   final String? status;
   final String imageUrl;
-  final String accessToken;
   final bool isGoogle;
 
   const User({
@@ -14,7 +13,6 @@
     required this.email,
     required this.imageUrl,
     this.status = 'inactive',
-    required this.accessToken,
     this.role,
     this.isGoogle = false,
   });
@@ -27,7 +25,6 @@
       role: json['role'],
       status: json['status'],
       imageUrl: json['profile'] ?? '',
-      accessToken: json['accessToken'] ?? '',
       isGoogle: json['isGoogle'] ?? false,
     );
   }
@@ -40,7 +37,6 @@
       'role': role,
       'status': status,
       'profile': imageUrl,
-      'accessToken': accessToken,
       'isGoogle': isGoogle,
     };
   }

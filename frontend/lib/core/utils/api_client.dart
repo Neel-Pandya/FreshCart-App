@@ -1,9 +1,8 @@
-﻿import 'dart:convert';
+import 'dart:convert';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:frontend/core/models/user.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiClient {
@@ -26,6 +25,10 @@ class ApiClient {
         onRequest: (options, handler) async {
           final storage = const FlutterSecureStorage();
           final stored = await storage.read(key: 'user');
+
+          // Get access token from separate storage key
+          final accessToken = await storage.read(key: 'accessToken');
+
           if (stored != null) {
             final decoded = jsonDecode(stored);
 
@@ -35,11 +38,8 @@ class ApiClient {
                       : decoded)
                 : <String, dynamic>{};
 
-            if (payload.isNotEmpty) {
-              final user = User.fromJson(payload);
-              if (user.accessToken.isNotEmpty) {
-                options.headers['Authorization'] = 'Bearer ${user.accessToken}';
-              }
+            if (payload.isNotEmpty && accessToken != null && accessToken.isNotEmpty) {
+              options.headers['Authorization'] = 'Bearer $accessToken';
             }
           }
 

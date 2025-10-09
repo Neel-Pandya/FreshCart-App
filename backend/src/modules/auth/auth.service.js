@@ -5,7 +5,7 @@ import nodemailer from 'nodemailer';
 import EnvConfig from '../../core/config/env.config.js';
 import bcrypt from 'bcryptjs';
 import admin from '../../core/config/firebase.config.js';
-import uploadImage from "../../core/utils/cloudinary.util.js";
+import uploadImage from '../../core/utils/cloudinary.util.js';
 
 class AuthService {
   async signup(data) {
@@ -248,7 +248,7 @@ class AuthService {
     );
 
     if (!updatedUser) throw new ApiError(400, 'Profile update failed');
-    
+
     return { updatedUser };
   }
 }

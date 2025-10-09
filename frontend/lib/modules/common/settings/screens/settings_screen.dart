@@ -5,10 +5,11 @@ import 'package:frontend/core/controllers/theme_controller.dart';
 import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/theme/app_colors.dart';
-import 'package:frontend/modules/common/settings/widgets/setting_item.dart';
 import 'package:frontend/core/theme/app_typography.dart';
+import 'package:frontend/core/utils/app_dialog.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
+import 'package:frontend/modules/common/settings/widgets/setting_item.dart';
 import 'package:get/get.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -16,65 +17,48 @@ class SettingsScreen extends StatelessWidget {
 
   final ThemeController _themeController = Get.find<ThemeController>();
   final AuthController _authController = Get.find<AuthController>();
-  void _logout(BuildContext context) {
-    showDialog(
+
+  Future<void> _logout(BuildContext context) async {
+    final result = await AppDialog.showLogoutDialog(
       context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          icon: Icon(FeatherIcons.logOut, color: Get.theme.colorScheme.error, size: 36),
-          title: Text(
-            'Logout',
-            style: AppTypography.titleLarge.copyWith(color: Get.theme.colorScheme.onSurface),
-            textAlign: TextAlign.center,
-          ),
-          content: Text(
-            'Are you sure you want to logout?',
-            style: AppTypography.bodyMedium.copyWith(
-              color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
-            ),
-            textAlign: TextAlign.center,
-          ),
-          actionsAlignment: MainAxisAlignment.spaceEvenly,
-          actions: [
-            TextButton(
-              onPressed: () => Get.back(),
-              style: TextButton.styleFrom(
-                foregroundColor: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
-                backgroundColor: Colors.transparent,
-              ),
-              child: Text(
-                'Cancel',
-                style: AppTypography.bodyMedium.copyWith(
-                  color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                final authController = Get.put(AuthController());
-                authController.logout();
-                Get.back();
-                Toaster.showSuccessMessage(message: 'Logout successful');
-                final nav = Get.find<BottomNavController>();
-                nav.setIndex(0);
-                Get.offAllNamed(Routes.onBoarding);
-              },
-              style: TextButton.styleFrom(
-                foregroundColor: Get.theme.colorScheme.error,
-                backgroundColor: Colors.transparent,
-              ),
-              child: Text(
-                'Logout',
-                style: AppTypography.bodyMedium.copyWith(
-                  color: Get.theme.colorScheme.error,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-        );
+      onConfirm: () async {
+        try {
+          // Only perform logout, don't navigate here
+          await _authController.logout();
+        } catch (e) {
+          // Handle logout error
+          throw Exception('Logout failed');
+        }
       },
     );
+
+    // Handle navigation after dialog is completely closed
+    if (result == true) {
+      try {
+        // Show success message
+        Toaster.showSuccessMessage(message: 'Logout successful');
+
+        // Reset bottom navigation controller if it exists
+        try {
+          final nav = Get.find<BottomNavController>();
+          nav.setIndex(0);
+        } catch (e) {
+          // Controller might not exist in admin context, ignore
+        }
+
+        // Use WidgetsBinding to ensure navigation happens after current frame
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          // Clear the entire navigation stack and go to onboarding
+          Get.offAllNamed(Routes.onBoarding);
+        });
+      } catch (e) {
+        // If navigation fails, show error
+        Toaster.showErrorMessage(message: 'Navigation error occurred');
+      }
+    } else if (result == false) {
+      // Logout failed
+      Toaster.showErrorMessage(message: 'Logout failed. Please try again.');
+    }
   }
 
   @override
@@ -107,14 +91,14 @@ class SettingsScreen extends StatelessWidget {
                 SettingItem(
                   title: 'Edit Profile',
                   icon: FeatherIcons.user,
-                  trailingIcon: FeatherIcons.chevronRight,
+                  trailingIcon: Icons.chevron_right,
                   onTap: () => Get.toNamed(UserRoutes.editProfile),
                 ),
                 const SizedBox(height: 20),
                 SettingItem(
                   title: 'Change Password',
                   icon: FeatherIcons.lock,
-                  trailingIcon: FeatherIcons.chevronRight,
+                  trailingIcon: Icons.chevron_right,
                   onTap: () => Get.toNamed(UserRoutes.changePassword),
                 ),
                 const SizedBox(height: 30),
@@ -147,7 +131,7 @@ class SettingsScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 SettingItem(
                   title: 'Logout',
-                  icon: FeatherIcons.logOut,
+                  icon: Icons.logout,
                   iconColor: Get.theme.colorScheme.error,
                   titleColor: Get.theme.colorScheme.error,
                   onTap: () => _logout(context),
