@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:frontend/core/widgets/bottom_navigation.dart';
+import 'package:frontend/modules/admin/product/controller/product_controller.dart';
 import 'package:frontend/modules/user/home/screens/home_screen.dart';
 import 'package:frontend/modules/user/products/screens/products_screen.dart';
 import 'package:frontend/modules/user/orders/screens/orders_screen.dart';
@@ -38,6 +39,7 @@ class _UserMasterLayoutState extends State<UserMasterLayout> {
   @override
   Widget build(BuildContext context) {
     final nav = Get.find<BottomNavController>();
+    Get.put(ProductController(), permanent: true);
     return Scaffold(
       body: PageView.builder(
         controller: _pageController,

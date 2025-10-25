@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:frontend/core/models/admin_product.dart';
 import 'package:frontend/core/utils/api_client.dart';
@@ -9,6 +11,8 @@ class ProductController extends GetxController {
   Rx<String> errorMessage = ''.obs;
   Rx<String> responseMessage = ''.obs;
   RxList<Product> products = <Product>[].obs;
+  RxList<Product> favouriteProducts = <Product>[].obs;
+  Rx<bool> isFavouritesLoading = false.obs;
 
   @override
   void onInit() {
@@ -38,6 +42,7 @@ class ProductController extends GetxController {
       isLoading.value = true;
       errorMessage.value = '';
       final response = await apiClient.get('products/all');
+      log(response.toString());
       final data = response['data'] as List;
       products.value = data.map((e) => Product.fromJson(e)).toList();
       return products;
@@ -46,6 +51,36 @@ class ProductController extends GetxController {
       return [];
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<bool> isProductFavourite(String productId) async {
+    try {
+      errorMessage.value = '';
+      final response = await apiClient.get(
+        'products/favourite-status',
+        queryParameters: {'productId': productId},
+      );
+      final isFavourite = response['data']['isFavourite'] as bool;
+      return isFavourite;
+    } catch (e) {
+      errorMessage.value = e.toString();
+      log(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> toggleFavourite(String productId) async {
+    try {
+      errorMessage.value = '';
+      final response = await apiClient.post('products/favourite', data: {'productId': productId});
+      log(response.toString());
+      responseMessage.value = response['message'];
+      return true;
+    } catch (e) {
+      errorMessage.value = e.toString();
+      log(e.toString());
+      return false;
     }
   }
 
@@ -80,6 +115,23 @@ class ProductController extends GetxController {
     } catch (e) {
       errorMessage.value = e.toString();
       return false;
+    }
+  }
+
+  Future<List<Product>> fetchUserFavourites() async {
+    try {
+      isFavouritesLoading.value = true;
+      errorMessage.value = '';
+      final response = await apiClient.get('users/favourites/all');
+      log(response.toString());
+      final data = response['data'] as List;
+      favouriteProducts.value = data.map((e) => Product.fromJson(e)).toList();
+      return favouriteProducts;
+    } catch (e) {
+      errorMessage.value = e.toString();
+      return [];
+    } finally {
+      isFavouritesLoading.value = false;
     }
   }
 }

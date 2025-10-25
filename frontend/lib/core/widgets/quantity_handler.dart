@@ -3,31 +3,20 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:get/get.dart';
 
-class QuantityHandler extends StatefulWidget {
-  const QuantityHandler({super.key, this.height, this.width});
+class QuantityHandler extends StatelessWidget {
+  const QuantityHandler({
+    super.key,
+    this.height,
+    this.width,
+    this.onDecrement,
+    this.onIncrement,
+    required this.quantity,
+  });
   final double? height;
   final double? width;
-
-  @override
-  State<QuantityHandler> createState() => _QuantityHandlerState();
-}
-
-class _QuantityHandlerState extends State<QuantityHandler> {
-  int quantity = 1;
-
-  void increment() {
-    setState(() {
-      quantity++;
-    });
-  }
-
-  void decrement() {
-    if (quantity > 1) {
-      setState(() {
-        quantity--;
-      });
-    }
-  }
+  final VoidCallback? onIncrement;
+  final VoidCallback? onDecrement;
+  final int quantity;
 
   Widget buildIconButton({
     required IconData icon,
@@ -39,8 +28,8 @@ class _QuantityHandlerState extends State<QuantityHandler> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: widget.width ?? size,
-        height: widget.height ?? size,
+        width: width ?? size,
+        height: height ?? size,
         decoration: BoxDecoration(
           color: backgroundColor,
           shape: BoxShape.circle,
@@ -69,21 +58,19 @@ class _QuantityHandlerState extends State<QuantityHandler> {
           children: [
             buildIconButton(
               icon: FeatherIcons.minus,
-              onTap: decrement,
+              onTap: onDecrement ?? () {},
               backgroundColor: Get.theme.colorScheme.surface,
               iconColor: Get.theme.colorScheme.onSurface,
             ),
             const SizedBox(width: 15),
             Text(
               '$quantity',
-              style: AppTypography.labelMedium.copyWith(
-                color: Get.theme.colorScheme.onSurface,
-              ),
+              style: AppTypography.labelMedium.copyWith(color: Get.theme.colorScheme.onSurface),
             ),
             const SizedBox(width: 15),
             buildIconButton(
               icon: FeatherIcons.plus,
-              onTap: increment,
+              onTap: onIncrement ?? () {},
               backgroundColor: Get.theme.colorScheme.onSurface,
               iconColor: Get.theme.colorScheme.surface,
             ),

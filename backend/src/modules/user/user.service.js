@@ -1,6 +1,7 @@
 import ApiError from '../../core/utils/api_error.util.js';
 import uploadImage, { removeImageFromCloudinary } from '../../core/utils/cloudinary.util.js';
-import User from '../../core/models/user.model.js';
+import User from './user.model.js';
+import Product from '../products/product.model.js';
 
 class UserService {
   async addUser(data, filePath) {
@@ -68,6 +69,21 @@ class UserService {
     const user = await User.findById(userId).select('-password');
     if (!user) throw new ApiError(404, 'User not found');
     return user;
+  }
+
+  async getUserFavourites(userId) {
+    const user = await User.findById(userId).populate({
+      path: 'favourites',
+      model: Product,
+      populate: {
+        path: 'category',
+        select: 'name',
+      },
+    });
+    
+    if (!user) throw new ApiError(404, 'User not found');
+    
+    return user.favourites;
   }
 }
 

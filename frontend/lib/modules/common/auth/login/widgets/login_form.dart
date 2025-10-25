@@ -37,7 +37,7 @@ class _LoginFormState extends State<LoginForm> {
     }
     Toaster.showSuccessMessage(message: _authController.responseMessage.value);
     Future.delayed(const Duration(seconds: 2), () {
-      Get.to(const UserMasterLayout());
+      Get.off(const UserMasterLayout());
     });
   }
 
@@ -56,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
 
     Toaster.showSuccessMessage(message: _authController.responseMessage.value);
     Future.delayed(const Duration(seconds: 2), () {
-      Get.to(
+      Get.off(
         _authController.user.value!.role == 1
             ? const AdminMasterLayout()
             : const UserMasterLayout(),

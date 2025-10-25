@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTitle(context) {
+  Widget _buildTitle(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

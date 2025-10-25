@@ -52,7 +52,7 @@ class _DropDownFieldState extends State<DropDownField> {
     if (_isFocused) return AppColors.primary;
     return Theme.of(context).brightness == Brightness.light
         ? AppColors.iconColor
-        : Get.theme.colorScheme.surface;
+        : Get.theme.colorScheme.onSurface;
   }
 
   @override

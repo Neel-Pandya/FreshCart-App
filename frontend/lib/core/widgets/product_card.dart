@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:frontend/core/models/admin_product.dart';
 import 'package:frontend/core/theme/app_typography.dart';
-import 'package:frontend/core/models/product.dart';
 import 'package:get/get.dart';
 
 class ProductCard extends StatelessWidget {

@@ -49,6 +49,14 @@ const addProductValidation = z.object(
   },
   { error: 'Invalid product data' }
 );
+const addToFavouritesValidation = z.strictObject(
+  {
+    productId: z
+      .string({ error: 'Product ID is required' })
+      .nonempty({ error: 'Product ID cannot be empty' }),
+  },
+  { error: 'Invalid product ID' }
+);
 
 const removeProductValidation = z.strictObject(
   {
@@ -106,4 +114,4 @@ const updateProductValidation = z.object({
   imageUrl: z.url({ message: 'Invalid image URL' }).nonempty({ message: 'Image URL is required' }),
 });
 
-export { addProductValidation, removeProductValidation, updateProductValidation };
+export { addProductValidation, removeProductValidation, updateProductValidation, addToFavouritesValidation };

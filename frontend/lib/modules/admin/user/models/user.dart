@@ -5,6 +5,7 @@
   final int? role;
   final String? status;
   final String imageUrl;
+  final bool isGoogle;
 
   const User({
     required this.userId,
@@ -13,6 +14,7 @@
     required this.imageUrl,
     this.status = 'inactive',
     this.role,
+    this.isGoogle = false,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@
       role: json['role'] ?? 0,
       status: json['status'],
       imageUrl: json['profile'] ?? '',
+      isGoogle: json['isGoogle'] ?? false,
     );
   }
 

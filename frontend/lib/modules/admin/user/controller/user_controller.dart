@@ -39,8 +39,12 @@ class UserController extends GetxController {
       errorMessage.value = '';
       final response = await apiClient.get('users/all');
       final data = response['data'] as List;
-      // Filter out admin users (role = 1) to prevent admin from deleting themselves
-      users.value = data.map((e) => User.fromJson(e)).where((user) => user.role != 1).toList();
+      // Filter out admin and google users from the list and assign to users observable list
+      users.value = data
+          .map((e) => User.fromJson(e))
+          .where((user) => user.role != 1)
+          .where((user) => !user.isGoogle)
+          .toList();
       return users;
     } catch (e) {
       errorMessage.value = e.toString();

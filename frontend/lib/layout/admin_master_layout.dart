@@ -60,6 +60,8 @@ class _AdminMasterLayoutState extends State<AdminMasterLayout> {
                   _authController.user.value?.imageUrl ?? '',
                   height: 48,
                   width: 48,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
                 ),
               ),
             ),

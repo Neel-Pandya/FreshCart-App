@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-import EnvConfig from '../config/env.config.js';
+import EnvConfig from '../../core/config/env.config.js';
 import jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema(
@@ -37,6 +37,25 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    favourites: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+      },
+    ],
+
+    cart: [
+      {
+        productId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Product',
+        },
+        quantity: {
+          type: Number,
+          default: 1,
+        },
+      },
+    ]
   },
   { timestamps: true }
 );

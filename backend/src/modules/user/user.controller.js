@@ -39,4 +39,11 @@ const deleteUser = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, 'User deleted successfully', null));
 });
 
-export { addUser, getAllUsers, getUserById, updateUser, deleteUser };
+const getUserFavourites = asyncHandler(async (req, res) => {
+  const userId = req.user.id;
+  const favourites = await UserService.getUserFavourites(userId);
+
+  return res.status(200).json(new ApiResponse(200, 'User favourites retrieved successfully', favourites));
+});
+
+export { addUser, getAllUsers, getUserById, updateUser, deleteUser, getUserFavourites };

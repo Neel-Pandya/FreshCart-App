@@ -29,9 +29,23 @@ class ProductListItem extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 5),
-              Text(
-                cart.quantity.toString(),
-                style: AppTypography.bodyMedium.copyWith(color: Get.theme.colorScheme.onSurface),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Qty: ',
+                      style: AppTypography.bodyMedium.copyWith(
+                        color: Get.theme.colorScheme.onSurface,
+                      ),
+                    ),
+                    TextSpan(
+                      text: '${cart.quantity} × \u20B9${cart.productPrice.toStringAsFixed(0)}',
+                      style: AppTypography.bodyMedium.copyWith(
+                        color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

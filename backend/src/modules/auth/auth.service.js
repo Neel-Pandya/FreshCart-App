@@ -1,4 +1,4 @@
-import User from '../../core/models/user.model.js';
+import User from '../user/user.model.js';
 import Otp from '../../core/models/otp.model.js';
 import ApiError from '../../core/utils/api_error.util.js';
 import nodemailer from 'nodemailer';

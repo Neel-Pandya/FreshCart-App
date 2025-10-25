@@ -59,7 +59,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
     super.dispose();
   }
 
-  _handleImagePicker() async {
+  Future<void> _handleImagePicker() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['jpg', 'jpeg', 'png'],

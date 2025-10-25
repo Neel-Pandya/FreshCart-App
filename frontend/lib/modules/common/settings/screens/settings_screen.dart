@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:frontend/core/controllers/bottom_nav_controller.dart';
+import 'package:frontend/core/controllers/drawer_nav_controller.dart';
 import 'package:frontend/core/controllers/theme_controller.dart';
 import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/routes/user_routes.dart';
@@ -41,6 +42,8 @@ class SettingsScreen extends StatelessWidget {
         // Reset bottom navigation controller if it exists
         try {
           final nav = Get.find<BottomNavController>();
+          final sideNav = Get.find<DrawerNavController>();
+          sideNav.setIndex(0);
           nav.setIndex(0);
         } catch (e) {
           // Controller might not exist in admin context, ignore
