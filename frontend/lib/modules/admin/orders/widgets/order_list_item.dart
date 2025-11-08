@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 class OrderListItem extends StatelessWidget {
   const OrderListItem({super.key, required this.order, required this.imageUrl});
-  final Order order;
+  final AdminOrder order;
   final String imageUrl;
 
   @override
@@ -18,7 +18,22 @@ class OrderListItem extends StatelessWidget {
       },
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(100),
-        child: Image.asset(imageUrl, height: 48, width: 48, fit: BoxFit.cover),
+        child: imageUrl.startsWith('http') || imageUrl.startsWith('https')
+            ? Image.network(
+                imageUrl,
+                height: 48,
+                width: 48,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    'assets/images/user/common_profile.png',
+                    height: 48,
+                    width: 48,
+                    fit: BoxFit.cover,
+                  );
+                },
+              )
+            : Image.asset(imageUrl, height: 48, width: 48, fit: BoxFit.cover),
       ),
       tileColor: Get.theme.brightness == Brightness.light
           ? Get.theme.colorScheme.surface
@@ -29,7 +44,7 @@ class OrderListItem extends StatelessWidget {
         side: const BorderSide(color: AppColors.border, width: 1.25),
       ),
       title: Text(
-        order.orderId,
+        order.shortOrderId,
         style: AppTypography.titleMedium.copyWith(color: Get.theme.colorScheme.onSurface),
       ),
 
@@ -42,9 +57,7 @@ class OrderListItem extends StatelessWidget {
 
       trailing: Text(
         '\u20B9 ${order.totalAmount.toStringAsFixed(0)}',
-        style: AppTypography.bodyMediumEmphasized.copyWith(
-          color: Get.theme.colorScheme.onSurface,
-        ),
+        style: AppTypography.bodyMediumEmphasized.copyWith(color: Get.theme.colorScheme.onSurface),
       ),
     );
   }

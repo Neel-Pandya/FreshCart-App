@@ -3,6 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/widgets/form_textfield.dart';
+import 'package:frontend/modules/user/checkout/controller/checkout_address_controller.dart';
 import 'package:get/get.dart';
 
 class CheckoutAddress extends StatefulWidget {
@@ -14,18 +15,17 @@ class CheckoutAddress extends StatefulWidget {
 }
 
 class _CheckoutAddressState extends State<CheckoutAddress> {
-  late final TextEditingController _addressController;
+  late final CheckoutAddressController addressController;
 
   @override
   void initState() {
     super.initState();
-    _addressController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _addressController.dispose();
-    super.dispose();
+    // Use the existing controller if already created, otherwise create new one
+    if (Get.isRegistered<CheckoutAddressController>()) {
+      addressController = Get.find<CheckoutAddressController>();
+    } else {
+      addressController = Get.put(CheckoutAddressController());
+    }
   }
 
   @override
@@ -36,25 +36,19 @@ class _CheckoutAddressState extends State<CheckoutAddress> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Address',
+            'Delivery Address',
             style: AppTypography.titleMediumEmphasized.copyWith(
               color: Get.theme.colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 15),
           FormTextField(
-            controller: _addressController,
-            hintText: 'Enter your address',
+            controller: addressController.addressController,
+            hintText: 'Enter your delivery address',
             prefixIcon: FeatherIcons.mapPin,
             validator: MultiValidator([
               RequiredValidator(errorText: 'Address is required'),
               MinLengthValidator(10, errorText: 'At least 10 characters'),
-              MaxLengthValidator(255, errorText: 'At most 255 characters'),
-              PatternValidator(
-                r'^[a-zA-Z0-9\s,./-]*$',
-                errorText:
-                    'Address can only contain letters, numbers, spaces, commas, periods, and hyphens',
-              ),
             ]).call,
           ),
         ],

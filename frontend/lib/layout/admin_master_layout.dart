@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:frontend/core/routes/user_routes.dart';
 import 'package:frontend/core/widgets/drawer_navigation.dart';
 import 'package:frontend/modules/admin/category/screens/category_screen.dart';
 import 'package:frontend/modules/admin/dashboard/screens/dashboard_screen.dart';
@@ -53,15 +54,21 @@ class _AdminMasterLayoutState extends State<AdminMasterLayout> {
         appBar: AppBar(
           title: Text(_screens[selectedIndex]['title']),
           actions: [
-            ClipRRect(
+            InkWell(
               borderRadius: BorderRadius.circular(100),
-              child: Obx(
-                () => Image.network(
-                  _authController.user.value?.imageUrl ?? '',
-                  height: 48,
-                  width: 48,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
+              onTap: () {
+                Get.toNamed(UserRoutes.editProfile);
+              },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Obx(
+                  () => Image.network(
+                    _authController.user.value?.imageUrl ?? '',
+                    height: 48,
+                    width: 48,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.center,
+                  ),
                 ),
               ),
             ),

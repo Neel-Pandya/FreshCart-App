@@ -5,9 +5,11 @@ import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
 import 'package:frontend/modules/user/cart/controller/cart_controller.dart';
+import 'package:frontend/modules/user/checkout/controller/checkout_address_controller.dart';
 import 'package:frontend/modules/user/checkout/widgets/checkout_address.dart';
 import 'package:frontend/modules/user/checkout/widgets/payment_method.dart';
 import 'package:frontend/modules/user/checkout/widgets/product_listing.dart';
+import 'package:frontend/modules/user/orders/controller/order_controller.dart';
 import 'package:get/get.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -19,12 +21,18 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   late final CartController cartController;
+  late final OrderController orderController;
+  late final PaymentMethodController paymentController;
+  late final CheckoutAddressController addressController;
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
     cartController = Get.find<CartController>();
+    orderController = Get.put(OrderController());
+    paymentController = Get.put(PaymentMethodController());
+    addressController = Get.put(CheckoutAddressController());
   }
 
   void _handleCheckout(BuildContext context) {
@@ -32,14 +40,41 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     FocusManager.instance.primaryFocus?.unfocus();
 
-    // Clear cart after successful checkout
-    cartController.clearCart();
+    final paymentMethod = paymentController.getSelectedMethod();
 
-    Toaster.showSuccessMessage(message: 'Checkout successful');
-    Future.delayed(const Duration(seconds: 2), () {
-      if (!context.mounted) return;
-      Get.offAllNamed(UserRoutes.master);
-    });
+    if (paymentMethod == null) {
+      Toaster.showErrorMessage(message: 'Please select a payment method');
+      return;
+    }
+
+    if (paymentMethod == 'Cash on Delivery') {
+      _handleCashOnDelivery();
+    } else if (paymentMethod == 'RazorPay') {
+      // RazorPay not implemented yet
+      Toaster.showErrorMessage(message: 'RazorPay is not yet available');
+    }
+  }
+
+  Future<void> _handleCashOnDelivery() async {
+    final deliveryAddress = addressController.getDeliveryAddress();
+    final paymentMethod = paymentController.getSelectedMethod() ?? 'Cash on Delivery';
+
+    final success = await orderController.createOrder(paymentMethod, deliveryAddress);
+
+    if (!mounted) return;
+
+    if (success) {
+      // Clear cart after successful order
+      cartController.clearCart();
+
+      Toaster.showSuccessMessage(message: 'Order placed successfully');
+      Future.delayed(const Duration(seconds: 2), () {
+        if (!context.mounted) return;
+        Get.offAllNamed(UserRoutes.master);
+      });
+    } else {
+      Toaster.showErrorMessage(message: orderController.errorMessage.value);
+    }
   }
 
   double _calculateTotal() {
@@ -63,17 +98,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'Your cart is empty',
+                        textAlign: TextAlign.center,
                         style: AppTypography.titleMedium.copyWith(
                           color: Get.theme.colorScheme.onSurface,
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      PrimaryButton(
-                        text: 'Back to Shopping',
-                        onPressed: () => Get.offAllNamed(UserRoutes.master),
                       ),
                     ],
                   ),
@@ -133,9 +165,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             const SizedBox(height: 10),
                             SizedBox(
                               width: double.infinity,
-                              child: PrimaryButton(
-                                text: 'Checkout',
-                                onPressed: () => _handleCheckout(context),
+                              child: Obx(
+                                () => PrimaryButton(
+                                  text: orderController.isLoading.value
+                                      ? 'Processing...'
+                                      : 'Checkout',
+                                  onPressed: orderController.isLoading.value
+                                      ? null
+                                      : () => _handleCheckout(context),
+                                ),
                               ),
                             ),
                           ],

@@ -3,6 +3,7 @@ import 'package:frontend/core/widgets/bottom_navigation.dart';
 import 'package:frontend/modules/admin/product/controller/product_controller.dart';
 import 'package:frontend/modules/user/home/screens/home_screen.dart';
 import 'package:frontend/modules/user/products/screens/products_screen.dart';
+import 'package:frontend/modules/user/favourites/screens/favourites_screen.dart';
 import 'package:frontend/modules/user/orders/screens/orders_screen.dart';
 import 'package:frontend/modules/common/settings/screens/settings_screen.dart';
 import 'package:get/get.dart';
@@ -20,6 +21,7 @@ class _UserMasterLayoutState extends State<UserMasterLayout> {
   final screens = [
     const HomeScreen(),
     const ProductsScreen(),
+    const FavouritesScreen(),
     const OrdersScreen(),
     SettingsScreen(),
   ];

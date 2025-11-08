@@ -33,6 +33,6 @@ class UserRoutes {
       transitionDuration: const Duration(milliseconds: 300),
     ),
     GetPage(name: cart, page: () => const CartScreen(), transition: Transition.native),
-    GetPage(name: checkout, page: () => CheckoutScreen(), transition: Transition.native),
+    GetPage(name: checkout, page: () => const CheckoutScreen(), transition: Transition.native),
   ];
 }

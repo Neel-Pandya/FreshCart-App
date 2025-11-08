@@ -55,7 +55,47 @@ const userSchema = new mongoose.Schema(
           default: 1,
         },
       },
-    ]
+    ],
+
+    orders: [
+      {
+        items: [
+          {
+            productId: {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: 'Product',
+            },
+            productName: {
+              type: String,
+            },
+            price: {
+              type: Number,
+            },
+            quantity: {
+              type: Number,
+            },
+            total: {
+              type: Number,
+            },
+            imageUrl: {
+              type: String,
+            },
+          },
+        ],
+        totalAmount: {
+          type: Number,
+        },
+        paymentMethod: {
+          type: String,
+          enum: ['Cash on Delivery', 'RazorPay'],
+        },
+        deliveryAddress: String,
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

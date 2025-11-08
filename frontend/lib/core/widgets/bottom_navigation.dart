@@ -21,6 +21,7 @@ class BottomNavigation extends StatelessWidget {
         destinations: const <NavigationDestination>[
           NavigationDestination(icon: Icon(FeatherIcons.home), label: 'Home'),
           NavigationDestination(icon: Icon(FeatherIcons.shoppingCart), label: 'Products'),
+          NavigationDestination(icon: Icon(FeatherIcons.heart), label: 'Favourites'),
           NavigationDestination(icon: Icon(FeatherIcons.shoppingBag), label: 'Orders'),
           NavigationDestination(icon: Icon(FeatherIcons.settings), label: 'Settings'),
         ],

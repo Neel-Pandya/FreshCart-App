@@ -18,16 +18,32 @@
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
+    String categoryName = '';
+    
+    // Handle different category formats
+    if (json['category'] == null) {
+      categoryName = 'Uncategorized';
+    } else if (json['category'] is Map) {
+      // Category is populated as an object
+      categoryName = json['category']['name'] as String? ?? 
+                     json['category']['_id']?.toString() ?? 
+                     'Uncategorized';
+    } else if (json['category'] is String) {
+      // Category is a string (could be name or ObjectId)
+      categoryName = json['category'] as String;
+    } else {
+      // Category might be an ObjectId object, try to convert to string
+      categoryName = json['category'].toString();
+    }
+    
     return Product(
-      productId: json['_id'] as String? ?? '',
+      productId: json['_id'] as String? ?? json['productId'] as String? ?? '',
       imageUrl: json['imageUrl'] as String,
       name: json['name'] as String,
       price: (json['price'] as num).toDouble(),
-      quantity: json['stock'] as int,
+      quantity: json['stock'] as int? ?? json['quantity'] as int? ?? 0,
       description: json['description'] as String,
-      category: json['category'] is Map
-          ? json['category']['name'] as String
-          : json['category'] as String,
+      category: categoryName,
     );
   }
 

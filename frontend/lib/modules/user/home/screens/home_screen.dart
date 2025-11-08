@@ -54,19 +54,24 @@ class HomeScreen extends StatelessWidget {
                       ? const Center(child: CircularProgressIndicator())
                       : productController.products.isEmpty
                       ? const Center(child: Text('No Products Available'))
-                      : GridView.builder(
-                          padding: const EdgeInsets.only(top: 10),
-                          itemCount: productController.products.length,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 30,
-                            mainAxisSpacing: 25,
-                            childAspectRatio: 0.7,
-                          ),
-                          itemBuilder: (context, index) => ProductCard(
-                            product: productController.products[index],
-                            onTap: (product) =>
-                                Get.to(const DetailedProductScreen(), arguments: product),
+                      : RefreshIndicator(
+                          onRefresh: () async {
+                            await productController.fetchProducts();
+                          },
+                          child: GridView.builder(
+                            padding: const EdgeInsets.only(top: 10),
+                            itemCount: productController.products.length,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 30,
+                              mainAxisSpacing: 25,
+                              childAspectRatio: 0.7,
+                            ),
+                            itemBuilder: (context, index) => ProductCard(
+                              product: productController.products[index],
+                              onTap: (product) =>
+                                  Get.to(const DetailedProductScreen(), arguments: product),
+                            ),
                           ),
                         ),
                 ),
