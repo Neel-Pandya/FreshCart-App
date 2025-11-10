@@ -2,7 +2,7 @@ import ApiError from '../../core/utils/api_error.util.js';
 import uploadImage, { removeImageFromCloudinary } from '../../core/utils/cloudinary.util.js';
 import Product from './product.model.js';
 import Category from '../category/category.model.js';
-import User from "../user/user.model.js";
+import User from '../user/user.model.js';
 
 class ProductService {
   async addProduct(data, filePath) {
@@ -30,20 +30,16 @@ class ProductService {
   }
 
   async toggleFavourite(userId, productId) {
-
-    const [user, product] = await Promise.all([
-      User.findById(userId),
-      Product.findById(productId),
-    ]);
+    const [user, product] = await Promise.all([User.findById(userId), Product.findById(productId)]);
 
     if (!user) throw new ApiError(404, 'User not found');
     if (!product) throw new ApiError(404, 'Product not found');
-    
+
     const isFavourite = user.favourites.includes(productId);
 
     if (isFavourite) {
       // If already favourite, remove it
-      user.favourites = user.favourites.filter(id => id.toString() !== productId.toString());
+      user.favourites = user.favourites.filter((id) => id.toString() !== productId.toString());
       await user.save();
       return { message: 'Product removed from favourites' };
     } else {

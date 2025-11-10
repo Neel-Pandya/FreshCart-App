@@ -80,9 +80,9 @@ class UserService {
         select: 'name',
       },
     });
-    
+
     if (!user) throw new ApiError(404, 'User not found');
-    
+
     return user.favourites;
   }
 }

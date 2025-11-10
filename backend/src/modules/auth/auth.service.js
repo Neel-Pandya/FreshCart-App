@@ -233,7 +233,7 @@ class AuthService {
   async updateProfile(userId, name, oldProfile, profile) {
     const user = await User.findById(userId);
     if (!user) throw new ApiError(404, 'User not found');
-    
+
     let newProfile = oldProfile;
     if (profile) {
       newProfile = await uploadImage(profile);

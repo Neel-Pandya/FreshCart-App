@@ -90,7 +90,6 @@ class OrderService {
     return user.orders;
   }
 
-
   async getOrderById(userId, orderId) {
     const user = await User.findById(userId);
 
@@ -105,12 +104,10 @@ class OrderService {
 
   async getAllOrders() {
     // Get all users with their orders populated
-    const users = await User.find()
-      .select('name email profile orders')
-      .populate({
-        path: 'orders.items.productId',
-        select: 'name imageUrl',
-      });
+    const users = await User.find().select('name email profile orders').populate({
+      path: 'orders.items.productId',
+      select: 'name imageUrl',
+    });
 
     // Flatten all orders and add user information
     const allOrders = [];

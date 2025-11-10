@@ -26,8 +26,8 @@ const deleteProduct = asyncHandler(async (req, res) => {
 const toggleFavourite = asyncHandler(async (req, res) => {
   const userId = req.user.id;
   const { productId } = req.body;
-  
-  const {message} = await ProductService.toggleFavourite(userId, productId);
+
+  const { message } = await ProductService.toggleFavourite(userId, productId);
   return res.status(200).json(new ApiResponse(200, message, null));
 });
 
@@ -36,7 +36,9 @@ const isProductFavourite = asyncHandler(async (req, res) => {
   const { productId } = req.query;
 
   const isFavourite = await ProductService.isProductFavourite(userId, productId);
-  return res.status(200).json(new ApiResponse(200, 'Favourite status retrieved successfully', { isFavourite }));
+  return res
+    .status(200)
+    .json(new ApiResponse(200, 'Favourite status retrieved successfully', { isFavourite }));
 });
 
 const updateProduct = asyncHandler(async (req, res) => {
@@ -51,5 +53,11 @@ const updateProduct = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, 'Product updated successfully', product));
 });
 
-
-export { addProduct, getAllProducts,toggleFavourite, isProductFavourite, deleteProduct, updateProduct };
+export {
+  addProduct,
+  getAllProducts,
+  toggleFavourite,
+  isProductFavourite,
+  deleteProduct,
+  updateProduct,
+};

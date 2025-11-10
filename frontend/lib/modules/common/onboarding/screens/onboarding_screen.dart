@@ -62,13 +62,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        PrimaryButton(
-          text: 'Create Account',
-          onPressed: () => Get.toNamed(AuthRoutes.signUp),
-        ),
+        PrimaryButton(text: 'Create Account', onPressed: () => Get.offNamed(AuthRoutes.signUp)),
         const SizedBox(height: 10),
         GestureDetector(
-          onTap: () => Get.toNamed(AuthRoutes.login),
+          onTap: () => Get.offNamed(AuthRoutes.login),
           child: Text(
             'Already Have An Account',
             textAlign: TextAlign.center,

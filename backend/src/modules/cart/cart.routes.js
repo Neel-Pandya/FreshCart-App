@@ -1,8 +1,19 @@
 import { Router } from 'express';
-import { addToCart, getCart, removeFromCart, updateCartQuantity, clearCart, getCartCount } from './cart.controller.js';
+import {
+  addToCart,
+  getCart,
+  removeFromCart,
+  updateCartQuantity,
+  clearCart,
+  getCartCount,
+} from './cart.controller.js';
 import verifyJWT from '../../core/middleware/jwt.middleware.js';
 import validate from '../../core/middleware/zod.middleware.js';
-import { addToCartValidation, removeFromCartValidation, updateCartQuantityValidation } from './cart.validation.js';
+import {
+  addToCartValidation,
+  removeFromCartValidation,
+  updateCartQuantityValidation,
+} from './cart.validation.js';
 
 const router = Router();
 
@@ -16,7 +27,12 @@ router.get('/all', verifyJWT, getCart);
 router.post('/remove', verifyJWT, validate(removeFromCartValidation), removeFromCart);
 
 // Update cart item quantity
-router.put('/update-quantity', verifyJWT, validate(updateCartQuantityValidation), updateCartQuantity);
+router.put(
+  '/update-quantity',
+  verifyJWT,
+  validate(updateCartQuantityValidation),
+  updateCartQuantity
+);
 
 // Clear entire cart
 router.post('/clear', verifyJWT, clearCart);

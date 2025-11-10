@@ -1,5 +1,12 @@
 import { Router } from 'express';
-import { addUser, deleteUser, getAllUsers, getUserById, updateUser, getUserFavourites } from './user.controller.js';
+import {
+  addUser,
+  deleteUser,
+  getAllUsers,
+  getUserById,
+  updateUser,
+  getUserFavourites,
+} from './user.controller.js';
 import verifyJWT from '../../core/middleware/jwt.middleware.js';
 import adminMiddleware from '../../core/middleware/admin.middleware.js';
 import upload from '../../core/middleware/multer.middleware.js';

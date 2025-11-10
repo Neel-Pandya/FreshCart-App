@@ -4,10 +4,7 @@ import Product from '../products/product.model.js';
 
 class CartService {
   async addToCart(userId, productId, quantity = 1) {
-    const [user, product] = await Promise.all([
-      User.findById(userId),
-      Product.findById(productId),
-    ]);
+    const [user, product] = await Promise.all([User.findById(userId), Product.findById(productId)]);
 
     if (!user) throw new ApiError(404, 'User not found');
     if (!product) throw new ApiError(404, 'Product not found');
@@ -15,14 +12,17 @@ class CartService {
       throw new ApiError(400, `Insufficient stock. Only ${product.stock} items available`);
     }
 
-    const cartItem = user.cart.find(item => item.productId.toString() === productId.toString());
+    const cartItem = user.cart.find((item) => item.productId.toString() === productId.toString());
 
     if (!cartItem) {
       user.cart.push({ productId, quantity });
     } else {
       const newQuantity = cartItem.quantity + quantity;
       if (newQuantity > product.stock) {
-        throw new ApiError(400, `Insufficient stock. Only ${product.stock} items available in total`);
+        throw new ApiError(
+          400,
+          `Insufficient stock. Only ${product.stock} items available in total`
+        );
       }
       cartItem.quantity = newQuantity;
     }
@@ -52,7 +52,9 @@ class CartService {
 
     if (!user) throw new ApiError(404, 'User not found');
 
-    const cartItemIndex = user.cart.findIndex(item => item.productId.toString() === productId.toString());
+    const cartItemIndex = user.cart.findIndex(
+      (item) => item.productId.toString() === productId.toString()
+    );
 
     if (cartItemIndex === -1) throw new ApiError(404, 'Product not found in cart');
 
@@ -71,7 +73,7 @@ class CartService {
 
     if (!user) throw new ApiError(404, 'User not found');
 
-    const cartItem = user.cart.find(item => item.productId.toString() === productId.toString());
+    const cartItem = user.cart.find((item) => item.productId.toString() === productId.toString());
 
     if (!cartItem) throw new ApiError(404, 'Product not found in cart');
 

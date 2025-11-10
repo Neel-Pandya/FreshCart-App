@@ -37,6 +37,7 @@ class _LoginFormState extends State<LoginForm> {
     }
     Toaster.showSuccessMessage(message: _authController.responseMessage.value);
     Future.delayed(const Duration(seconds: 2), () {
+      // off the onboarding also
       Get.off(const UserMasterLayout());
     });
   }

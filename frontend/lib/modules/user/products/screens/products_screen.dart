@@ -8,8 +8,37 @@ import 'package:frontend/modules/user/products/screens/detailed_product_screen.d
 import 'package:frontend/modules/user/products/widgets/filter_sheet.dart';
 import 'package:get/get.dart';
 
-class ProductsScreen extends StatelessWidget {
+class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
+
+  @override
+  State<ProductsScreen> createState() => _ProductsScreenState();
+}
+
+class _ProductsScreenState extends State<ProductsScreen> {
+  late TextEditingController _searchController;
+  late ProductController productController;
+
+  @override
+  void initState() {
+    super.initState();
+    productController = Get.find<ProductController>();
+    _searchController = TextEditingController();
+
+    // Initialize search controller with current search query
+    _searchController.text = productController.searchQuery.value;
+
+    // Add listener to handle search as user types
+    _searchController.addListener(() {
+      productController.applyFilters(search: _searchController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   void _showFilterSheet(BuildContext context) {
     showModalBottomSheet(
@@ -23,7 +52,6 @@ class ProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productController = Get.find<ProductController>();
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -32,6 +60,7 @@ class ProductsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               FormTextField(
+                controller: _searchController,
                 hintText: 'Search Products',
                 prefixIcon: FeatherIcons.search,
                 suffixIcon: FeatherIcons.filter,
@@ -40,33 +69,35 @@ class ProductsScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              Expanded(
-                child: productController.isLoading.value
-                    ? const Center(child: CircularProgressIndicator())
-                    : productController.products.isEmpty
-                    ? const Center(child: Text('No Products Available'))
-                    : RefreshIndicator(
-                        onRefresh: () async {
-                          await productController.fetchProducts();
-                        },
-                        child: GridView.builder(
-                          padding: const EdgeInsets.only(top: 10),
-                          itemCount: productController.products.length,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 30,
-                            mainAxisSpacing: 25,
-                            childAspectRatio: 0.7,
-                          ),
-                          itemBuilder: (context, index) => ProductCard(
-                            product: productController.products[index],
-                            onTap: (Product product) {
-                              FocusManager.instance.primaryFocus?.unfocus();
-                              Get.to(() => const DetailedProductScreen(), arguments: product);
-                            },
+              Obx(
+                () => Expanded(
+                  child: productController.isLoading.value
+                      ? const Center(child: CircularProgressIndicator())
+                      : productController.products.isEmpty
+                      ? const Center(child: Text('No Products Available'))
+                      : RefreshIndicator(
+                          onRefresh: () async {
+                            await productController.fetchProducts();
+                          },
+                          child: GridView.builder(
+                            padding: const EdgeInsets.only(top: 10),
+                            itemCount: productController.products.length,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 30,
+                              mainAxisSpacing: 25,
+                              childAspectRatio: 0.7,
+                            ),
+                            itemBuilder: (context, index) => ProductCard(
+                              product: productController.products[index],
+                              onTap: (Product product) {
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                Get.to(() => const DetailedProductScreen(), arguments: product);
+                              },
+                            ),
                           ),
                         ),
-                      ),
+                ),
               ),
             ],
           ),
