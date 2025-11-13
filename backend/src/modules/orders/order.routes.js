@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { createOrder, getOrders, getOrderById, getAllOrders } from './order.controller.js';
+import { createRazorpayOrder, verifyRazorpayPayment } from './order.razorpay.js';
 import verifyJWT from '../../core/middleware/jwt.middleware.js';
 import adminMiddleware from '../../core/middleware/admin.middleware.js';
 import validate from '../../core/middleware/zod.middleware.js';
@@ -9,6 +10,10 @@ const router = Router();
 
 // Create order (Cash on Delivery)
 router.post('/create', verifyJWT, validate(createOrderValidation), createOrder);
+
+// Razorpay routes
+router.post('/razorpay/create', verifyJWT, createRazorpayOrder);
+router.post('/razorpay/verify', verifyJWT, verifyRazorpayPayment);
 
 // Get all orders for user
 router.get('/all', verifyJWT, getOrders);

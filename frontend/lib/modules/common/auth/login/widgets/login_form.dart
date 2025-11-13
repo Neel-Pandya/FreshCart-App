@@ -37,8 +37,8 @@ class _LoginFormState extends State<LoginForm> {
     }
     Toaster.showSuccessMessage(message: _authController.responseMessage.value);
     Future.delayed(const Duration(seconds: 2), () {
-      // off the onboarding also
-      Get.off(const UserMasterLayout());
+      // Clear the entire navigation stack (removes onboarding and previous routes)
+      Get.offAll(const UserMasterLayout());
     });
   }
 
@@ -57,7 +57,8 @@ class _LoginFormState extends State<LoginForm> {
 
     Toaster.showSuccessMessage(message: _authController.responseMessage.value);
     Future.delayed(const Duration(seconds: 2), () {
-      Get.off(
+      // Clear the navigation stack and go to the appropriate master layout
+      Get.offAll(
         _authController.user.value!.role == 1
             ? const AdminMasterLayout()
             : const UserMasterLayout(),

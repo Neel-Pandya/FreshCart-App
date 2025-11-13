@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:core';
-import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:frontend/core/utils/api_client.dart';
 import 'package:frontend/core/models/user.dart';
+import 'package:frontend/core/utils/toaster.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide FormData;
 import 'package:google_sign_in/google_sign_in.dart';
@@ -140,8 +140,12 @@ class AuthController extends GetxController {
 
   Future<bool> googleSignup() async {
     await _googleSignIn.initialize();
+
     try {
       final GoogleSignInAccount googleUser = await _googleSignIn.authenticate();
+
+      // Show loading toast after user selects account
+      Toaster.showLoadingToast(title: 'Signing Up', message: 'Connecting with Google...');
 
       final GoogleSignInAuthentication googleAuth = googleUser.authentication;
       final credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken);
@@ -151,13 +155,18 @@ class AuthController extends GetxController {
 
       if (idToken == null) {
         error.value = 'Failed to retrieve ID token from Google.';
+        Toaster.dismissLoadingToast();
         return false;
       }
 
       final response = await apiClient.post('auth/google-signup', data: {'idToken': idToken});
       responseMessage.value = response['message'];
+
+      Toaster.dismissLoadingToast();
       return true;
     } catch (e) {
+      Toaster.dismissLoadingToast();
+
       if (e.toString().contains('sign in aborted') || e.toString().contains('Cancelled by user')) {
         error.value = 'Google sign-up was cancelled.';
         return false;
@@ -169,8 +178,12 @@ class AuthController extends GetxController {
 
   Future<bool> googleLogin() async {
     await _googleSignIn.initialize();
+
     try {
       final GoogleSignInAccount googleUser = await _googleSignIn.authenticate();
+
+      // Show loading toast after user selects account
+      Toaster.showLoadingToast(title: 'Signing In', message: 'Connecting with Google...');
 
       final GoogleSignInAuthentication googleAuth = googleUser.authentication;
       final credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken);
@@ -179,6 +192,7 @@ class AuthController extends GetxController {
 
       if (idToken == null) {
         error.value = 'Failed to retrieve ID token from Google.';
+        Toaster.dismissLoadingToast();
         return false;
       }
 
@@ -192,8 +206,12 @@ class AuthController extends GetxController {
 
       this.user.value = user;
       responseMessage.value = response['message'];
+
+      Toaster.dismissLoadingToast();
       return true;
     } catch (e) {
+      Toaster.dismissLoadingToast();
+
       if (e.toString().contains('sign in aborted') || e.toString().contains('Cancelled by user')) {
         error.value = 'Google sign-in was cancelled.';
         return false;
@@ -217,7 +235,6 @@ class AuthController extends GetxController {
     isLoading.value = true;
     try {
       final response = await apiClient.put('auth/update-profile', data: data);
-      log(response.toString());
 
       final updated = User.fromJson(response['data']);
 

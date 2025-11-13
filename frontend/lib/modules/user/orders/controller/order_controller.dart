@@ -21,18 +21,12 @@ class OrderController extends GetxController {
       isLoading.value = true;
       errorMessage.value = '';
 
-      if (paymentMethod != 'Cash on Delivery') {
-        errorMessage.value = 'Only Cash on Delivery is currently supported';
-        return false;
-      }
-
       final response = await apiClient.post(
         'orders/create',
         data: {'paymentMethod': paymentMethod, 'deliveryAddress': deliveryAddress},
       );
 
       responseMessage.value = response['message'];
-      log('Order created successfully');
 
       // Refresh orders after creating a new one
       await fetchOrders();
@@ -47,13 +41,81 @@ class OrderController extends GetxController {
     }
   }
 
+  /// Create Razorpay order - gets order ID from backend
+  Future<Map<String, dynamic>?> createRazorpayOrder(String deliveryAddress) async {
+    try {
+      isLoading.value = true;
+      errorMessage.value = '';
+
+      log('Creating Razorpay order with address: $deliveryAddress');
+
+      final response = await apiClient.post(
+        'orders/razorpay/create',
+        data: {'deliveryAddress': deliveryAddress},
+      );
+
+      log('Razorpay order response: $response');
+
+      final data = response['data'] as Map<String, dynamic>;
+
+      return {
+        'orderId': data['orderId'],
+        'amount': data['amount'],
+        'currency': data['currency'],
+        'keyId': data['keyId'],
+      };
+    } catch (e) {
+      log('Razorpay order creation error: $e');
+      errorMessage.value = e.toString();
+      log('Razorpay order creation failed: $e');
+      return null;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  /// Verify Razorpay payment - sends payment details to backend
+  Future<bool> verifyRazorpayPayment({
+    required String razorpayOrderId,
+    required String razorpayPaymentId,
+    required String razorpaySignature,
+    required String deliveryAddress,
+  }) async {
+    try {
+      isLoading.value = true;
+      errorMessage.value = '';
+
+      final response = await apiClient.post(
+        'orders/razorpay/verify',
+        data: {
+          'razorpayOrderId': razorpayOrderId,
+          'razorpayPaymentId': razorpayPaymentId,
+          'razorpaySignature': razorpaySignature,
+          'deliveryAddress': deliveryAddress,
+        },
+      );
+
+      responseMessage.value = response['message'];
+
+      // Refresh orders after successful payment
+      await fetchOrders();
+
+      return true;
+    } catch (e) {
+      errorMessage.value = e.toString();
+      log('Payment verification failed: $e');
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   Future<void> fetchOrders() async {
     try {
       isLoading.value = true;
       errorMessage.value = '';
 
       final response = await apiClient.get('orders/all');
-      log('Orders response: $response');
 
       final data = response['data'] as List<dynamic>? ?? [];
       orders.value = data
@@ -64,7 +126,6 @@ class OrderController extends GetxController {
       orders.sort((a, b) => b.createdAt.compareTo(a.createdAt));
     } catch (e) {
       errorMessage.value = e.toString();
-      log('Failed to get orders: $e');
       orders.value = [];
     } finally {
       isLoading.value = false;

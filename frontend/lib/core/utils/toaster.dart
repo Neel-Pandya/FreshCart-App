@@ -3,6 +3,7 @@ import 'package:toastification/toastification.dart';
 
 class Toaster {
   static final _toastification = Toastification();
+  static ToastificationItem? _loadingToast;
 
   static void _showMessage({
     required String title,
@@ -45,5 +46,42 @@ class Toaster {
     IconData? icon = Icons.error,
   }) {
     _showMessage(title: title, message: message, type: ToastificationType.error, icon: icon);
+  }
+
+  /// Show a loading toast that stays visible until dismissed
+  static void showLoadingToast({String title = 'Please Wait', required String message}) {
+    // Dismiss any existing loading toast first
+    dismissLoadingToast();
+
+    _loadingToast = _toastification.show(
+      title: Text(title),
+      description: Text(message),
+      style: ToastificationStyle.fillColored,
+      autoCloseDuration: null, // Don't auto-close
+      alignment: Alignment.topCenter,
+      animationDuration: const Duration(milliseconds: 400),
+      type: ToastificationType.info,
+      icon: const SizedBox(
+        width: 20,
+        height: 20,
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        ),
+      ),
+      showIcon: true,
+      showProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      applyBlurEffect: true,
+    );
+  }
+
+  /// Dismiss the loading toast
+  static void dismissLoadingToast() {
+    if (_loadingToast != null) {
+      _toastification.dismiss(_loadingToast!);
+      _loadingToast = null;
+    }
   }
 }

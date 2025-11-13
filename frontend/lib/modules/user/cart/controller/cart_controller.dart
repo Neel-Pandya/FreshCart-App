@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:frontend/core/utils/api_client.dart';
 import 'package:frontend/modules/user/cart/models/cart.dart';
 import 'package:get/get.dart';
@@ -19,11 +17,9 @@ class CartController extends GetxController {
         data: {'productId': productId, 'quantity': quantity},
       );
       responseMessage.value = response['message'];
-      log('Product added to cart: $productId');
       return true;
     } catch (e) {
       errorMessage.value = e.toString();
-      log(e.toString());
       return false;
     }
   }
@@ -33,7 +29,6 @@ class CartController extends GetxController {
       isFetching.value = true;
       errorMessage.value = '';
       final response = await apiClient.get('cart/all');
-      log(response.toString());
 
       if (response['data'] is List) {
         final data = response['data'] as List;
@@ -45,7 +40,6 @@ class CartController extends GetxController {
       return cartItems;
     } catch (e) {
       errorMessage.value = e.toString();
-      log(e.toString());
       return [];
     } finally {
       isFetching.value = false;
@@ -61,11 +55,9 @@ class CartController extends GetxController {
       // Remove from local list
       cartItems.removeWhere((item) => item.productId == productId);
 
-      log('Product removed from cart: $productId');
       return true;
     } catch (e) {
       errorMessage.value = e.toString();
-      log(e.toString());
       return false;
     }
   }
@@ -86,11 +78,9 @@ class CartController extends GetxController {
         cartItems.refresh();
       }
 
-      log('Cart quantity updated: $productId - $quantity');
       return true;
     } catch (e) {
       errorMessage.value = e.toString();
-      log(e.toString());
       return false;
     }
   }
@@ -104,11 +94,9 @@ class CartController extends GetxController {
       // Clear local list
       cartItems.value = [];
 
-      log('Cart cleared');
       return true;
     } catch (e) {
       errorMessage.value = e.toString();
-      log(e.toString());
       return false;
     }
   }
@@ -121,7 +109,6 @@ class CartController extends GetxController {
       return count;
     } catch (e) {
       errorMessage.value = e.toString();
-      log(e.toString());
       return 0;
     }
   }

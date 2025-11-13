@@ -5,7 +5,7 @@ import 'package:frontend/core/theme/app_typography.dart';
 import 'package:get/get.dart';
 
 class PaymentMethodController extends GetxController {
-  Rx<String?> selectedPaymentMethod = Rx<String?>(null);
+  Rx<String?> selectedPaymentMethod = Rx<String?>('RazorPay');
 
   void selectPaymentMethod(String method) {
     selectedPaymentMethod.value = method;

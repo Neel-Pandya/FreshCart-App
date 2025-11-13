@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:frontend/core/models/admin_product.dart';
 import 'package:frontend/core/utils/api_client.dart';
@@ -131,7 +129,6 @@ class ProductController extends GetxController {
       isLoading.value = true;
       errorMessage.value = '';
       final response = await apiClient.get('products/all');
-      log(response.toString());
       final data = response['data'] as List;
       allProducts.value = data.map((e) => Product.fromJson(e)).toList();
       _calculatePriceRange();
@@ -156,7 +153,6 @@ class ProductController extends GetxController {
       return isFavourite;
     } catch (e) {
       errorMessage.value = e.toString();
-      log(e.toString());
       return false;
     }
   }
@@ -165,12 +161,10 @@ class ProductController extends GetxController {
     try {
       errorMessage.value = '';
       final response = await apiClient.post('products/favourite', data: {'productId': productId});
-      log(response.toString());
       responseMessage.value = response['message'];
       return true;
     } catch (e) {
       errorMessage.value = e.toString();
-      log(e.toString());
       return false;
     }
   }
@@ -220,7 +214,6 @@ class ProductController extends GetxController {
       isFavouritesLoading.value = true;
       errorMessage.value = '';
       final response = await apiClient.get('users/favourites/all');
-      log(response.toString());
       final data = response['data'] as List;
       favouriteProducts.value = data.map((e) => Product.fromJson(e)).toList();
       return favouriteProducts;

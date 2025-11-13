@@ -17,9 +17,12 @@ class OrderService {
       throw new ApiError(400, 'Cart is empty');
     }
 
-    // Only allow Cash on Delivery
-    if (paymentMethod !== 'Cash on Delivery') {
-      throw new ApiError(400, 'Only Cash on Delivery is currently supported');
+    // Allow both Cash on Delivery and RazorPay
+    if (paymentMethod !== 'Cash on Delivery' && paymentMethod !== 'RazorPay') {
+      throw new ApiError(
+        400,
+        'Invalid payment method. Only Cash on Delivery and RazorPay are supported'
+      );
     }
 
     // Validate stock and prepare order items

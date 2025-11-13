@@ -34,6 +34,10 @@ class EnvConfig {
   static firebaseAuthProviderCertUrl = process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL;
   static firebaseClientCertUrl = process.env.FIREBASE_CLIENT_X509_CERT_URL;
   static firebaseUniverseDomain = process.env.FIREBASE_UNIVERSE_DOMAIN;
+
+  // Razorpay
+  static razorpayKeyId = process.env.RAZORPAY_KEY_ID;
+  static razorpayKeySecret = process.env.RAZORPAY_KEY_SECRET;
 }
 
 export default EnvConfig;

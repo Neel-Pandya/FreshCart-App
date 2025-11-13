@@ -90,6 +90,12 @@ const userSchema = new mongoose.Schema(
           enum: ['Cash on Delivery', 'RazorPay'],
         },
         deliveryAddress: String,
+        paymentDetails: {
+          razorpayOrderId: String,
+          razorpayPaymentId: String,
+          razorpaySignature: String,
+          paymentStatus: String,
+        },
         createdAt: {
           type: Date,
           default: Date.now,

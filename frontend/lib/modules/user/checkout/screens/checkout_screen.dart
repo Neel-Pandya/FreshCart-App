@@ -1,9 +1,12 @@
 ﻿import 'package:flutter/material.dart';
+import 'dart:developer';
 import 'package:frontend/core/routes/user_routes.dart';
+import 'package:frontend/core/services/razorpay_service.dart';
 import 'package:frontend/core/theme/app_colors.dart';
 import 'package:frontend/core/theme/app_typography.dart';
 import 'package:frontend/core/utils/toaster.dart';
 import 'package:frontend/core/widgets/primary_button.dart';
+import 'package:frontend/modules/common/auth/common/controllers/auth_controller.dart';
 import 'package:frontend/modules/user/cart/controller/cart_controller.dart';
 import 'package:frontend/modules/user/checkout/controller/checkout_address_controller.dart';
 import 'package:frontend/modules/user/checkout/widgets/checkout_address.dart';
@@ -24,6 +27,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   late final OrderController orderController;
   late final PaymentMethodController paymentController;
   late final CheckoutAddressController addressController;
+  late final AuthController authController;
+  late final RazorpayService razorpayService;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -33,6 +38,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     orderController = Get.put(OrderController());
     paymentController = Get.put(PaymentMethodController());
     addressController = Get.put(CheckoutAddressController());
+    authController = Get.find<AuthController>();
+    razorpayService = RazorpayService();
+  }
+
+  @override
+  void dispose() {
+    razorpayService.dispose();
+    super.dispose();
   }
 
   void _handleCheckout(BuildContext context) {
@@ -50,9 +63,69 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     if (paymentMethod == 'Cash on Delivery') {
       _handleCashOnDelivery();
     } else if (paymentMethod == 'RazorPay') {
-      // RazorPay not implemented yet
-      Toaster.showErrorMessage(message: 'RazorPay is not yet available');
+      _handleRazorpayPayment();
     }
+  }
+
+  Future<void> _handleRazorpayPayment() async {
+    final deliveryAddress = addressController.getDeliveryAddress();
+    final user = authController.user.value;
+
+    if (user == null) {
+      Toaster.showErrorMessage(message: 'User not logged in');
+      return;
+    }
+
+    // Create Razorpay order on backend
+    final orderData = await orderController.createRazorpayOrder(deliveryAddress);
+
+    if (orderData == null) {
+      Toaster.showErrorMessage(message: orderController.errorMessage.value);
+      return;
+    }
+
+    log('Opening Razorpay payment gateway with order: ${orderData['orderId']}');
+
+    // Open Razorpay payment gateway
+    razorpayService.openPaymentGateway(
+      orderId: orderData['orderId'] as String,
+      amount: orderData['amount'] as int,
+      keyId: orderData['keyId'] as String,
+      name: user.name,
+      email: user.email,
+      contact: '9999999999', // Default contact number
+      onSuccess: (paymentId, orderId, signature) async {
+        // Verify payment on backend
+        final success = await orderController.verifyRazorpayPayment(
+          razorpayOrderId: orderId,
+          razorpayPaymentId: paymentId,
+          razorpaySignature: signature,
+          deliveryAddress: deliveryAddress,
+        );
+
+        if (!mounted) return;
+
+        if (success) {
+          // Clear cart after successful payment
+          cartController.clearCart();
+
+          Toaster.showSuccessMessage(message: 'Payment successful! Order placed.');
+          Future.delayed(const Duration(seconds: 2), () {
+            if (!context.mounted) return;
+            Get.offAllNamed(UserRoutes.master);
+          });
+        } else {
+          Toaster.showErrorMessage(
+            message: orderController.errorMessage.value.isNotEmpty
+                ? orderController.errorMessage.value
+                : 'Payment verification failed',
+          );
+        }
+      },
+      onError: (errorMessage) {
+        Toaster.showErrorMessage(message: errorMessage);
+      },
+    );
   }
 
   Future<void> _handleCashOnDelivery() async {
