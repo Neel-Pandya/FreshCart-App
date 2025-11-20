@@ -7,6 +7,7 @@ import {
   updateUser,
   getUserFavourites,
 } from './user.controller.js';
+import { getDashboardStats } from './user.stats.controller.js';
 import verifyJWT from '../../core/middleware/jwt.middleware.js';
 import adminMiddleware from '../../core/middleware/admin.middleware.js';
 import upload from '../../core/middleware/multer.middleware.js';
@@ -45,5 +46,7 @@ router.put(
 router.post('/delete', verifyJWT, adminMiddleware, validate(removeUserValidation), deleteUser);
 
 router.get('/favourites/all', verifyJWT, getUserFavourites);
+
+router.get('/stats/dashboard', verifyJWT, adminMiddleware, getDashboardStats);
 
 export default router;
