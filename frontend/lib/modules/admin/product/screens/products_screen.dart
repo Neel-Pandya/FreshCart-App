@@ -30,7 +30,10 @@ class ProductsScreen extends StatelessWidget {
                 ? const Center(child: CircularProgressIndicator())
                 : productController.products.isEmpty
                 ? const Center(child: Text('No products found. Add some products.'))
-                : ProductList(),
+                : RefreshIndicator(
+                    onRefresh: () async => await productController.fetchProducts(),
+                    child: ProductList(),
+                  ),
           ),
         ),
       ),

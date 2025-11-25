@@ -31,10 +31,13 @@ class UserScreen extends StatelessWidget {
             return const Center(child: Text('No users found', style: TextStyle(fontSize: 16)));
           }
 
-          return ListView.separated(
-            itemCount: userController.users.length,
-            itemBuilder: (context, index) => UserListItem(user: userController.users[index]),
-            separatorBuilder: (context, index) => const SizedBox(height: 10),
+          return RefreshIndicator(
+            onRefresh: () => userController.fetchUsers(),
+            child: ListView.separated(
+              itemCount: userController.users.length,
+              itemBuilder: (context, index) => UserListItem(user: userController.users[index]),
+              separatorBuilder: (context, index) => const SizedBox(height: 10),
+            ),
           );
         }),
       ),

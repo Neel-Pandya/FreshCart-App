@@ -18,7 +18,23 @@ class HomeHeader extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(100),
-            child: Image.network(imageUrl, fit: BoxFit.cover, height: 50, width: 50),
+            child: Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+              height: 50,
+              width: 50,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  height: 50,
+                  width: 50,
+                  color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.1),
+                  child: Icon(
+                    FeatherIcons.user,
+                    color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.3),
+                  ),
+                );
+              },
+            ),
           ),
 
           const SizedBox(width: 13),

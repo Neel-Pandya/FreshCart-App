@@ -93,6 +93,17 @@ class _EditProfileFormState extends State<EditProfileForm> {
                         height: 80,
                         width: 80,
                         fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            height: 80,
+                            width: 80,
+                            color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.1),
+                            child: Icon(
+                              FeatherIcons.user,
+                              color: Get.theme.colorScheme.onSurface.withValues(alpha: 0.3),
+                            ),
+                          );
+                        },
                       ),
               ),
               Positioned(

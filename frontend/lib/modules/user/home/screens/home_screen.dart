@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      'New Arrivals 🔥',
+                      'Our Products',
                       style: AppTypography.bodyLargeEmphasized.copyWith(
                         color: Get.theme.colorScheme.onSurface,
                       ),

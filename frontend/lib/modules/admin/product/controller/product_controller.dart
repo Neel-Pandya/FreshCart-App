@@ -114,7 +114,8 @@ class ProductController extends GetxController {
       final product = Product.fromJson(response['data']);
       allProducts.add(product);
       _calculatePriceRange();
-      _filterProducts();
+      // Clear filters to show all products including the new one
+      clearFilters();
       return true;
     } catch (e) {
       errorMessage.value = e.toString();
